@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\QAnimate.h" />
+    <ClInclude Include="..\include\QAnimation.h" />
+    <ClInclude Include="..\include\QAtlas.h" />
+    <ClInclude Include="..\include\QAudio.h" />
+    <ClInclude Include="..\include\QBase.h" />
+    <ClInclude Include="..\include\QCircle.h" />
+    <ClInclude Include="..\include\QColor.h" />
+    <ClInclude Include="..\include\QDefines.h" />
+    <ClInclude Include="..\include\QDirector.h" />
+    <ClInclude Include="..\include\QDraw.h" />
+    <ClInclude Include="..\include\QEvent.h" />
+    <ClInclude Include="..\include\QFont.h" />
+    <ClInclude Include="..\include\QLabel.h" />
+    <ClInclude Include="..\include\QLines.h" />
+    <ClInclude Include="..\include\QLsqlite3.h" />
+    <ClInclude Include="..\include\QLuaHelpers.h" />
+    <ClInclude Include="..\include\QMain.h" />
+    <ClInclude Include="..\include\QNode.h" />
+    <ClInclude Include="..\include\QParticles.h" />
+    <ClInclude Include="..\include\QPhysics.h" />
+    <ClInclude Include="..\include\QPhysicsContact.h" />
+    <ClInclude Include="..\include\QPhysicsContactListener.h" />
+    <ClInclude Include="..\include\QPhysicsJoint.h" />
+    <ClInclude Include="..\include\QPhysicsJointDistance.h" />
+    <ClInclude Include="..\include\QPhysicsJointFriction.h" />
+    <ClInclude Include="..\include\QPhysicsJointGear.h" />
+    <ClInclude Include="..\include\QPhysicsJointPrismatic.h" />
+    <ClInclude Include="..\include\QPhysicsJointPulley.h" />
+    <ClInclude Include="..\include\QPhysicsJointRevolute.h" />
+    <ClInclude Include="..\include\QPhysicsJointRope.h" />
+    <ClInclude Include="..\include\QPhysicsJointTouch.h" />
+    <ClInclude Include="..\include\QPhysicsJointWeld.h" />
+    <ClInclude Include="..\include\QPhysicsJointWheel.h" />
+    <ClInclude Include="..\include\QPhysicsNew.h" />
+    <ClInclude Include="..\include\QPhysicsNodeProps.h" />
+    <ClInclude Include="..\include\QRectangle.h" />
+    <ClInclude Include="..\include\QScene.h" />
+    <ClInclude Include="..\include\QSceneTextureBatch.h" />
+    <ClInclude Include="..\include\QSprite.h" />
+    <ClInclude Include="..\include\QSystem.h" />
+    <ClInclude Include="..\include\QTemplate.h" />
+    <ClInclude Include="..\include\QTiledMap.h" />
+    <ClInclude Include="..\include\QTimer.h" />
+    <ClInclude Include="..\include\QTween.h" />
+    <ClInclude Include="..\include\QVec2.h" />
+    <ClInclude Include="..\include\QVector.h" />
+    <ClInclude Include="..\sqlite3\sqlite3.h" />
+    <ClInclude Include="..\sqlite3\sqlite3ext.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\openquick_tolua.cpp" />
+    <ClCompile Include="..\source\QAnimate.cpp" />
+    <ClCompile Include="..\source\QAnimation.cpp" />
+    <ClCompile Include="..\source\QAtlas.cpp" />
+    <ClCompile Include="..\source\QAudio.cpp" />
+    <ClCompile Include="..\source\QBase.cpp" />
+    <ClCompile Include="..\source\QCircle.cpp" />
+    <ClCompile Include="..\source\QColor.cpp" />
+    <ClCompile Include="..\source\QDirector.cpp" />
+    <ClCompile Include="..\source\QDraw.cpp" />
+    <ClCompile Include="..\source\QFont.cpp" />
+    <ClCompile Include="..\source\QLabel.cpp" />
+    <ClCompile Include="..\source\QLines.cpp" />
+    <ClCompile Include="..\source\QLsqlite3.cpp" />
+    <ClCompile Include="..\source\QLuaHelpers.cpp" />
+    <ClCompile Include="..\source\QMain.cpp" />
+    <ClCompile Include="..\source\QNode.cpp" />
+    <ClCompile Include="..\source\QParticles.cpp" />
+    <ClCompile Include="..\source\QPhysics.cpp" />
+    <ClCompile Include="..\source\QPhysicsContact.cpp" />
+    <ClCompile Include="..\source\QPhysicsContactListener.cpp" />
+    <ClCompile Include="..\source\QPhysicsJoint.cpp" />
+    <ClCompile Include="..\source\QPhysicsJointDistance.cpp" />
+    <ClCompile Include="..\source\QPhysicsJointFriction.cpp" />
+    <ClCompile Include="..\source\QPhysicsJointGear.cpp" />
+    <ClCompile Include="..\source\QPhysicsJointPrismatic.cpp" />
+    <ClCompile Include="..\source\QPhysicsJointPulley.cpp" />
+    <ClCompile Include="..\source\QPhysicsJointRevolute.cpp" />
+    <ClCompile Include="..\source\QPhysicsJointRope.cpp" />
+    <ClCompile Include="..\source\QPhysicsJointTouch.cpp" />
+    <ClCompile Include="..\source\QPhysicsJointWeld.cpp" />
+    <ClCompile Include="..\source\QPhysicsJointWheel.cpp" />
+    <ClCompile Include="..\source\QPhysicsNodeProps.cpp" />
+    <ClCompile Include="..\source\QRectangle.cpp" />
+    <ClCompile Include="..\source\QScene.cpp" />
+    <ClCompile Include="..\source\QSceneTextureBatch.cpp" />
+    <ClCompile Include="..\source\QSprite.cpp" />
+    <ClCompile Include="..\source\QSystem.cpp" />
+    <ClCompile Include="..\source\QTiledMap.cpp" />
+    <ClCompile Include="..\source\QTween.cpp" />
+    <ClCompile Include="..\source\QVec2.cpp" />
+    <ClCompile Include="..\source\QVector.cpp" />
+    <ClCompile Include="..\sqlite3\lsqlite3.c" />
+    <ClCompile Include="..\sqlite3\shell.c" />
+    <ClCompile Include="..\sqlite3\sqlite3.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\cocos2dx-2\cocos2dx\proj.win32\cocos2d.vcxproj">
+      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2dx-2\CocosDenshion\proj.win32\CocosDenshion.vcxproj">
+      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2dx-2\extensions\proj.win32\libExtensions.vcxproj">
+      <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2dx-2\external\Box2D\proj.win32\Box2D.vcxproj">
+      <Project>{929480e7-23c0-4df6-8456-096d71547116}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\cocos2dx-2\scripting\lua\proj.win32\liblua.vcxproj">
+      <Project>{ddc3e27f-004d-4dd4-9dd3-931a013d2159}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{18EA2002-EC4E-4969-8D99-D943A8993201}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>OpenQuick</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <IntDir>$(Configuration).win32\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IntDir>$(Configuration).win32\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_WINDOWS;TOLUA_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\openquick\include;..\..\cocos2dx-2\CocosDenshion\include;..\..\cocos2dx-2\cocos2dx\layers_scenes_transitions_nodes;..\..\cocos2dx-2\cocos2dx\tilemap_parallax_nodes;..\..\cocos2dx-2\cocos2dx\textures;..\..\cocos2dx-2\cocos2dx\particle_nodes;..\..\cocos2dx-2\cocos2dx;..\..\cocos2dx-2\cocos2dx\include;..\..\cocos2dx-2\cocos2dx\cocoa;..\..\cocos2dx-2\cocos2dx\platform;..\..\cocos2dx-2\cocos2dx\platform\win32;..\..\cocos2dx-2\cocos2dx\platform\third_party\win32\OGLES;..\..\cocos2dx-2\cocos2dx\kazmath\include;..\..\cocos2dx-2\scripting\lua\tolua;..\..\cocos2dx-2\scripting\lua\lua;..\..\cocos2dx-2\external</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_LIB;_WINDOWS;TOLUA_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\openquick\include;..\..\cocos2dx-2\CocosDenshion\include;..\..\cocos2dx-2\cocos2dx\layers_scenes_transitions_nodes;..\..\cocos2dx-2\cocos2dx\tilemap_parallax_nodes;..\..\cocos2dx-2\cocos2dx\textures;..\..\cocos2dx-2\cocos2dx\particle_nodes;..\..\cocos2dx-2\cocos2dx;..\..\cocos2dx-2\cocos2dx\include;..\..\cocos2dx-2\cocos2dx\cocoa;..\..\cocos2dx-2\cocos2dx\platform;..\..\cocos2dx-2\cocos2dx\platform\win32;..\..\cocos2dx-2\cocos2dx\platform\third_party\win32\OGLES;..\..\cocos2dx-2\cocos2dx\kazmath\include;..\..\cocos2dx-2\scripting\lua\tolua;..\..\cocos2dx-2\scripting\lua\lua;..\..\cocos2dx-2\external</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,225 @@
+//------------------------------------------------------------------------------
+// Mark-up in header files
+//------------------------------------------------------------------------------
+$cfile "Include/QAnimation.h"
+$cfile "Include/QAtlas.h"
+$cfile "Include/QAudio.h"
+$cfile "Include/QBase.h"
+$cfile "Include/QCircle.h"
+$cfile "Include/QColor.h"
+$cfile "Include/QDirector.h"
+$cfile "Include/QEvent.h"
+$cfile "Include/QFont.h"
+$cfile "Include/QLabel.h"
+$cfile "Include/QLines.h"
+$cfile "Include/QNode.h"
+$cfile "Include/QMain.h"
+$cfile "Include/QParticles.h"
+$cfile "Include/QPhysics.h"
+$cfile "Include/QPhysicsContact.h"
+$cfile "Include/QPhysicsContactListener.h"
+$cfile "Include/QPhysicsJoint.h"
+$cfile "Include/QPhysicsJointDistance.h"
+$cfile "Include/QPhysicsJointRevolute.h"
+$cfile "Include/QPhysicsJointPrismatic.h"
+$cfile "Include/QPhysicsJointFriction.h"
+$cfile "Include/QPhysicsJointWheel.h"
+$cfile "Include/QPhysicsJointWeld.h"
+$cfile "Include/QPhysicsJointPulley.h"
+$cfile "Include/QPhysicsJointTouch.h"
+$cfile "Include/QPhysicsJointGear.h"
+$cfile "Include/QPhysicsJointRope.h"
+$cfile "Include/QPhysicsNodeProps.h"
+$cfile "Include/QRectangle.h"
+$cfile "Include/QScene.h"
+$cfile "Include/QSprite.h"
+$cfile "Include/QLsqlite3.h"
+$cfile "Include/QSystem.h"
+$cfile "Include/QTiledMap.h"
+$cfile "Include/QTimer.h"
+$cfile "Include/QTween.h"
+$cfile "Include/QVector.h"
+
+//------------------------------------------------------------------------------
+// Mark-up here:
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// QDirector
+//------------------------------------------------------------------------------
+namespace quick {
+    class QDirector {
+    public:
+         tolua_property float displayWidth;     // Read Only
+         tolua_property float displayHeight;    // Read Only
+         tolua_property float displayCenterX;   // Read Only
+         tolua_property float displayCenterY;   // Read Only
+    };
+}
+
+//------------------------------------------------------------------------------
+// QFont
+//------------------------------------------------------------------------------
+namespace quick {
+    class QFont {
+    public:
+         tolua_property int height;             // Read Only
+         tolua_property std::string fileName;   // Read Only
+    };
+}
+
+//------------------------------------------------------------------------------
+// QSprite
+//------------------------------------------------------------------------------
+namespace quick {
+    class QSprite {
+    public:
+         tolua_property bool isPlaying;
+         tolua_property int frame;
+         tolua_property QAnimation *animation;
+    };
+}
+
+//------------------------------------------------------------------------------
+// QAudio
+//------------------------------------------------------------------------------
+namespace quick {
+    class QAudio {
+    public:
+         tolua_property float musicVolume;
+         tolua_property float sfxVolume;
+    };
+}
+
+//------------------------------------------------------------------------------
+// QLabel
+//------------------------------------------------------------------------------
+namespace quick {
+    class QLabel {
+    public:
+         tolua_property float xText;        // Read Only
+         tolua_property float yText;        // Read Only
+         tolua_property float wText;        // Read Only
+         tolua_property float hText;        // Read Only
+    };
+}
+
+//------------------------------------------------------------------------------
+// Joint
+//------------------------------------------------------------------------------
+namespace quick {
+	namespace physics {
+		class QJoint {
+		public:
+			tolua_property bool isActive;
+			tolua_property bool isCollideConnected;
+		};
+	};
+}
+
+// QJointDistance
+namespace quick {
+	namespace physics {
+		class QJointDistance {
+		public:
+//			tolua_property float length;		//readonly
+        };
+    };
+}
+
+// QJointRevolute
+namespace quick {
+	namespace physics {
+		class QJointRevolute {
+		public:
+			tolua_property float motorTorque;		//readonly
+			tolua_property float jointSpeed;		//readonly
+			tolua_property float jointAngle;		//readonly
+        };
+    };
+}
+
+// QJointPrismatic
+namespace quick {
+	namespace physics {
+		class QJointPrismatic {
+		public:
+			tolua_property float motorForce;		//readonly
+			tolua_property float jointTranslation;	//readonly
+			tolua_property float jointSpeed;		//readonly
+        };
+    };
+}
+
+// QJointFriction
+namespace quick {
+	namespace physics {
+		class QJointFriction {
+		public:
+//			tolua_property float motorForce;		//readonly
+        };
+    };
+}
+
+// QJointWheel
+namespace quick {
+	namespace physics {
+		class QJointWheel {
+		public:
+			tolua_property float motorTorque;		//readonly
+			tolua_property float jointTranslation;	//readonly
+			tolua_property float jointSpeed;		//readonly
+        };
+    };
+}
+
+// QJointWeld
+namespace quick {
+	namespace physics {
+		class QJointWeld {
+		public:
+//			tolua_property float motorTorque;		//readonly
+        };
+    };
+}
+
+// QJointPulley
+namespace quick {
+	namespace physics {
+		class QJointPulley {
+		public:
+//			tolua_property float motorTorque;		//readonly
+        };
+    };
+}
+
+// QJointTouch
+namespace quick {
+	namespace physics {
+		class QJointTouch {
+		public:
+//			tolua_property float motorTorque;		//readonly
+        };
+    };
+}
+
+// QJointGear
+namespace quick {
+	namespace physics {
+		class QJointGear {
+		public:
+//			tolua_property float motorTorque;		//readonly
+        };
+    };
+}
+
+// QJointRope
+namespace quick {
+	namespace physics {
+		class QJointRope {
+		public:
+//			tolua_property float motorTorque;		//readonly
+        };
+    };
+}
+

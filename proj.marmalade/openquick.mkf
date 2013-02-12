@@ -1,0 +1,120 @@
+includepath "../include"
+
+# Don't compile in all the tolua error-checking code.
+# In any case, lua_isusertype() is too aggressive and appears
+# not to be able to deal with deep hierarchies of peer tables.
+define TOLUA_RELEASE
+
+files
+{
+    "../openquick_tolua.cpp"
+    "../openquick_tolua.pkg"
+
+    (../include)
+    QAnimate.h
+	QAnimation.h
+	QAtlas.h
+	QAudio.h
+    QBase.h
+    QCircle.h
+    QColor.h
+    QDefines.h
+    QEvent.h
+    QDirector.h
+    QFont.h
+    QLabel.h
+    QLines.h
+	QLsqlite3.h
+    QLuaHelpers.h
+    QMain.h
+    QNode.h
+    QParticles.h
+    QPhysics.h
+    QPhysicsContact.h
+    QPhysicsContactListener.h
+    QPhysicsJoint.h
+    QPhysicsJointDistance.h
+    QPhysicsJointRevolute.h
+    QPhysicsJointPrismatic.h
+    QPhysicsJointFriction.h
+    QPhysicsJointWheel.h
+    QPhysicsJointWeld.h
+    QPhysicsJointPulley.h
+    QPhysicsJointTouch.h
+    QPhysicsJointGear.h
+    QPhysicsJointRope.h
+    QPhysicsNodeProps.h
+    QRectangle.h
+    QScene.h
+    QSceneTextureBatch.h
+    QSprite.h
+    QSystem.h
+    QTiledMap.h
+    QTimer.h
+    QTween.h
+    QVector.h
+    QVec2.h
+
+    (../source)
+    QAnimate.cpp
+	QAnimation.cpp
+	QAtlas.cpp
+	QAudio.cpp
+    QBase.cpp
+    QCircle.cpp
+    QColor.cpp
+    QDirector.cpp
+    QFont.cpp
+    QLabel.cpp
+    QLines.cpp
+	QLsqlite3.cpp
+    QLuaHelpers.cpp
+    QMain.cpp
+    QNode.cpp
+    QParticles.cpp
+    QPhysics.cpp
+    QPhysicsContact.cpp
+    QPhysicsContactListener.cpp
+    QPhysicsJoint.cpp
+    QPhysicsJointDistance.cpp
+    QPhysicsJointRevolute.cpp
+    QPhysicsJointPrismatic.cpp
+    QPhysicsJointFriction.cpp
+    QPhysicsJointWheel.cpp
+    QPhysicsJointWeld.cpp
+    QPhysicsJointPulley.cpp
+    QPhysicsJointTouch.cpp
+    QPhysicsJointGear.cpp
+    QPhysicsJointRope.cpp
+    QPhysicsNodeProps.cpp
+    QRectangle.cpp
+    QScene.cpp
+    QSceneTextureBatch.cpp
+    QSprite.cpp
+    QSystem.cpp
+    QTiledMap.cpp
+    QTween.cpp
+    QVector.cpp
+    QVec2.cpp
+
+    (../data/lua)
+    [Lua]
+
+    (../sqlite3)
+    [SQLite3]
+    sqlite3.h
+    sqlite3ext.h
+    sqlite3.c
+	lsqlite3.c
+}
+
+option module_path = "../../cocos2dx/cocos2dx/proj.marmalade;../../cocos2dx/CocosDenshion/proj.marmalade;../../cocos2dx/external/Box2D/proj.marmalade;../../cocos2dx/scripting/lua/proj.marmalade"
+
+subprojects
+{
+    iwgl
+    cocos2dx
+    CocosDenshion
+    Box2D
+    lua
+}
