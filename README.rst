@@ -5,6 +5,7 @@ OpenQuick is an open source framework for Rapid Application Development (RAD)
 of 2D games and apps.
 
 It provides high-level Lua APIs on top of the following components:
+
 - Cocos2d-x
 - Box2D
 - sqlite3 (luasqlite.luaforge.net)
@@ -49,6 +50,7 @@ OpenQuick is provided under the MIT license::
    */
 
 The following components are redistributed under their respective licenses:
+
 - sqlite3 (luasqlite.luaforge.net)
 - json (json.luaforge.net)
 
