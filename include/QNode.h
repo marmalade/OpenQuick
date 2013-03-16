@@ -57,7 +57,7 @@ public:
     // tolua_begin
     virtual const char* _getToLuaClassName() { return "quick::QNode"; }
     QNode();
-    ~QNode();
+    virtual ~QNode();
     void _createCCNode();
     bool _isChild(QNode* pChild);
     void _setParent(QNode* pParent);

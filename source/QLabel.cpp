@@ -158,12 +158,12 @@ void QLabel::sync()
 void QLabel::GetCurrentAlignment(cocos2d::CCTextAlignment *h_alignment, cocos2d::CCVerticalTextAlignment *v_alignmnet) const
 {
     // Get the horizontal alignment
-    if ( stricmp( hAlignment.c_str(), "centre") == 0 ||
-		 stricmp( hAlignment.c_str(), "center") == 0)
+    if ( strcasecmp( hAlignment.c_str(), "centre") == 0 ||
+		 strcasecmp( hAlignment.c_str(), "center") == 0)
 	{
 		*h_alignment = cocos2d::kCCTextAlignmentCenter;
 	}
-    else if ( stricmp( hAlignment.c_str(), "right") == 0)
+    else if ( strcasecmp( hAlignment.c_str(), "right") == 0)
 	{
 		*h_alignment = cocos2d::kCCTextAlignmentRight;
 	}
@@ -173,11 +173,11 @@ void QLabel::GetCurrentAlignment(cocos2d::CCTextAlignment *h_alignment, cocos2d:
     }
 
     // Get the vertical alignment
-	if ( stricmp( vAlignment.c_str(), "middle") == 0)
+	if ( strcasecmp( vAlignment.c_str(), "middle") == 0)
 	{
 		*v_alignmnet = cocos2d::kCCVerticalTextAlignmentCenter;
 	}
-    else if ( stricmp( vAlignment.c_str(), "top") == 0)
+    else if ( strcasecmp( vAlignment.c_str(), "top") == 0)
 	{
 		*v_alignmnet = cocos2d::kCCVerticalTextAlignmentTop;
 	}

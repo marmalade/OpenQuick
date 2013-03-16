@@ -25,9 +25,9 @@
 #include "QScene.h"
 
 #include "cocos2d.h"
-#include "CCTransition.h"
-#include "CCTransitionPageTurn.h"
-#include "CCTransitionProgress.h"
+#include "layers_scenes_transitions_nodes/CCTransition.h"
+#include "layers_scenes_transitions_nodes/CCTransitionPageTurn.h"
+#include "layers_scenes_transitions_nodes/CCTransitionProgress.h"
 
 USING_NS_CC;
 QUICK_NAMESPACE_BEGIN;
@@ -166,7 +166,7 @@ void QDirector::RunScene()
             if (pNextScene && (pNextScene != pCurrScene))
             {
                 // We need to start a scene transition here
-                CCScene* outgoing_cc_scene = (CCScene*)pCurrScene->m_CCNode;
+                //CCScene* outgoing_cc_scene = (CCScene*)pCurrScene->m_CCNode;
                 CCScene* incoming_cc_scene = (CCScene*)pNextScene->m_CCNode;
 
                 // Default to a direct transition
@@ -319,7 +319,6 @@ static CCGLProgram* s_pShader = NULL;
 static int s_nColorLocation = -1;
 static ccColor4F s_tColor = {1.0f,1.0f,1.0f,1.0f};
 static int s_nPointSizeLocation = -1;
-static GLfloat s_fPointSize = 1.0f;
 //------------------------------------------------------------------------------
 static void lazy_init( void )
 {
@@ -362,7 +361,7 @@ void QDirector::DrawPolyVert2F( const cocos2d::ccVertex2F* poli, unsigned int nu
     lazy_init();
 
     s_pShader->use();
-    s_pShader->setUniformForModelViewProjectionMatrix();
+    s_pShader->setUniformsForBuiltins();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );

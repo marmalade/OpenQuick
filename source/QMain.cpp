@@ -90,8 +90,13 @@ std::string MainLuaLoadFile(const char* filename)
     memset(buff, 0, fileSize + namelength + 1);
 
 //    sprintf(buff, "f('%s'); ", filename);
-    fread(buff + namelength, fileSize, 1, pFile);
+    int rtn = fread(buff + namelength, fileSize, 1, pFile);
     fclose(pFile);
+    if (rtn != 1)
+    {
+        QAssert(false, "error reading file");
+        return "";
+    }
 
 #ifdef LUA_PREPROCESS
     // Assume this function is only ever called after dbg.lua has been loaded, and therefore dbg.DEBUG has been set from config
@@ -164,15 +169,15 @@ const char* MainGetProcessedLuaCallStack()
     // Call Lua's debug.traceback(), and tidy up the results
     if (g_L && (g_Config.isDbgLoaded == true))
     {
-        int s1 = lua_gettop(g_L);
+        lua_gettop(g_L);
         lua_getfield(g_L, LUA_GLOBALSINDEX, "dbg");
-        int s11 = lua_gettop(g_L);
+        lua_gettop(g_L);
 	    lua_getfield(g_L, -1, "getProcessedCallstack");
-	    int s = lua_pcall(g_L, 0, 1, 0);
+	    lua_pcall(g_L, 0, 1, 0);
         const char* luastack = lua_tostring(g_L, -1);
         lua_pop(g_L, 2);
 
-        int s2 = lua_gettop(g_L);
+        lua_gettop(g_L);
         return luastack;
     }
     else
@@ -188,7 +193,7 @@ const char* MainGetProcessedLuaError(const char* error)
         lua_getfield(g_L, LUA_GLOBALSINDEX, "dbg");
 	    lua_getfield(g_L, -1, "getProcessedError");
 	    lua_pushstring(g_L, error);
-	    int s = lua_pcall(g_L, 1, 1, 0);
+	    lua_pcall(g_L, 1, 1, 0);
         //int s2 = lua_gettop(g_L);
         const char* processed = lua_tostring(g_L, -1);
         //int s3 = lua_gettop(g_L);
@@ -263,7 +268,7 @@ void MainInitLuaMiddleware(const char* configFilename)
 {
     // Initialise tolua packages
     // This will register all bound symbols with Lua
-    int r = tolua_openquick_tolua_open(g_L);
+    tolua_openquick_tolua_open(g_L);
 
     // Load Lua files
     int s;

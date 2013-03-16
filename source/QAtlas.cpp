@@ -61,7 +61,7 @@ bool QAtlas::initFromFile(std::string fileName)
 
     std::string ext(fileName, pos);
     bool result = true;
-    if (stricmp( ext.c_str(), ".plist") == 0)
+    if (strcasecmp( ext.c_str(), ".plist") == 0)
     {
         // Call  the base class initialisation
         init();
@@ -80,7 +80,7 @@ bool QAtlas::initFromFile(std::string fileName)
 
     // cocos2d::CCTexture must have pointer back to QAtlas
     QAssert(m_Texture, "Failed to set CCTexture for QAtlas");
-    m_Texture->m_uID = (int)(void*)this;
+    m_Texture->m_uID = (intptr_t)(void*)this;
     return result;
 }
 //------------------------------------------------------------------------------
@@ -95,7 +95,7 @@ bool QAtlas::initTexture(std::string filename)
     m_Texture->retain();
 
     // cocos2d::CCTexture must have pointer back to QAtlas
-    m_Texture->m_uID = (int)(void*)this;
+    m_Texture->m_uID = (intptr_t)(void*)this;
     return true;
 }
 //------------------------------------------------------------------------------

@@ -66,7 +66,7 @@ public:
 	// BOUND, PRIVATE
     virtual const char* _getToLuaClassName() { return "quick::QVector"; }
 	QVector();
-	~QVector();
+    virtual ~QVector();
 
     float   _strokeAlphaInternal; // used to calculate alpha value for Cocos2d, may or may not inherit from parent
 

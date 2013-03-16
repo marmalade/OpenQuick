@@ -58,7 +58,7 @@ void CCSpriteVector::draw()
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
     m_Shader->use();
-    m_Shader->setUniformForModelViewProjectionMatrix();
+    m_Shader->setUniformsForBuiltins();
 
     // Draw stroke
     float color[4];

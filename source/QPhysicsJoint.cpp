@@ -31,7 +31,7 @@ PHYSICS_NAMESPACE_BEGIN;
 //------------------------------------------------------------------------------
 // QJoint
 //------------------------------------------------------------------------------
-QJoint::QJoint() : m_Joint(NULL), m_NodeA(NULL), m_NodeB(NULL), m_Next(NULL), m_Previous(NULL)
+QJoint::QJoint() : m_Next(NULL),  m_Previous(NULL), m_Joint(NULL), m_NodeA(NULL), m_NodeB(NULL)
 {
     // This is not accessible from LUA: call physics::_createNewJoint instead
 }

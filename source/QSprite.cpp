@@ -265,7 +265,7 @@ QAtlas* QSprite::getAtlas() const
     
     cocos2d::CCTexture2D* pTex = pSF->getTexture();
 
-    QAtlas* pAtlas = (QAtlas*)pTex->m_uID;
+    QAtlas* pAtlas = (QAtlas*)(intptr_t)pTex->m_uID;
     return pAtlas;
 }
 //------------------------------------------------------------------------------

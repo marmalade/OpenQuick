@@ -30,12 +30,13 @@
 #ifndef __Q_DEFINES_H
 #define __Q_DEFINES_H
 
+#ifdef _MSC_VER
 #pragma warning ( disable : 4800 ) // thrown by tolua_boolean forcing int to bool
 #pragma warning ( disable : 4251 ) // "...needs to have dll-interface to be used by clients of class..."
 #pragma warning ( disable : 4996 ) // This function or variable may be unsafe.
+#endif
 
 #include "cocos2d.h"
-#include "CCPlatformMacros.h"
 
 // Macros for default namespace
 #define QUICK_NAMESPACE_BEGIN namespace quick {

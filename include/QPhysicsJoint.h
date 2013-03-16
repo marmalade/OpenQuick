@@ -76,7 +76,7 @@ public:
     /**
     The destructor that must be called by the physics global instance.
     */
-    ~QJoint();
+    virtual ~QJoint();
         
     // BOUND, PUBLIC
     /**
