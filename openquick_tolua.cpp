@@ -13,44 +13,44 @@
 /* Exported function */
 TOLUA_API int  tolua_openquick_tolua_open (lua_State* tolua_S);
 
-#include "Include/QAnimation.h"
-#include "Include/QAtlas.h"
-#include "Include/QAudio.h"
-#include "Include/QBase.h"
-#include "Include/QCircle.h"
-#include "Include/QColor.h"
-#include "Include/QDirector.h"
-#include "Include/QEvent.h"
-#include "Include/QFont.h"
-#include "Include/QLabel.h"
-#include "Include/QLines.h"
-#include "Include/QNode.h"
-#include "Include/QMain.h"
-#include "Include/QParticles.h"
-#include "Include/QPhysics.h"
-#include "Include/QPhysicsContact.h"
-#include "Include/QPhysicsContactListener.h"
-#include "Include/QPhysicsJoint.h"
-#include "Include/QPhysicsJointDistance.h"
-#include "Include/QPhysicsJointRevolute.h"
-#include "Include/QPhysicsJointPrismatic.h"
-#include "Include/QPhysicsJointFriction.h"
-#include "Include/QPhysicsJointWheel.h"
-#include "Include/QPhysicsJointWeld.h"
-#include "Include/QPhysicsJointPulley.h"
-#include "Include/QPhysicsJointTouch.h"
-#include "Include/QPhysicsJointGear.h"
-#include "Include/QPhysicsJointRope.h"
-#include "Include/QPhysicsNodeProps.h"
-#include "Include/QRectangle.h"
-#include "Include/QScene.h"
-#include "Include/QSprite.h"
-#include "Include/QLsqlite3.h"
-#include "Include/QSystem.h"
-#include "Include/QTiledMap.h"
-#include "Include/QTimer.h"
-#include "Include/QTween.h"
-#include "Include/QVector.h"
+#include "include/QAnimation.h"
+#include "include/QAtlas.h"
+#include "include/QAudio.h"
+#include "include/QBase.h"
+#include "include/QCircle.h"
+#include "include/QColor.h"
+#include "include/QDirector.h"
+#include "include/QEvent.h"
+#include "include/QFont.h"
+#include "include/QLabel.h"
+#include "include/QLines.h"
+#include "include/QNode.h"
+#include "include/QMain.h"
+#include "include/QParticles.h"
+#include "include/QPhysics.h"
+#include "include/QPhysicsContact.h"
+#include "include/QPhysicsContactListener.h"
+#include "include/QPhysicsJoint.h"
+#include "include/QPhysicsJointDistance.h"
+#include "include/QPhysicsJointRevolute.h"
+#include "include/QPhysicsJointPrismatic.h"
+#include "include/QPhysicsJointFriction.h"
+#include "include/QPhysicsJointWheel.h"
+#include "include/QPhysicsJointWeld.h"
+#include "include/QPhysicsJointPulley.h"
+#include "include/QPhysicsJointTouch.h"
+#include "include/QPhysicsJointGear.h"
+#include "include/QPhysicsJointRope.h"
+#include "include/QPhysicsNodeProps.h"
+#include "include/QRectangle.h"
+#include "include/QScene.h"
+#include "include/QSprite.h"
+#include "include/QLsqlite3.h"
+#include "include/QSystem.h"
+#include "include/QTiledMap.h"
+#include "include/QTimer.h"
+#include "include/QTween.h"
+#include "include/QVector.h"
 
 /* function to release collected object via destructor */
 #ifdef __cplusplus
@@ -265,12 +265,16 @@ static int tolua_collect_quick__QNode (lua_State* tolua_S)
 	return 0;
 }
 
+/*
+This function is not used.  Updating to the latest version of cocos2dx will
+fix this issue.
 static int tolua_collect_cocos2d__ccColor4F (lua_State* tolua_S)
 {
  cocos2d::ccColor4F* self = (cocos2d::ccColor4F*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
+*/
 
 static int tolua_collect_quick__QParticles (lua_State* tolua_S)
 {
