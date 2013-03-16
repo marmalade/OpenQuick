@@ -239,7 +239,9 @@ void QSprite::sync()
 
 		pCCNode->setColor(*(ccColor3B*)&color); // cast ccColor4B* to ccColor3B* should be OK
 
-		pCCNode->updateTransform();
+        // updateTransform will assert if the sprite is not part of a batch.
+        if (pCCNode->getBatchNode())
+            pCCNode->updateTransform();
 
         if (pCCNode->isFlipX() != xFlip)
             pCCNode->setFlipX(xFlip);
