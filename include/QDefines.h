@@ -51,7 +51,7 @@
 #ifdef MARMALADE
 extern void MarmQuickTrace(const char * pszFormat, ...);
 extern void MarmQuickWarning(const char * pszFormat, ...);
-extern void MarmQuickAssert(bool cond, const char * pszFormat, ...);
+extern void MarmQuickAssert(bool cond, const char* message);
 #define QTrace MarmQuickTrace
 #define QWarning MarmQuickWarning
 #define QAssert MarmQuickAssert

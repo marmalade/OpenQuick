@@ -63,8 +63,8 @@ QUICK_NAMESPACE_BEGIN;
 luadbg g_Config = // map some stuff from Lua dbg table
 {
     false,  // isDbgLoaded
-    true,   // DEBUG
-    false,  // ASSERTDIALOGS
+    true,   // debugEnabled
+    false,  // assertDialogsEnabled
 };
 
 MainCallback g_MainCallback = NULL;
@@ -100,7 +100,7 @@ std::string MainLuaLoadFile(const char* filename)
 
 #ifdef LUA_PREPROCESS
     // Assume this function is only ever called after dbg.lua has been loaded, and therefore dbg.DEBUG has been set from config
-    if (g_Config.DEBUG == false)
+    if (!g_Config.debugEnabled)
     {
         // GREP "dbg." to "--g."
         char* pChar = buff;
@@ -191,9 +191,9 @@ const char* MainGetProcessedLuaError(const char* error)
         // Call our dbg function to process the Lua error string
         //int s1 = lua_gettop(g_L);
         lua_getfield(g_L, LUA_GLOBALSINDEX, "dbg");
-	    lua_getfield(g_L, -1, "getProcessedError");
-	    lua_pushstring(g_L, error);
-	    lua_pcall(g_L, 1, 1, 0);
+        lua_getfield(g_L, -1, "getProcessedError");
+        lua_pushstring(g_L, error);
+        lua_pcall(g_L, 1, 1, 0);
         //int s2 = lua_gettop(g_L);
         const char* processed = lua_tostring(g_L, -1);
         //int s3 = lua_gettop(g_L);
@@ -274,7 +274,8 @@ void MainInitLuaMiddleware(const char* configFilename)
     int s;
 
     // Log some blank lines, so it's easier to see where the *real* log starts
-    printf("\n\n");
+    QTrace("");
+    QTrace("");
 
     // Log "QUICKLOG CPP: Marmalade Quick <version>"
     QTrace("Marmalade Quick %s", MainGetVersionString());
@@ -283,29 +284,45 @@ void MainInitLuaMiddleware(const char* configFilename)
     QTrace("Loading app configuration...");
 
     // Our app config
-    s = luaL_loadfile(g_L, "quicklua/QConfig.lua");
+    const char* qconfig = "quicklua/QConfig.lua";
+    s = luaL_loadfile(g_L, qconfig);
     if (s)
-        QWarning("Failed to load QConfig.lua file");
-  	s = lua_pcall(g_L, 0, 0, 0);
-	LUA_REPORT_ERRORS(g_L, s);
+    {
+        QWarning("Failed to load '%s' file", qconfig);
+        LUA_REPORT_ERRORS(g_L, s);
+    }
+    else
+    {
+        s = lua_pcall(g_L, 0, 0, 0);
+    }
+    LUA_REPORT_ERRORS(g_L, s);
 
     // Allow non-existence of config.lua
     FILE* pFile = fopen(configFilename, "rt");
-    fclose(pFile);
     if (!pFile)
+    {
         QWarning("Failed to load config lua file");
+    }
     else
     {
+        fclose(pFile);
         s = luaL_loadfile(g_L, configFilename);
         if (s)
+        {
             QWarning("Failed to load config lua file");
-  	    s = lua_pcall(g_L, 0, 0, 0);
-	    LUA_REPORT_ERRORS(g_L, s);
+        }
+        else
+        {
+            s = lua_pcall(g_L, 0, 0, 0);
+        }
+        LUA_REPORT_ERRORS(g_L, s);
     }
 
+    QTrace("Calling ininConfig...");
+
     // Initialise configuration
-	lua_getglobal(g_L, "initConfig");
- 	s = lua_pcall(g_L, 0, 0, 0);
+    lua_getglobal(g_L, "initConfig");
+    s = lua_pcall(g_L, 0, 0, 0);
     LUA_REPORT_ERRORS(g_L, s);
 
     // Log "QUICKLOG CPP: Loading Quick engine..."
@@ -317,22 +334,22 @@ void MainInitLuaMiddleware(const char* configFilename)
         QWarning("Failed to load dbg.lua file");
     else
         g_Config.isDbgLoaded = true;
-  	s = lua_pcall(g_L, 0, 0, 0);
-	LUA_REPORT_ERRORS(g_L, s);
+    s = lua_pcall(g_L, 0, 0, 0);
+    LUA_REPORT_ERRORS(g_L, s);
 
     // Read stuff from Lua dbg
     lua_getglobal(g_L, "dbg");
     lua_getfield(g_L, -1, "DEBUG");
-    g_Config.DEBUG = lua_toboolean(g_L, -1);
+    g_Config.debugEnabled = lua_toboolean(g_L, -1);
     lua_settop(g_L, 0);
 
     lua_getglobal(g_L, "dbg");
     lua_getfield(g_L, -1, "ASSERTDIALOGS");
-    g_Config.ASSERTDIALOGS = lua_toboolean(g_L, -1);
+    g_Config.assertDialogsEnabled = lua_toboolean(g_L, -1);
     lua_settop(g_L, 0);
 
 #ifdef LUA_PREPROCESS
-    if (g_Config.DEBUG == false)
+    if (g_Config.debugEnabled == false)
         printf("config.debug.general = false. All 'dbg.' lines will become comments...");
 #endif
     
@@ -466,7 +483,12 @@ void MainUpdate(float dt)
         else
         {
             int ls = lua_gettop(g_L);
-            QAssert(ls == firstVal, "Lua stack top is unexpected value: %d", ls);
+            if (ls != firstVal)
+            {
+              char msg[cocos2d::kMaxLogLen+1];
+              snprintf(msg, cocos2d::kMaxLogLen, "Lua stack top is unexpected value: %d", ls);
+              QAssert(ls == firstVal, msg);
+            }
         }
     }
 #endif
@@ -506,3 +528,4 @@ void MainUpdate(float dt)
 }
 
 QUICK_NAMESPACE_END;
+

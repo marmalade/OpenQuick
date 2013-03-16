@@ -59,8 +59,8 @@ void MainPrint(char* pBuffer);
 // Globals for communicating to/from Lua
 struct luadbg {
     bool isDbgLoaded;
-    bool DEBUG;
-    bool ASSERTDIALOGS;
+    bool debugEnabled;
+    bool assertDialogsEnabled;
 };
 extern luadbg g_Config;
 

@@ -380,7 +380,7 @@ bool QNodeProps::get_isSensor()
 //------------------------------------------------------------------------------
 void QNodeProps::set_isSensor(bool v)
 {
-	QAssert(false, ("Trying to set read-only property isSensor"));
+	QAssert(false, "Trying to set read-only property isSensor");
 }
 //------------------------------------------------------------------------------
 void QNodeProps::draw()

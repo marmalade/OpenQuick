@@ -38,11 +38,13 @@ int (*g_LuaErrorHandler)(lua_State* L) = QLuaErrorHandler;
 // Default error handler
 int QLuaErrorHandler(lua_State *L)
 {
-	const char * CC_UNUSED msg = lua_tostring(L, -1);
+	const char* CC_UNUSED msg = lua_tostring(L, -1);
 	QTrace("--Lua Error: %s", msg ? msg : "<No message>");
 
+  char assertMsg[cocos2d::kMaxLogLen+1];
+  snprintf(assertMsg, cocos2d::kMaxLogLen, "Lua Error: %s", msg ? msg : "<No message>");
 	// use an assert here, so it shows up on device
-	QAssert(false, ("Lua Error: %s", msg ? msg : "<No message>"));
+	QAssert(false, assertMsg);
 
 	return 0;
 }
@@ -67,7 +69,6 @@ void LUA_REPORT_ERRORS(lua_State *L, int status)
         //int s3 = lua_gettop(g_L);
         QAssert(false, processed);
         //int s4 = lua_gettop(g_L);
-        
         lua_pop(g_L, 1); // remove error message
     }
 }

@@ -71,12 +71,17 @@ extern int (*g_LuaErrorHandler)(lua_State* L);
 void LUA_REPORT_ERRORS(lua_State *L, int status);
 
 // Assert Lua stack entry is of specified type
-#define LUA_ASSERT_STACK_TYPE(L, i, t) \
-	QAssert(lua_type(L, i) == LUA_T##t, ("Lua stack index %d is of type %s, expected type %s", i, lua_typename(L, lua_type(L, i)), lua_typename(L, LUA_T##t)))
+#define LUA_ASSERT_STACK_TYPE(L, i, t) do { \
+    if (lua_type(L, i) != LUA_T##t) { \
+      char msg[cocos2d::kMaxLogLen + 1]; \
+      snprintf(msg, cocos2d::kMaxLogLen, "Lua stack index %d is of type %s, expected type %s", i, lua_typename(L, lua_type(L, i)), lua_typename(L, LUA_T##t)); \
+      QAssert(lua_type(L, i) == LUA_T##t, msg); \
+    } \
+  } while (0)
 
 // Assert Lua stack size
 #define LUA_ASSERT_STACK_SIZE(L, s) \
-	QAssert(lua_gettop(L) == s, ("Lua stack size is %d, expected %d", lua_gettop(L), s))
+	QAssert(lua_gettop(L) == s, "Lua stack size is %d, expected %d", lua_gettop(L), s)
 
 // Empty Lua stack
 #define LUA_RESET_STACK(L) \
