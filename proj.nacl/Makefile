@@ -66,7 +66,7 @@ INCLUDES += -I../include \
 CXXFLAGS += -Wno-uninitialized
 
 ifdef DEBUG
-TARGET := ../lib/nacl/Debug/$(TARGET)
+TARGET := ../lib/nacl/$(NACL_ARCH)/Debug/$(TARGET)
 else
 TARGET := ../lib/nacl/Release/$(TARGET)
 endif
