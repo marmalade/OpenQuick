@@ -63,8 +63,7 @@ local.properties
 .builds
 *.dotCover
 
-## TODO: If you have NuGet Package Restore enabled, uncomment this
-#packages/
+/samples/HelloWorld/proj.nacl/Resources/
 
 # Visual C++ cache files
 ipch/
