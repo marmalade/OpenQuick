@@ -1,4 +1,4 @@
-PLATFORM?=linux
+PLATFORM ?= linux
 
 all:
 	+$(MAKE) -C proj.$(PLATFORM)

@@ -1,5 +1,10 @@
+THIS_MAKEFILE := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
+
 ifndef COCOS_ROOT
-$(error $$COCOS_ROOT not defined)
+COCOS_ROOT := $(realpath $(dir $(THIS_MAKEFILE))/..)/cocox2d-x
+ifeq ($(wildcard $(COCOS_ROOT)),)
+  $(error $$COCOS_ROOT not defined.  Either use git submodule init to fetch it or define it yourself)
+endif
 endif
 
 TARGET = libOpenQuick.a
