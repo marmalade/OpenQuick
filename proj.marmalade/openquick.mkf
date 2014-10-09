@@ -12,9 +12,9 @@ files
 
     (../include)
     QAnimate.h
-	QAnimation.h
-	QAtlas.h
-	QAudio.h
+    QAnimation.h
+    QAtlas.h
+    QAudio.h
     QBase.h
     QCircle.h
     QColor.h
@@ -24,7 +24,7 @@ files
     QFont.h
     QLabel.h
     QLines.h
-	QLsqlite3.h
+    QLsqlite3.h
     QLuaHelpers.h
     QMain.h
     QNode.h
@@ -57,9 +57,9 @@ files
 
     (../source)
     QAnimate.cpp
-	QAnimation.cpp
-	QAtlas.cpp
-	QAudio.cpp
+    QAnimation.cpp
+    QAtlas.cpp
+    QAudio.cpp
     QBase.cpp
     QCircle.cpp
     QColor.cpp
@@ -67,7 +67,7 @@ files
     QFont.cpp
     QLabel.cpp
     QLines.cpp
-	QLsqlite3.cpp
+    QLsqlite3.cpp
     QLuaHelpers.cpp
     QMain.cpp
     QNode.cpp
@@ -105,7 +105,7 @@ files
     sqlite3.h
     sqlite3ext.h
     sqlite3.c
-	lsqlite3.c
+    lsqlite3.c
 }
 
 option module_path = "../../cocos2dx/cocos2dx/proj.marmalade;../../cocos2dx/CocosDenshion/proj.marmalade;../../cocos2dx/external/Box2D/proj.marmalade;../../cocos2dx/scripting/lua/proj.marmalade"

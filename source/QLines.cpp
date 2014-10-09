@@ -39,7 +39,6 @@ void CCSpriteLines::draw()
 
     // Write vertex buffer
 	int nump = m_Vector->m_NumPoints;
-	int numl = nump-1;
 	float w2 = m_Vector->strokeWidth / 2;
 
     float* pCoord = m_GLVerts + 2;

@@ -239,7 +239,9 @@ void QSprite::sync()
 
 		pCCNode->setColor(*(ccColor3B*)&color); // cast ccColor4B* to ccColor3B* should be OK
 
-		pCCNode->updateTransform();
+        // updateTransform will assert if the sprite is not part of a batch.
+        if (pCCNode->getBatchNode())
+            pCCNode->updateTransform();
 
         if (pCCNode->isFlipX() != xFlip)
             pCCNode->setFlipX(xFlip);
@@ -265,7 +267,7 @@ QAtlas* QSprite::getAtlas() const
     
     cocos2d::CCTexture2D* pTex = pSF->getTexture();
 
-    QAtlas* pAtlas = (QAtlas*)pTex->m_uID;
+    QAtlas* pAtlas = (QAtlas*)(intptr_t)pTex->m_uID;
     return pAtlas;
 }
 //------------------------------------------------------------------------------

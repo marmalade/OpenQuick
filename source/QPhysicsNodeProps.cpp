@@ -380,7 +380,7 @@ bool QNodeProps::get_isSensor()
 //------------------------------------------------------------------------------
 void QNodeProps::set_isSensor(bool v)
 {
-	QAssert(false, ("Trying to set read-only property isSensor"));
+	QAssert(false, "Trying to set read-only property isSensor");
 }
 //------------------------------------------------------------------------------
 void QNodeProps::draw()
@@ -401,8 +401,6 @@ void QNodeProps::draw()
 
             // Scale rotational part of transform by object scale
             // NOTE: WE ASSUME NO MORE RENDERING WITHIN THIS NODE'S SPACE AFTER THIS!
-            float xCentre = radius - m_Node->xAnchor*radius*2;
-            float yCentre = radius - m_Node->yAnchor*radius*2;
 
             // Initialise null 4x4 matrix
             kmMat4 t44;

@@ -61,7 +61,7 @@ bool QAtlas::initFromFile(std::string fileName)
 
     std::string ext(fileName, pos);
     bool result = true;
-    if (stricmp( ext.c_str(), ".plist") == 0)
+    if (strcasecmp( ext.c_str(), ".plist") == 0)
     {
         // Call  the base class initialisation
         init();
@@ -80,7 +80,7 @@ bool QAtlas::initFromFile(std::string fileName)
 
     // cocos2d::CCTexture must have pointer back to QAtlas
     QAssert(m_Texture, "Failed to set CCTexture for QAtlas");
-    m_Texture->m_uID = (int)(void*)this;
+    m_Texture->m_uID = (intptr_t)(void*)this;
     return result;
 }
 //------------------------------------------------------------------------------
@@ -95,7 +95,7 @@ bool QAtlas::initTexture(std::string filename)
     m_Texture->retain();
 
     // cocos2d::CCTexture must have pointer back to QAtlas
-    m_Texture->m_uID = (int)(void*)this;
+    m_Texture->m_uID = (intptr_t)(void*)this;
     return true;
 }
 //------------------------------------------------------------------------------
@@ -145,6 +145,17 @@ CCSpriteFrame* QAtlas::GetFrame( std::string frame) const
     return pframe;
 }
 //------------------------------------------------------------------------------
+#if COCOS2D_DEBUG > 0
+static char* FormatAssertMsg(char* dest, const char* format, ...)
+{
+    va_list ap;
+    va_start(ap, format);
+    vsnprintf(dest, kMaxLogLen, format, ap);
+    va_end(ap);
+    return dest;
+}
+#endif
+//------------------------------------------------------------------------------
 void QAtlas::setTextureParams(const char* minFilter, const char* magFilter, const char* wrapS, const char* wrapT)
 {
     // Default parameters
@@ -179,7 +190,8 @@ void QAtlas::setTextureParams(const char* minFilter, const char* magFilter, cons
         }
         pNV++;
     }
-    QAssert(pNV->s, "Unrecognised minFilter type: %s", minFilter);
+    char CC_UNUSED msg[kMaxLogLen + 1];
+    QAssert(pNV->s, FormatAssertMsg(msg, "Unrecognised minFilter type: %s", minFilter));
 
     // MAG FILTER
     static const NameValue magFilters[] =
@@ -198,7 +210,7 @@ void QAtlas::setTextureParams(const char* minFilter, const char* magFilter, cons
         }
         pNV++;
     }
-    QAssert(pNV->s, "Unrecognised magFilter type: %s", magFilter);
+    QAssert(pNV->s, FormatAssertMsg(msg, "Unrecognised magFilter type: %s", magFilter));
 
     // WRAP S
     static const NameValue wraps[] =
@@ -223,7 +235,7 @@ void QAtlas::setTextureParams(const char* minFilter, const char* magFilter, cons
             }
             pNV++;
         }
-        QAssert(pNV->s, "Unrecognised wrap type: %s", wrapS);
+        QAssert(pNV->s, FormatAssertMsg(msg, "Unrecognised wrap type: %s", wrapS));
     }
 
     if (!wrapT)
@@ -240,7 +252,7 @@ void QAtlas::setTextureParams(const char* minFilter, const char* magFilter, cons
             }
             pNV++;
         }
-        QAssert(pNV->s, "Unrecognised wrap type: %s", wrapT);
+        QAssert(pNV->s, FormatAssertMsg(msg, "Unrecognised wrap type: %s", wrapT));
     }
 
     // Set parameters on Cocos2d-x texture 
@@ -286,7 +298,8 @@ void QAtlas::setBlendFunc(const char* blendSrc, const char* blendDst)
         }
         pNV++;
     }
-    QAssert(pNV->s, "Unrecognised blend function: %s", blendSrc);
+    char CC_UNUSED msg[kMaxLogLen + 1];
+    QAssert(pNV->s, FormatAssertMsg(msg, "Unrecognised blend function: %s", blendSrc));
 
     pNV = funcs;
     while(pNV->e != -1)
@@ -298,7 +311,7 @@ void QAtlas::setBlendFunc(const char* blendSrc, const char* blendDst)
         }
         pNV++;
     }
-    QAssert(pNV->s, "Unrecognised blend function: %s", blendDst);
+    QAssert(pNV->s, FormatAssertMsg(msg, "Unrecognised blend function: %s", blendDst));
 
     // Cocos2d-x stores these values on CCSprite etc.
     // We will store them directly on the QAtlas object, and copy across to CCSprite etc.

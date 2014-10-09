@@ -21,7 +21,7 @@
  */
 
 #include "QTiledMap.h"
-#include "CCTMXTiledMap.h"
+#include "tilemap_parallax_nodes/CCTMXTiledMap.h"
 
 USING_NS_CC;
 QUICK_NAMESPACE_BEGIN;

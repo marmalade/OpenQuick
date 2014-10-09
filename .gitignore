@@ -93,6 +93,9 @@ DocProject/Help/*.hhp
 DocProject/Help/Html2
 DocProject/Help/html
 
+# Linux build output
+*.so
+
 # Click-Once directory
 publish
 
@@ -113,7 +116,6 @@ Generated_Code #added for RIA/Silverlight projects
 _UpgradeReport_Files/
 Backup*/
 UpgradeLog*.XML
-
 
 
 ############

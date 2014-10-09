@@ -24,7 +24,7 @@
 #define __Q_PARTICLES_H
 
 #include "QNode.h"
-#include "CCParticleSystemQuad.h"
+#include "particle_nodes/CCParticleSystemQuad.h"
 
 // tolua_begin
 namespace quick {

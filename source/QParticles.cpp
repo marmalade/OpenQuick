@@ -22,7 +22,6 @@
 
 #include "QParticles.h"
 #include "QAtlas.h"
-#include "CCParticleSystemQuad.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
