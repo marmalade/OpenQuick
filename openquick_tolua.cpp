@@ -13012,34 +13012,6 @@ static int tolua_set_quick__QSprite_animation_ptr(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* function: quick::lsqlite3::instantiate_lsqlite3_global */
-#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_lsqlite3_instantiate_lsqlite3_global00
-static int tolua_openquick_tolua_quick_lsqlite3_instantiate_lsqlite3_global00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isnoobj(tolua_S,1,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  lua_State* luaState =  tolua_S;
-  {
-   int tolua_ret = (int)  quick::lsqlite3::instantiate_lsqlite3_global(luaState);
-   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'instantiate_lsqlite3_global'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: new of class  quick::QSystem */
 #ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QSystem_new00
 static int tolua_openquick_tolua_quick_QSystem_new00(lua_State* tolua_S)
@@ -15565,13 +15537,7 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
     tolua_variable(tolua_S,"animation",tolua_get_quick__QSprite_animation_ptr,tolua_set_quick__QSprite_animation_ptr);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
-  tolua_module(tolua_S,"quick",0);
-  tolua_beginmodule(tolua_S,"quick");
-   tolua_module(tolua_S,"lsqlite3",0);
-   tolua_beginmodule(tolua_S,"lsqlite3");
-    tolua_function(tolua_S,"instantiate_lsqlite3_global",tolua_openquick_tolua_quick_lsqlite3_instantiate_lsqlite3_global00);
-   tolua_endmodule(tolua_S);
-  tolua_endmodule(tolua_S);
+
   tolua_module(tolua_S,"quick",0);
   tolua_beginmodule(tolua_S,"quick");
    #ifdef __cplusplus

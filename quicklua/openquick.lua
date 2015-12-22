@@ -39,9 +39,9 @@ dofile("quicklua/QEvent.lua")
 dofile("quicklua/QPhysics.lua")
 dofile("quicklua/Qjson.lua")
 
-if config.debug.mock_tolua == false then
-	dofile("quicklua/QLsqlite3.lua")
-end
+-- if config.debug.mock_tolua == false then
+	-- dofile("quicklua/QLsqlite3.lua")
+-- end
 
 dofile("quicklua/QVector.lua")
 dofile("quicklua/QLines.lua")

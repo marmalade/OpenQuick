@@ -7,7 +7,7 @@ ifeq ($(wildcard $(COCOS_ROOT)),)
 endif
 endif
 
-TARGET = libOpenQuick.so
+TARGET = libOpenQuick.a
 
 SOURCES = \
     QAnimate.cpp \
@@ -21,7 +21,6 @@ SOURCES = \
     QFont.cpp \
     QLabel.cpp \
     QLines.cpp \
-    QLsqlite3.cpp \
     QLuaHelpers.cpp \
     QMain.cpp \
     QNode.cpp \
@@ -50,13 +49,12 @@ SOURCES = \
     QTween.cpp \
     QVector.cpp \
     QVec2.cpp \
-    ../openquick_tolua.cpp \
-    ../sqlite3/sqlite3.c \
-    ../sqlite3/lsqlite3.c
+    ../openquick_tolua.cpp
+    #QLsqlite3.cpp \
+    #../sqlite3/sqlite3.c \
+    #../sqlite3/lsqlite3.c
 
-include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
-
-CXXFLAGS += -Wno-uninitialized
+include $(COCOS_ROOT)/cocos2dx/proj.nacl/cocos2dx.mk
 
 SHAREDLIBS += -lcocos2d -lcocosdenshion
 COCOS_LIBS = $(LIB_DIR)/libcocos2d.so $(LIB_DIR)/libcocosdenshion.so
@@ -70,26 +68,32 @@ INCLUDES += -I../include \
     -I$(COCOS_ROOT)/scripting/lua/tolua \
     -I$(COCOS_ROOT)/external/chipmunk/include/chipmunk
 
-STATICLIBS += $(LIB_DIR)/libbox2d.a
+CXXFLAGS += -Wno-uninitialized
 
-DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
-
-TARGET := ../lib/linux/$(TARGET)
+ifdef DEBUG
+TARGET := ../lib/nacl/$(NACL_ARCH)/Debug/$(TARGET)
+else
+TARGET := ../lib/nacl/Release/$(TARGET)
+endif
 
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS) $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	$(LOG_LINK)$(CXX) $(CXXFLAGS) $(OBJECTS) -shared -o $@ $(SHAREDLIBS) $(STATICLIBS) $(LIBS)
+	$(LOG_AR)$(NACL_AR) $(ARFLAGS) $@ $(OBJECTS)
 
 $(OBJ_DIR)/%.o: ../%.cpp $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	$(LOG_CXX)$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
-
-$(OBJ_DIR)/%.o: ../%.c $(CORE_MAKEFILE_LIST)
-	@mkdir -p $(@D)
-	$(LOG_CC)$(CC) $(CCFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
 
 $(OBJ_DIR)/%.o: ../source/%.cpp $(CORE_MAKEFILE_LIST)
 	@mkdir -p $(@D)
-	$(LOG_CXX)$(CXX) $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+$(OBJ_DIR)/%.o: %.cpp $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_CXX)$(NACL_CXX) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
+
+$(OBJ_DIR)/%.o: ../%.c $(CORE_MAKEFILE_LIST)
+	@mkdir -p $(@D)
+	$(LOG_CC)$(NACL_CC) -MMD $(CXXFLAGS) $(INCLUDES) $(DEFINES) -c $< -o $@
