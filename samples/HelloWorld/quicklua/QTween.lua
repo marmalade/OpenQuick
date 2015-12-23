@@ -81,154 +81,255 @@ end
 function tweeninst:update(dt)
     dbg.assertFuncVarType("number", dt)
 
+	local i, v, i2, v2
+
 	-- dt is delta time
 	-- self.elapsedTime is time elapsed on this tween
-	-- self.startTime is time that tween is supposed to start
-	-- self.duration is duration of tween
+	-- self.delay is time that tween is supposed to start
+	-- self.time is duration of tween
 	if self.isComplete == true then
 		return true
 	end
 
-    -- Elapse time
+    -- Elapse time, return if animation not yet started (due to 'delay')
     self.elapsedTime = self.elapsedTime + dt
-	if self.elapsedTime < self.startTime then
+	if self.elapsedTime < self.delay then
         -- Tween not yet in progress (due to specified delay value)
 		return false
 	end
 
 	-- Tween in progress
-	local frac = (self.elapsedTime - self.startTime) / self.duration -- 0..1
-	frac = math.min(frac, 1.0)
+	-- Calculate 'frac' value in range 0..1
+	local frac = (self.elapsedTime - (self.time*self.numCycles) - self.delay) / self.time -- 0..1
+	local cycled = false
+	if self.mode ~= "clamp" then -- "repeat" or "mirror"
+		if frac >= 1 then
+			cycled = true
+			frac = frac - math.floor(frac)
+			self.numCycles = self.numCycles + 1 -- TODO handle big jumps
+		end
+	else
+		frac = math.min(frac, 1.0)
+	end
 
 	-- Call interpolation function to map 'frac' to 'interp'
+	-- interp also in range 0..1
     local interp
-    if self.easingValue == nil then
+    if not self.easingValue then
         interp = self.easing(frac)
     else
         interp = self.easing(frac, self.easingValue)
     end
 
-	if (self.inProgress == false) then
+	if self.mode == "mirror" then
+		if self.numCycles%2 ~= 0 then -- numCycles is odd
+			interp = 1 - interp
+		end
+	end
+	
+	if self.inProgress == false then
 		-- Tween just started
 		self.inProgress = true
-		if (type(self.onStart) == "function") then
-			self.onStart(self.target)
-		elseif (type(self.onStart) == "table") then
-			self.onStart[onStart](self.target)
-		end
 
-		-- Capture tween start or end values from current values
-		for i,v in pairs(self.values) do
-			self.tofromvalues[i] = self.target[i]
+		-- Call 'onStart' callback?
+        if self.onStart then
+            local typeOnStart = type(self.onStart)
+		    if typeOnStart == "function" then
+			    self.onStart(self.target)
+		    elseif typeOnStart == "table" or typeOnStart == "userdata" then
+			    self.onStart["onStart"](self.target)
+            else
+                dbg.assert(false, "Tween onStart property must be of type function, table (or Quick Object); instead found type " .. typeOnStart)
+		    end
+        end
+
+		-- Set up tween to/from values, depending on tween type and delta
+		-- TO, no delta: from target current values (after 'delay') to PARAM values
+		-- TO, with delta: from target current values (after 'delay') to same values + PARAM
+		-- FROM, no delta: from PARAM values, to target current values (after 'delay')
+		-- FROM, with delta: from PARAM values + target current values (after 'delay'), to target current values (after 'delay')
+		if self.tofrom == "to" then
+			for i,v in pairs(self.valuesTo) do
+				if type(v) == "table" then
+					-- to, table
+					-- Note that some valuesFrom or valuesTo may become type "userdata"
+					self.valuesFrom[i] = {}
+					for i2,v2 in pairs(v) do
+						self.valuesFrom[i][i2] = self.target[i][i2]
+						if self.delta then
+							self.valuesTo[i][i2] = self.target[i][i2] + self.valuesTo[i][i2]
+                        end
+                    end
+				else
+					-- to, number
+					self.valuesFrom[i] = self.target[i]
+					if self.delta then
+						self.valuesTo[i] = self.target[i] + self.valuesTo[i]
+					end
+					--dbg.print("self.valuesFrom[i] - " .. i .. type(v))
+				end
+			end
+		else
+			for i,v in pairs(self.valuesFrom) do
+				if type(v) == table then
+					-- from, table
+					-- Note that some valuesFrom or valuesTo may become type "userdata"
+					self.valuesTo[i] = {}
+					for i2,v2 in pairs(v) do
+						self.valuesTo[i][i2] = self.target[i][i2]
+						if self.delta then
+							self.valuesFrom[i][i2] = self.target[i][i2] + self.valuesTo[i][i2]
+						end
+					end
+				else
+					-- to, number
+					self.valuesTo[i] = self.target[i]
+					if self.delta then
+						self.valuesFrom[i] = self.target[i] + self.valuesTo[i]
+					end
+				end
+			end
 		end
 	end
 
 	-- Update values
-	for i,v in pairs(self.values) do
-        -- Currently we only support tweening of number types
-		dbg.assert(type(v) == "number", "Cannot tween this type")
---		dbg.assert(type(self.target[i]) == "number", "Tween target for index: ", i, " is of unsupported type: ", type(self.target[i]))
-        if not (type(self.target[i]) == "number") then
-            dbg.print("Tween target for index: ", i, " is of unsupported type: ", type(self.target[i]))
-        else
---            dbg.print("Tween target for index: ", i, " is OK")
-        end
-
-		local val
-		if (self.tofrom == "to") then
-			-- Tween from self.toframevalues to self.values
-			val = self.tofromvalues[i] + interp * (v - self.tofromvalues[i])
+	for i,v in pairs(self.valuesFrom) do
+		--dbg.print("Updating index " .. i .. " of type " .. type(v))
+		if type(v) ~= "number" then
+			-- table
+			for i2,v2 in pairs(v) do
+				local val = v2 + interp * (self.valuesTo[i][i2] - v2)
+				self.target[i][i2] = val
+			end
 		else
-			-- Tween from self.values to self.toframevalues
-			val = v + interp * (self.tofromvalues[i] - v)
+			-- number
+			local val = v + interp * (self.valuesTo[i] - v)
+			self.target[i] = val
 		end
-		self.target[i] = val
 	end
 
-	if (frac >= 1) then
-		-- Tween just completed
-		self.isComplete = true
-		if (type(self.onComplete) == "function") then
-			self.onComplete(self.target)
-		elseif (type(self.onComplete) == "table") then
-			self.onComplete[onComplete](self.target)
+	if self.mode ~= "clamp" then -- "repeat" or "mirror"
+		if cycled == true then
+			-- Tween just cycled
+            if self.onComplete then
+                local typeOnComplete = type(self.onComplete)
+		        if typeOnComplete == "function" then
+			        self.onComplete(self.target)
+		        elseif typeOnComplete == "table" or typeOnComplete == "userdata" then
+			        self.onComplete["onComplete"](self.target)
+                else
+                    dbg.assert(false, "Tween onComplete property must be of type function, table (or Quick Object); instead found type " .. typeOnComplete)
+		        end
+            end
 		end
-		return true -- remove tween from object list
+	else
+		if frac >= 1 then
+			-- Tween just completed
+			self.isComplete = true
+            if self.onComplete then
+                local typeOnComplete = type(self.onComplete)
+		        if typeOnComplete == "function" then
+			        self.onComplete(self.target)
+		        elseif typeOnComplete == "table" or typeOnComplete == "userdata" then
+			        self.onComplete["onComplete"](self.target)
+                else
+                    dbg.assert(false, "Tween onComplete property must be of type function, table (or Quick Object); instead found type " .. typeOnComplete)
+		        end
+            end
+			return true -- remove tween from object list
+		end
 	end
+
+	-- Note: if mode is "repeat" or "mirror", tween never finishes.
+	-- App must store return value from tween creation function, and call
+	-- tween:cancel() or similar. Alternatively, tween is destroyed when
+	-- owning object is destroyed
 	return false
 end
 
 --------------------------------------------------------------------------------
 -- Main public functions
 --------------------------------------------------------------------------------
---[[
-Returns a tween that animates properties in the display object target over time.
-The final property values are specified in the params table. To customize the
-tween, you can optionally specify the following non-animating properties in params
+local tweenProps = {
+	time=0.5,			-- duration of tween cycle
+	delay=0,			-- delay before animation starts
+	delta=false,		-- true if the specified values should be treated as deltas from current values
+	mode="clamp",		-- "clamp", "repeat" or "mirror"
+	easing=ease.linear,	-- interpolation function
+	easingValue="nil",	-- default is nil, so C++ function can take default C++ input
+	onStart="nil",		-- callback for when animation actually starts
+	onComplete="nil",	-- callback for when each cycle completes
+	}
 
-params.time specifies the duration of the transition in milliseconds. By default, the duration is 0.5 seconds.
-params.transition is by default easing.linear . See Easing for more functions.
-params.delay specifies the delay (none by default) before the tween begins.
-params.delta is a boolean specifying whether non-control parameters are interpreted as final ending values or as changes in value. The default is nil meaning false.
-params.onStart is a function or table listener called before the tween begins. Table listeners must have an onStart method. When invoked, the listener is given target instead of an event.
-params.onComplete is a function or table listener called after the tween completes.
---]]
+-- TO, no delta: from target current values (after 'delay') to PARAM values
+-- TO, with delta: from target current values (after 'delay') to same values + PARAM
+-- FROM, no delta: from PARAM values, to target current values (after 'delay')
+-- FROM, with delta: from PARAM values + target current values (after 'delay'), to target current values (after 'delay')
+
 function tween:new(_target, params, tofrom)
     dbg.assertFuncVarTypes({"userdata", "table", "string"}, _target, params, tofrom)
 
 	t = tweeninst:new()
 --	t = director:createTween()
 --    dbg.print("Creating QTween: ", t)
-	t.target = _target
---    dbg.print("Target set: ", t.target)
-	t.tofrom = tofrom
-	t.duration = 0.5 -- set from "time" input
-	t.elapsedTime = 0
-	t.startTime = 0
-	t.values = {}
-	t.tofromvalues = {}
-	t.delta = false
-	t.isComplete = false
-	t.inProgress = false
-    t.easing = ease.linear  -- default interpolation function
-    t.easingValue = nil     -- default is nil, so C++ function can take default C++ input
+	t.target = _target		-- target object
+	t.tofrom = tofrom		-- "to" or "from"
+
+	-- Internals	
+	t.elapsedTime = 0		-- total elapsed time on this tween
+	t.valuesTo = {}			-- indices/values to tween TO
+	t.valuesFrom = {}		-- indices/values to tween FROM
+	t.isComplete = false	-- for "clamp": true only when completed
+	t.inProgress = false	-- true only when startTime has elapsed
+	t.numCycles = 0			-- number of completed cycles
+
+	-- Things that can be set in the input array
+	local i, v, i2, v2
+	for i,v in pairs(tweenProps) do
+		if params[i] then
+			t[i] = params[i]	-- specified in input array
+			params[i] = nil		-- remove from input array
+		else
+			t[i] = v			-- default value
+		end
+	end
+
+	-- Special case
+	for i,v in pairs(tweenProps) do
+		if t[i] == "nil" then
+			t[i]=nil
+		end
+	end
 
     -- Ensure target object has a tweens array
-    if _target.tweens == nil then
+    if not _target.tweens then
         dbg.print("Warning: Target found with no tweens array")
         _target.tweens = {}
     end
 
-	for i,v in pairs(params) do
-		if i == "time" then
-			t.duration = v
-		elseif i == "easing" then
-			t.easing = v
-		elseif i == "easingValue" then
-			t.easingValue = v
-		elseif i == "delay" then
-			t.startTime = v
-		elseif i == "delta" then
-			t.delta = v
-		elseif i == "onStart" then
-			-- TODO, CHECK FUNC OR TABLE AND ONSTART METHOD
-			t.onStart = v
-		elseif i == "onComplete" then
-			-- TODO, CHECK FUNC OR TABLE AND ONCOMPLETE METHOD
-			t.onComplete = v
-		else
-			-- Param is assumed to be a value to tween
-			dbg.assert(_target[i], "Target object does not have specified interpolant")
---            dbg.print("Tween will interpolate index: ", i);
-			t.values[i] = v -- add to values array
+	-- params is now ONLY the values to tween
+	-- These can be of type number OR table, e.g. { x=10, color={r=255} )
+	-- Test all values are of valid type, and that target object has
+	-- matching indices
+	if config.debug.general == true then
+		local t
+		for i,v in pairs(params) do
+			t = type(v)
+			dbg.assert(t=="number" or t=="table", "Tween index of '" .. tostring(i) .. "' must be number or table, but is of type " .. tostring(t))
+			if t == "table" then
+				for i2,v2 in pairs(v) do
+					dbg.assert(_target[i][i2], "Target object does not have specified interpolant '" .. i .. "." .. i2 .. "'")
+					--dbg.print("Table interpolant '" .. i .. "." .. i2 .. "'")
+				end
+			else
+				dbg.assert(_target[i], "Target object does not have specified interpolant '" .. i .. "'")
+			end
 		end
 	end
-
-	-- Should we adjust all values by delta?
-	if t.delta == true then
-		for i,v in pairs(t.values) do
-			t.values[i] = v + _target[i]
-		end
+	if t.tofrom == "to" then
+		t.valuesTo = params
+	else
+		t.valuesFrom = params
 	end
 
 	-- Add to object tween list
@@ -254,12 +355,12 @@ end
 -- Cancel a tween
 function tween:cancel(t)
     dbg.assertFuncVarType("table", t)
-
 	for i,v in ipairs(t.target.tweens) do
-		if (v == t) then
+		if v == t then
 			table.remove(t.target.tweens, i)
 		end
 	end
+    t.target = nil
 end
 
 -- Dissolve between two image objects (fade one it, the other out)
@@ -285,4 +386,25 @@ function tween:dissolve(src, dst, duration, durationDelay)
 	tween:to(dst, {alpha=1, time=duration, delay=durationDelay, onStart=_dstOnStart } )
 	-- Fade src down
 	tween:to(src, {alpha=0, time=duration, delay=durationDelay, onComplete=_srcOnComplete } )
+end
+
+-- Accessors
+-- Get the amount of time elapsed on the tween
+-- This begins increasing right after the tween is created
+function tween:getElapsedTime()
+	return self.elapsedTime
+end
+
+-- Returns true only if the tween has started animating values, 
+-- i.e. after any 'delay' has been passed
+function tween:isAnimating()
+	return self.inProgress
+end
+
+-- Return the number of cycles that have elapsed on the tween.
+-- If mode=="clamp", this is 0 until the tween completes, then 1.
+-- If mode== "mirror" or "repeat", this increases by 1 for each
+-- completed cycle.
+function tween:getNumCycles()
+	return self.numCycles
 end

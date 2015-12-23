@@ -25,34 +25,57 @@
 -- NOTE: This file must have no dependencies on the ones loaded after it by
 -- openquick_init.lua. For example, it must have no dependencies on QDirector.lua
 --------------------------------------------------------------------------------
-if config.debug.mock_tolua == true then
-	QNode = quick.QNode
-else
-	QNode = {}
-	QNode.__index = QNode
-end
+QNode = {}
+QNode.__index = QNode
 
 -- Explicit override when setting color property, to allow for assignment
 prop_setColor = function(prop, value)
     if value.r then
-        -- Assume value is an existing QColor object: copy r,g,b
-        prop.r = value.r
-        prop.g = value.g
-        prop.b = value.b
+        -- Assume value is an existing QColor object: copy r,g,b,a
+        prop.r = value.r or 0xff
+        prop.g = value.g or 0xff
+        prop.b = value.b or 0xff
+        prop.a = value.a or 0xff
     else
-        -- Assume value is a tuple, copy 1,2,3
-        prop.r = value[1]
-        prop.g = value[2]
-        prop.b = value[3]
+        -- Assume value is a tuple, copy 1,2,3,4
+        prop.r = value[1] or 0xff
+        prop.g = value[2] or 0xff
+        prop.b = value[3] or 0xff
+        prop.a = value[4] or 0xff
     end
 end
 
-local oldNodeMTNI
-if config.debug.mock_tolua == true then
-	oldNodeMTNI = function(t, name, value) t.name = value end
-else
-	oldNodeMTNI = getmetatable(quick.QNode).__newindex
+-- Explicit override when setting rect property, to allow for assignment
+prop_setRect = function(prop, value)
+    if value.w then
+        -- Assume value is an existing rect object: copy x,y,w,h
+        prop.x = value.x or 0
+        prop.y = value.y or 0
+        prop.w = value.w or 0
+        prop.h = value.h or 0
+    else
+        -- Assume value is a tuple, copy 1,2,3,4
+        prop.x = value[1] or 0
+        prop.y = value[2] or 0
+        prop.w = value[3] or 0
+        prop.h = value[4] or 0
+    end
 end
+
+-- Explicit override when setting vec2 property, to allow for assignment
+prop_setVec2 = function(prop, value)
+    if value.x then
+        -- Assume value is an existing QVec2 object: copy x,y
+        prop.x = value.x or 0
+        prop.y = value.y or 0
+    else
+        -- Assume value is a tuple, copy 1,2
+        prop.x = value[1] or 0
+        prop.y = value[2] or 0
+    end
+end
+
+local oldNodeMTNI = getmetatable(quick.QNode).__newindex
 QNode_set = function(t, name, value)
     if name == "color" then
         prop_setColor(t.color, value)
@@ -60,6 +83,8 @@ QNode_set = function(t, name, value)
         prop_setColor(t.strokeColor, value)
     elseif name == "debugDrawColor" then
         prop_setColor(t.debugDrawColor, value)
+    elseif name == "uvRect" then -- Handle uvRect, even though it's a property of QSprite
+        prop_setRect(t.uvRect, value)
     else
         oldNodeMTNI(t, name, value)
     end
@@ -68,13 +93,17 @@ end
 --------------------------------------------------------------------------------
 -- Private API
 --------------------------------------------------------------------------------
+QNode.serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+	return obj
+end
+
 --[[
 /*
 Initialise the peer table for the C++ class QNode.
 This must be called immediately after the QNode() constructor.
 */
 --]]
-
 -- Override QNode GC function (still call old one at the end)
 QNode.oldGC = getmetatable(quick.QNode).__gc
 QNode.newGC = function(n)
@@ -97,20 +126,19 @@ end
     
 function QNode:initNode(n)
     -- Allow explicit control over assignment... see above
-	if config.debug.mock_tolua == false then
-		getmetatable(n).__newindex = QNode_set
-	end
+	getmetatable(n).__newindex = QNode_set
+
     -- ALWAYS set this, because it does stuff even in non-debug mode, e.g. remove node from physics
     getmetatable(n).__gc = QNode.newGC
 
 	local np
-	if not config.debug.mock_tolua == true then
-		np = {}
-		setmetatable(np, QNode)
-		tolua.setpeer(n, np)
-	else
-		np = n
-	end
+	np = {}
+	setmetatable(np, QNode)
+	tolua.setpeer(n, np)
+
+    local mt = getmetatable(n) 
+    mt.__serialize = QNode.serialize
+
     np.parent = nil
     np.children = {}
     np.tweens = {}
@@ -160,6 +188,7 @@ function QNode:updateTweens(dt)
 		if v.isComplete == false then
 			local remove = v:update(dt)
 			if remove == true then
+                v.target = nil
 				table.remove(self.tweens, i)
 			end
 		end
@@ -218,13 +247,17 @@ before being added as a child to the specified node.
 */
 --]]
 function QNode:setParent(np)
-    dbg.assertFuncVarType("userdata", np)
+    if np == nil and self.parent then
+        self:removeFromParent()
+    else
+        dbg.assertFuncVarType("userdata", np)
 
-    if self.parent then
-        self.parent:removeChild(self)
+        if self.parent then
+            self.parent:removeChild(self)
+        end
+        self.parent = np
+        self:_setParent(np)
     end
-    self.parent = np
-    self:_setParent(np)
 end
 
 --[[
@@ -253,8 +286,29 @@ function QNode:addChild(nc)
     end
     table.insert(self.children, nc)
     nc.parent = self
-
+    nc:refreshTweens(false)
     self:_addChild(nc)
+end
+
+--[[
+/**
+This function with 'drop = true' will break back link of all tweens
+with 'drop = false' this will restore them
+Needed to GC to destroy this node end tweens linked with it
+@param drop boolean parameter
+*/
+--]]
+function QNode:refreshTweens(drop)
+    for i,v in ipairs(self.tweens) do
+        if drop then
+            v.target = nil
+        else
+            v.target = self
+        end
+	end
+    for i,v in ipairs(self.children) do
+        v:refreshTweens(drop)
+    end
 end
 
 --[[
@@ -275,7 +329,7 @@ function QNode:removeChild(nc)
             break
         end
     end
-
+    nc:refreshTweens(true)
     self:_removeChild(nc)
 end
 
@@ -342,7 +396,7 @@ function QNode:addTimer(funcortable, period, iterations, delay)
 
     local el = quick.QEventListener:new()
     QEventListener:initEventListener(el, "timer", funcortable)
-    timer = quick.QTimer:new()
+    local timer = quick.QTimer:new()
     QTimer:initTimer(timer, el, period, iterations, delay)
     timer.target = self
     table.insert(self.timers, timer)
@@ -389,3 +443,286 @@ function QNode:translate(dx, dy)
     self.y = self.y + dy
 end
 
+
+--------------------------------------------------------------------------------
+-- Utility functions to allow operating on trees of nodes at once
+-- and performing useful operations in onComplete callbacks with
+-- tweens and timers.
+
+--[[
+/**
+Cancel all timers on a node.
+myNode.cancelTimers can be passed as an onComplete callback since
+onComplete is automatically passed the owning node as its first and
+only parameter (i.e. self).
+*/
+--]]
+function QNode:cancelTimers()
+    for k,v in pairs(self.timers) do
+        v:cancel()
+    end
+end
+
+--[[
+/**
+Cancel all timers on a node plus it's children and any descendants.
+myNode.cancelTimersInTree can be passed as an onComplete callback.
+*/
+--]]
+function QNode:cancelTimersInTree()
+    self:cancelTimers()
+    
+    for k,child in pairs(self.children) do
+        child:cancelTimersInTree()
+    end
+end
+
+--[[
+/**
+Cancel all tweens on a node.
+myNode.cancelTweens can be passed as an onComplete callback.
+*/
+--]]
+function QNode:cancelTweens()
+    --tween:cancel() causes tween to be removed from node.tweens in an ipairs loop
+    --This relyies on that being true - using another pairs loop here would break.
+    --FIXME: Prob should also update tween:cancel in SDK to call break once it removes a tween
+    --for a tiny bit of performance (or replace cancel()'s loop with index by id or somesuch).
+    while self.tweens[1] do
+        tween:cancel(self.tweens[1])
+    end
+end
+
+--[[
+/**
+Cancel all tweens on a node plus it's children and any descendants.
+myNode.cancelTweensInTree can be passed as an onComplete callback.
+*/
+--]]
+function QNode:cancelTweensInTree()
+    self:cancelTweens()
+    
+    for k,child in pairs(self.children) do
+        child:cancelTweensInTree()
+    end
+end
+
+
+--[[
+/**
+Pauses timers for a node and all its descendants in the
+scene-graph.
+*/
+--]]
+function QNode:pauseTimersInTree()
+    self:pauseTimers()
+    for k,child in pairs(self.children) do
+        child:pauseTimersInTree()
+    end
+end
+
+--[[
+/**
+Resumes paused timers for a node and all its descendants in the
+scene-graph.
+*/
+--]]
+function QNode:resumeTimersInTree()
+    self:resumeTimers()
+    for k,child in pairs(self.children) do
+        child:resumeTimersInTree()
+    end
+end
+
+
+--[[
+/**
+Pauses tweens for a node and all its descendants in the
+scene-graph.
+*/
+--]]
+function QNode:pauseTweensInTree()
+    self:pauseTweens()
+    for k,child in pairs(self.children) do
+        child:pauseTweensInTree()
+    end
+end
+
+--[[
+/**
+Resumes paused timers and tweens for a node and all its descendants in the
+scene-graph.
+*/
+--]]
+function QNode:resumeTweensInTree()
+    self:resumeTweens()
+    for k,child in pairs(self.children) do
+        child:resumeTweensInTree()
+    end
+end
+
+--[[
+/**
+Pauses timers and tweens for a node and all its descendants in the
+scene-graph.
+*/
+--]]
+function QNode:pauseTree()
+    self:pauseTimers()
+    self:pauseTweens()
+    for k,child in pairs(self.children) do
+        child:pauseTree()
+    end
+end
+
+--[[
+/**
+Resumes paused timers and tweens for a node and all its descendants in the
+scene-graph.
+*/
+--]]
+function QNode:resumeTree()
+    self:resumeTimers()
+    self:resumeTweens()
+    for k,child in pairs(self.children) do
+        child:resumeTree()
+    end
+end
+
+
+--[[
+/**
+-- Remove the nodes from its parent, and therefore the current scene,
+-- cancelling all its timers and tweens and removing from the physics
+-- simulation if using physics.
+-- myNode.destroy can be passed as an onComplete callback
+-- You still need to manually nil any explicit handles to the node
+-- before it will be garbage collected.
+-- Timers are cancelled becuase otherwise they can keep running until
+-- the node is garbage collected.
+-- Always returns nil to match node:removeFromParent() behaviour.
+-- Call myNode = myNode:destroy() to destroy and nil local references
+-- in one call.
+*/
+--]]
+function QNode:destroy()
+    self:cancelTimers()
+    self:cancelTweens()
+    
+    if self.physics then
+        physics:removeNode(self)
+    end
+    
+    return self:removeFromParent()
+end
+
+--[[
+/**
+-- Remove the nodes from its parent, and therefore the current scene,
+-- cancelling all its timers and tweens and removing from the physics
+-- simulation if using physics. Also recursively performs the same
+-- operations on all children of the node.
+-- myNode.destroyTree can be passed as an onComplete callback
+-- You still need to manually nil any explicit handles to the node
+-- before it will be garbage collected.
+-- Timers are cancelled because otherwise they can keep running until
+-- the node is garbage collected.
+-- Returns nil to match node:removeFromParent() behaviour.
+-- Call myNode = myNode:destroyTree() to destroy and nil local
+-- references to myNode in one call.
+-- @param preseveRoot Set this true to just remove children and 
+-- keep root node. Equivalent to calling myNode:destroyChildren(),
+-- however, destroyChildren can be passed as onComplete callbacks.
+*/
+--]]
+function QNode:destroyTree(preserveRoot)
+    --Note: Each eventual call to node:destroy() calls removeFromParent(), which finds
+    --the node in parent's .children array and uses table.remove.
+    --Here, we can't use pairs() as order is not guaranteed. Can't use
+    --ipairs as behaviour is undefined after table.remove during ipairs loop.
+    --So, we use a manual loop, knowing that the SDK's .remove call will collapse
+    --the tree meaning we don't need to increment the index.
+    local i = 1
+    while self.children[i] do
+        --workaround to support VirtualResolution: don't delete the scalar node
+        local preserveThisNode = (self.children[i] == self.scalerRootNode)
+        
+        self.children[i]:destroyTree(preserveThisNode)
+        if preserveThisNode then
+            i = i + 1 --but we do increment if we didn't delete the node
+        end
+    end
+    
+    if not preserveRoot then
+        return self:destroy()
+    end
+    
+    --FIXME: we could probably make this more efficient by traversing the other
+    --way and calling removeChild instead of node:destroy -> removeFromParent...
+end
+
+--[[
+/**
+-- Remove all child nodes and decendents from this one, and therefore
+-- the current scene, cancelling timers and tweens and removing from the
+-- physics simulation if using physics.
+-- The node itself is not affected.
+-- myNode.destroyChildren can be passed as an onComplete callback,
+-- which is not possible if using myNode:destroyTree(true) (otherwise
+-- equivalent bahaviour).
+-- You still need to manually nil any explicit handles to the children
+-- before they will be garbage collected.
+-- Timers are cancelled because otherwise they can keep running until
+-- nodes are garbage collected.
+*/
+--]]
+function QNode:destroyChildren()
+    self:destroyTree(true)
+end
+
+--[[
+/**
+-- Get nodes position in world/screen coordinates
+*/
+--]]
+function QNode:getWorldPosition()
+    if not self.parent then
+        return 0,0
+    end
+    
+    return self.parent:getPointInWorldSpace(self.x, self.y)
+end
+
+--[[
+/**
+-- Returns the position of a decendent node in this nodes coordinate
+-- space. Returns nil if the node beign queried is not actually a
+-- decendent of this node.
+-- @param descendant The node to serach for in this nodes tree and
+-- return the position of in this nodes coordinate space.
+*/
+--]]
+function QNode:getLocalPositionOfDescendant(descendant)
+    local x = descendant.x
+    local y = descendant.y
+    descendant = descendant.parent
+    local gotSelf = false
+    
+    while descendant do
+        x = x * descendant.xScale + descendant.x
+        y = y * descendant.yScale + descendant.y
+        
+        if descendant == self then
+            gotSelf = true
+            break
+        end
+        
+        descendant = descendant.parent
+    end
+    
+    if gotSelf then
+        return worldX, worldY
+    else
+        return nil
+    end
+end

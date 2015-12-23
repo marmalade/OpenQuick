@@ -25,6 +25,11 @@
 --------------------------------------------------------------------------------
 director = quick.QDirector:new()
 
+getmetatable(director).__serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+	return obj
+end
+
 --------------------------------------------------------------------------------
 -- Private API
 --------------------------------------------------------------------------------
@@ -95,30 +100,39 @@ function director:update()
         QTimer:updateTimers(system.timers, system.deltaTime * system._timersTimeScale)
     end
 
-    -- Update scene graph (but don't sync)
+    local o = director:getOverlayScene()    
+    -- Update overlay scene graph
+    if o ~= nil then        
+        local keepQueue = true
+        if director:isOverlayModal() == true then
+            keepQueue = false
+        end        
+        handleEventQueue(o, keepQueue)
+        
+        director:_updateNodeAndChildren(o, system.deltaTime, 1, 1)
+        -- Sync scene graph
+        director:_syncNodeAndChildren(o, system.deltaTime)
+    end
+
     local s = director:getCurrentScene()
+    handleEventQueue(s, false)
+
+    -- Update scene graph (but don't sync)
     director:_updateNodeAndChildren(s, system.deltaTime, 1, 1)
 
     -- Sync scene graph
     director:_syncNodeAndChildren(s, system.deltaTime)
+
+	-- Sync web views
+    if nui then
+	    nui:_syncWebViews()
+    end
 
     -- Process instant scene changes without event locks getting in the way of
     -- the tearDown process
     director:_processInstantSceneChange()
 
 end
-
--- Destroy any objects pending destruction
---[[ This is now depreciated because of the new object lifecycle code
-function director:Purge()
-    for i,v in ipairs(self.destroyList) do
-        v:delete() -- calls QNode::~QNode(), or derived destructor
-    end
-    self.destroyList = {}
-
-end
-]]
-
 
 --[[
 /*
@@ -131,6 +145,39 @@ function director:createTween()
     local t = quick.QTween()
     QTween:initTween(t)
     return t
+end
+
+--[[
+/**
+-- Called to complete an overlay scene
+Throws the following events:
+<overlay> - exitPostTransition
+<overlay> - tearDown
+<current scene> - overlayEnd
+*/
+--]]
+function director:_overlayComplete()
+    if self._overlayTransitionType ~= "" then
+        local exitPostTransitionEvent = QEvent:create("exitPostTransition")
+        self._overlayScene:handleEvent(exitPostTransitionEvent)
+    end
+
+    self:_updateNodeAndChildren(self._overlayScene, 0, 1, 1)
+    self:_syncNodeAndChildren(self._overlayScene, 0)
+
+    if self._overlayScene.isSetUp == true then
+        local tearDownEvent = QEvent:create("tearDown", { nopropagation = true })
+        self._overlayScene:handleEvent(tearDownEvent)
+        self._overlayScene.isSetUp = false
+    end
+
+    -- Perform a bit of GC
+    collectgarbage("collect")
+    self:cleanupTextures()
+
+    -- Send an event to current scene
+    local overlayEndEvent = QEvent:create("overlayEnd", { nopropagation = true })
+    self.currentScene:handleEvent(overlayEndEvent)
 end
 
 -- Called to complete a scene transition
@@ -232,6 +279,25 @@ end
 
 --[[
 /**
+Gets the current overlay scene
+*/
+--]]
+function director:getOverlayScene()
+    -- Get the current scene from LUA side
+    return self._overlayScene
+end
+
+--[[
+/**
+Check if the overlay modal
+*/
+--]]
+function director:isOverlayModal()
+    return self._modalOverlay
+end
+
+--[[
+/**
 Remove a node from its scene.
 @param n The node to remove.
 */
@@ -292,27 +358,6 @@ end
 ----------------------------------
 -- Scenes
 ----------------------------------
--- PRIVATE:
--- Create default scene. Use of global variable ensures Lua doesn't GC it.
--- Doesn't use createScene because of extra parameters
-function director:createDefaultScene()
---    dbg.print("director:createDefaultScene")
-    local n = quick.QScene()
-    QNode:initNode(n)
-    QScene:initScene(n)
-    n:_init(true)
-    n.name = "globalScene"
-    self:setCurrentScene(n)
-
-    -- Store in globalScene variable, if it's nil
-    if not self.globalScene then
-        self.globalScene = n
-    end
-
-    -- Return globalScene object
-    return n
-end
-
 --[[
 /**
 Move to a new scene.
@@ -394,4 +439,106 @@ function director:moveToScene(newScene, options)
         self._newScene = newScene
 
     end
+end
+
+--[[
+/**
+Show a scene on the top of current one.
+Throws the following events:
+<overlay scene> - setUp (only if the overlay scene is not already set up)
+<overlay scene> - enterPreTransition
+<current scene> - overlayBegin
+
+@param newScene The new Scene object to show
+@param options A table of options, e.g. "transition", "time"
+*/
+--]]
+function director:showOverlay(overlayScene, options)
+    dbg.assertFuncUserDataType("quick::QScene", overlayScene)
+    dbg.assertFuncVarTypes({"table", "nil"}, options)
+
+    -- Do not show another overlay until current hidden
+    if self._overlayScene ~= nil or self._overlayTransitionScene ~= nil then
+        dbg.print("An overlay already shown")
+        return
+    end
+
+    -- Cannot show the current scene
+    if overlayScene == self._currentScene then
+        dbg.print("The overlay is current scene")
+        return
+    end
+ 
+    -- Set details of transition
+    self._overlayTransitionScene = overlayScene
+    self._overlayTransitionTime = 0
+    self._overlayTransitionType = ""
+	self._modalOverlay          = false
+
+	local oldScene = self.currentScene
+
+    if options ~= nil then
+        -- Get transition information
+        self._overlayTransitionTime = options.transitionTime or 0
+        self._overlayTransitionType = options.transitionType or ""
+        self._modalOverlay          = options.isModal or false
+    end
+
+    self.currentScene = overlayScene
+    if overlayScene.isSetUp == false then
+        local setUpEvent = QEvent:create("setUp", { nopropagation = true })
+        overlayScene:handleEvent(setUpEvent)
+        overlayScene.isSetUp = true
+    end
+    self.currentScene = oldScene
+
+    if self._overlayTransitionType ~= "" then
+        local enterPreTransitionEvent = QEvent:create("enterPreTransition", { nopropagation = true })
+        overlayScene:handleEvent(enterPreTransitionEvent)
+
+        -- Once we've called enterPreTransition on the new scene, we should sync() that scene graph once
+        -- so that stuff is in the right place as it's getting transitioned in. We pass a deltaTime of 0
+        self:_updateNodeAndChildren(overlayScene, 0, 1, 1)
+        self:_syncNodeAndChildren(overlayScene, 0)
+    else
+        -- no need to actually do a transition
+        self._overlayTransitionScene = overlayScene
+    end
+
+	-- Send events to current scene
+    local overlayBeginEvent = QEvent:create("overlayBegin", { nopropagation = true })
+    self.currentScene:handleEvent(overlayBeginEvent)
+end
+
+--[[
+/**
+Hide the overlay
+Throws the following events:
+<overlay> - exitPreTransition
+@param options A table of options, e.g. "transition", "time"
+*/
+--]]
+function director:hideOverlay(options)
+    -- Hide if the overlay
+    if self._overlayScene == nil then
+        dbg.print("The overlay is not shown")
+        return
+    end
+
+     -- Set details of transition
+    self._overlayTransitionTime = 0
+    self._overlayTransitionType = ""
+
+    if options ~= nil then
+        -- Get transition information
+        self._overlayTransitionTime = options.transitionTime or 0
+        self._overlayTransitionType = options.transitionType or ""
+    end
+
+    if self._overlayTransitionType ~= "" then
+        local enterPreTransitionEvent = QEvent:create("exitPreTransition", { nopropagation = true })
+        self._overlayScene:handleEvent(enterPreTransitionEvent)
+    end
+
+    self._overlayTransitionScene = self._overlayScene
 end

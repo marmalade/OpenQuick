@@ -89,6 +89,20 @@ void CCScene2::draw()
         m_QScene->draw();
     }
 }
+
+#ifdef MARMALADE
+static int GetSurfaceHeight()
+{
+    float angle = s3eSurfaceGetInt(S3E_SURFACE_DEVICE_BLIT_DIRECTION) * 90.0f;
+
+    if ((angle == 90.0f) || (angle == 270.0f))
+    {
+        return s3eSurfaceGetInt(S3E_SURFACE_WIDTH);
+    }
+    return s3eSurfaceGetInt(S3E_SURFACE_HEIGHT);
+}
+#endif
+
 //------------------------------------------------------------------------------
 void CCScene2::ccTouchesBegan(CCSet* pSet, CCEvent* pEvent)
 {
@@ -99,18 +113,17 @@ void CCScene2::ccTouchesBegan(CCSet* pSet, CCEvent* pEvent)
     {
     	CCTouch* pTouch = (CCTouch*)*itB;
         CCPoint liv = pTouch->getLocationInView();
+
 #ifdef MARMALADE
-        int sh = s3eSurfaceGetInt(S3E_SURFACE_HEIGHT);
-        CIwGLPoint glp = IwGLTransform(CIwGLPoint((int)liv.x, sh - (int)liv.y));
+        liv.y = IwGLGetInt(IW_GL_HEIGHT) - liv.y;
 #else
-        float sh = CCEGLView::sharedOpenGLView()->getFrameSize().height;
-        CCPoint glp(liv.x, sh - liv.y);
+        liv.y = CCEGLView::sharedOpenGLView()->getFrameSize().height - liv.y;
 #endif
 
         // SEND EVENT TO LUA
 	    LUA_EVENT_REUSE("touch");
-        LUA_EVENT_SET_NUMBER("x", glp.x);
-        LUA_EVENT_SET_NUMBER("y", glp.y);
+        LUA_EVENT_SET_NUMBER("x", liv.x);
+        LUA_EVENT_SET_NUMBER("y", liv.y);
         LUA_EVENT_SET_STRING("phase", "began");
         LUA_EVENT_SET_NUMBER("id", pTouch->getID() + 1);
 	    LUA_EVENT_SEND();
@@ -126,17 +139,17 @@ void CCScene2::ccTouchesEnded(CCSet* pSet, CCEvent* pEvent)
     {
     	CCTouch* pTouch = (CCTouch*)*itB;
         CCPoint liv = pTouch->getLocationInView();
+
 #ifdef MARMALADE
-        int sh = s3eSurfaceGetInt(S3E_SURFACE_HEIGHT);
-        CIwGLPoint glp = IwGLTransform(CIwGLPoint((int)liv.x, sh - (int)liv.y));
+        liv.y = IwGLGetInt(IW_GL_HEIGHT) - liv.y;
 #else
-        float sh = CCEGLView::sharedOpenGLView()->getFrameSize().height;
-        CCPoint glp(liv.x, sh - liv.y);
+        liv.y = CCEGLView::sharedOpenGLView()->getFrameSize().height - liv.y;
 #endif
+
         // SEND EVENT TO LUA
 	    LUA_EVENT_REUSE("touch");
-        LUA_EVENT_SET_NUMBER("x", glp.x);
-        LUA_EVENT_SET_NUMBER("y", glp.y);
+        LUA_EVENT_SET_NUMBER("x", liv.x);
+        LUA_EVENT_SET_NUMBER("y", liv.y);
         LUA_EVENT_SET_STRING("phase", "ended");
         LUA_EVENT_SET_NUMBER("id", pTouch->getID() + 1);
 	    LUA_EVENT_SEND();
@@ -152,17 +165,17 @@ void CCScene2::ccTouchesMoved(CCSet* pSet, CCEvent* pEvent)
     {
     	CCTouch* pTouch = (CCTouch*)*itB;
         CCPoint liv = pTouch->getLocationInView();
+
 #ifdef MARMALADE
-        int sh = s3eSurfaceGetInt(S3E_SURFACE_HEIGHT);
-        CIwGLPoint glp = IwGLTransform(CIwGLPoint((int)liv.x, sh - (int)liv.y));
+        liv.y = IwGLGetInt(IW_GL_HEIGHT) - liv.y;
 #else
-        float sh = CCEGLView::sharedOpenGLView()->getFrameSize().height;
-        CCPoint glp(liv.x, sh - liv.y);
+        liv.y = CCEGLView::sharedOpenGLView()->getFrameSize().height - liv.y;
 #endif
+
         // SEND EVENT TO LUA
 	    LUA_EVENT_REUSE("touch");
-        LUA_EVENT_SET_NUMBER("x", glp.x);
-        LUA_EVENT_SET_NUMBER("y", glp.y);
+        LUA_EVENT_SET_NUMBER("x", liv.x);
+        LUA_EVENT_SET_NUMBER("y", liv.y);
         LUA_EVENT_SET_STRING("phase", "moved");
         LUA_EVENT_SET_NUMBER("id", pTouch->getID() + 1);
 	    LUA_EVENT_SEND();

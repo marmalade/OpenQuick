@@ -32,7 +32,7 @@
 
 #include "QDefines.h"
 #include "cocos2d.h"
-#include "textures/CCTextureAtlas.h"
+#include "CCTextureAtlas.h"
 
 QUICK_NAMESPACE_BEGIN;
 

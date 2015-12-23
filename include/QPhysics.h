@@ -52,6 +52,8 @@ public:
     // tolua_begin
 
     // BOUND, PRIVATE
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
     QSim();
     ~QSim();
     void _addNode(QNode* pNode); // add node to the simulation

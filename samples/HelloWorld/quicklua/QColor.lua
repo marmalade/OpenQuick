@@ -180,3 +180,11 @@ color.whiteSmoke          = quick.QColor:new(0xF5,0xF5,0xF5)
 color.yellow              = quick.QColor:new(0xFF,0xFF,0x00)
 color.yellowGreen         = quick.QColor:new(0x9A,0xCD,0x32)
 
+-- Serialize
+QColor_serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+	return obj
+end
+local colorTemp = quick.QColor:new()
+local mt = getmetatable(colorTemp)
+mt.__serialize = QColor_serialize

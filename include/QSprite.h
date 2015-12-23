@@ -34,6 +34,8 @@
 #include "QNode.h"
 #include "QAnimation.h"
 #include "QAnimate.h"
+#include "QRect.h"
+#include "QFilter.h"
 
 #include "cocos2d.h"
 
@@ -67,7 +69,10 @@ public:
     // BOUND, PRIVATE
     // tolua_begin
     virtual const char* _getToLuaClassName() { return "quick::QSprite"; }
-    QSprite();
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
+    QSprite(bool createCCNode = true);
+    QSprite(CCSprite *sprite);
     ~QSprite();
     void _play( int startFrame, int loopCount);
 
@@ -97,6 +102,9 @@ public:
     /*! The yFlip boolean stores the current vertical render flip state of the sprite. */
     bool yFlip;
 
+    // The UV rectangle to display. Defaults to xywh = 0011
+    QRect uvRect;
+
     /*! The blend mode to use when rendering this sprite.
         Available options are.
         - "normal"\n
@@ -121,6 +129,10 @@ public:
     */
     bool raisesAnimEvents;
 
+    /*! Filter parameters
+    */
+    QFilterData filter;
+    
     /**
         Get the current atlas object referenced by this sprite.
     */
@@ -129,24 +141,18 @@ public:
     // tolua_end
 
     // UNBOUND
+    void GetBlendFunction(cocos2d::ccBlendFunc *blend) const;
+    cocos2d::CCSpriteFrame* GetSpriteFrame() const;
 
-    // PARAMETER, PUBLIC
-    //! tolua parameter set access for isPlaying
-    void set_isPlaying(bool value);
-    //! tolua parameter set access for isPlaying
-    bool get_isPlaying(void);
+    // tolua explicit accessors
+    void set_isPlaying(bool value);         //! tolua parameter set access for isPlaying
+    bool get_isPlaying(void);               //! tolua parameter get access for isPlaying
 
-    void getBlendFunction( cocos2d::ccBlendFunc *blend) const;
+    void set_animation(QAnimation *anim);   //! tolua parameter set access to m_pAnimation
+    QAnimation *get_animation(void);        //! tolua parameter get access to m_pAnimation
 
-    //! tolua parameter set access to m_pAnimation
-    void set_animation(QAnimation *anim);
-    //! tolua parameter get access to m_pAnimation
-    QAnimation *get_animation(void);
-
-    //! tolua parameter set access to frame
-    void set_frame(int frame);
-    //! tolua parameter get access to frame
-    int get_frame(void);
+    void set_frame(int frame);              //! tolua parameter set access to frame
+    int get_frame(void);                    //! tolua parameter get access to frame
 
     //! the animation currently associated with this sprite
     QAnimation *m_pAnimation;
@@ -158,6 +164,11 @@ public:
     //! the CCRepeatForever action used to encapsulate the AnimateAction
     cocos2d::CCRepeatForever *m_pRunAction;
 
+    //! Currently applied filter
+    QFilter * m_pFilter;
+    //! The Last applied filter name
+    std::string m_LastFilter;
+    
 }; // tolua_export
 
 // tolua_begin

@@ -27,6 +27,15 @@
 #include "cocos2d.h"
 #include <stdlib.h>
 
+//For GNUC compiler warnings. Cocos2d-x macro which isnt defined in our current version of CC
+#ifndef CC_UNUSED
+#ifdef __GNUC__
+#define CC_UNUSED __attribute__ ((unused))
+#else
+#define CC_UNUSED
+#endif
+#endif
+
 USING_NS_CC;
 
 QUICK_NAMESPACE_BEGIN;
@@ -47,6 +56,8 @@ QAtlas::QAtlas()
 QAtlas::~QAtlas()
 {
     // Release our handle on the atlas texture
+    if (m_Texture)
+        CCTextureCache::sharedTextureCache()->removeTexture(m_Texture);
 	CC_SAFE_RELEASE(m_Texture);
 
 //    QTrace("QAtlas destroyed");
@@ -61,7 +72,7 @@ bool QAtlas::initFromFile(std::string fileName)
 
     std::string ext(fileName, pos);
     bool result = true;
-    if (strcasecmp( ext.c_str(), ".plist") == 0)
+    if (stricmp( ext.c_str(), ".plist") == 0)
     {
         // Call  the base class initialisation
         init();
@@ -80,7 +91,7 @@ bool QAtlas::initFromFile(std::string fileName)
 
     // cocos2d::CCTexture must have pointer back to QAtlas
     QAssert(m_Texture, "Failed to set CCTexture for QAtlas");
-    m_Texture->m_uID = (intptr_t)(void*)this;
+    m_Texture->m_uID = (unsigned long)(void*)this;
     return result;
 }
 //------------------------------------------------------------------------------
@@ -95,7 +106,7 @@ bool QAtlas::initTexture(std::string filename)
     m_Texture->retain();
 
     // cocos2d::CCTexture must have pointer back to QAtlas
-    m_Texture->m_uID = (intptr_t)(void*)this;
+    m_Texture->m_uID = (unsigned long)(void*)this;
     return true;
 }
 //------------------------------------------------------------------------------
@@ -145,7 +156,6 @@ CCSpriteFrame* QAtlas::GetFrame( std::string frame) const
     return pframe;
 }
 //------------------------------------------------------------------------------
-#if COCOS2D_DEBUG > 0
 static char* FormatAssertMsg(char* dest, const char* format, ...)
 {
     va_list ap;
@@ -154,7 +164,6 @@ static char* FormatAssertMsg(char* dest, const char* format, ...)
     va_end(ap);
     return dest;
 }
-#endif
 //------------------------------------------------------------------------------
 void QAtlas::setTextureParams(const char* minFilter, const char* magFilter, const char* wrapS, const char* wrapT)
 {

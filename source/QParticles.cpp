@@ -22,6 +22,7 @@
 
 #include "QParticles.h"
 #include "QAtlas.h"
+#include "CCParticleSystemQuad.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
@@ -32,24 +33,67 @@ QParticles::QParticles()
 {
 	// We wait until we know what init() type is required
 	m_CCNode = new CCParticleSystemQuad2();
+
+    totalParticles = 200;
+    particleCount = 0;
+
+    emitterMode = kCCParticleModeGravity;
+	emitterRate = 1.0f;
+
+    memset(&modeGravity, 0, sizeof(modeGravityStruct));
+    memset(&modeRadial, 0, sizeof(modeRadialStruct));
+
+    duration = kCCParticleDurationInfinity;
+    sourcePos = QVec2::g_Zero;
+    sourcePosVar = QVec2::g_Zero;
+	life = 1.0f;
+    lifeVar = 0.0f;
+    angle = 0.0f;
+    angleVar = 0.0f;
+
+    startSize = 2.0f;
+    startSizeVar = 0.0f;
+    endSize = 8.0f;
+    endSizeVar = 0.0f;
+	startColor = QColor(0x80, 0x80, 0x80, 0xff);
+	startColorVar = QColor(0x00, 0x00, 0x00, 0x00);
+	endColor = QColor(0x80, 0x80, 0x80, 0xff);
+	endColorVar = QColor(0x00, 0x00, 0x00, 0x00);
+	startSpin = 0.0f;
+	startSpinVar = 0.0f;
+	endSpin = 0.0f;
+	endSpinVar = 0.0f;
+	alphaModifiesColor = false;
 }
 //------------------------------------------------------------------------------
 QParticles::~QParticles()
 {
 }
 //------------------------------------------------------------------------------
-void QParticles::init(const char* plist, int numParticles)
+void QParticles::_initWithPlist(const char* plist)
 {
-	// Initialise Cocos2dx node from plist file or total particles
 	CCParticleSystemQuad2* pCCNode = (CCParticleSystemQuad2*)m_CCNode;
-	if (plist)
-	{
-		pCCNode->initWithFile(plist);
-		syncReverse();
-	}
-	else
-		pCCNode->initWithTotalParticles(numParticles);
-	pCCNode->setAnchorPoint(ccp(0, 0));
+
+    // Init from plist file
+	pCCNode->initWithFile(plist);
+
+    // Because Cocos2d-x has set up the node members from the plist file, we should now
+    // copy these back to the QParticles members
+	syncReverse();
+
+    pCCNode->setAnchorPoint(ccp(0, 0));
+	pCCNode->m_bIsActive = true;
+}
+//------------------------------------------------------------------------------
+void QParticles::_initWithNumber(int numParticles)
+{
+	CCParticleSystemQuad2* pCCNode = (CCParticleSystemQuad2*)m_CCNode;
+
+    // Init with total number of particles
+    pCCNode->initWithTotalParticles(numParticles);
+    totalParticles = numParticles;
+
+    pCCNode->setAnchorPoint(ccp(0, 0));
 	pCCNode->m_bIsActive = true;
 }
 //------------------------------------------------------------------------------
@@ -79,9 +123,15 @@ bool QParticles::isFull()
 	return ((CCParticleSystemQuad2*)m_CCNode)->isFull();
 }
 //------------------------------------------------------------------------------
+bool QParticles::isActive()
+{
+	return ((CCParticleSystemQuad2*)m_CCNode)->isActive();
+}
+//------------------------------------------------------------------------------
 void QParticles::update(float dt)
 {
-	((CCParticleSystemQuad2*)m_CCNode)->update(dt);
+	CCParticleSystemQuad2* pCCNode = (CCParticleSystemQuad2*)m_CCNode;
+	pCCNode->update(dt);
 }
 //------------------------------------------------------------------------------
 void QParticles::sync()
@@ -89,9 +139,10 @@ void QParticles::sync()
 	QNode::sync();
 
 	CCParticleSystemQuad2* pCCNode = (CCParticleSystemQuad2*)m_CCNode;
+    pCCNode->setEmitterMode(emitterMode);
 	pCCNode->setDuration(duration);
-	pCCNode->setPosition(sourcePosX, sourcePosY);
-	pCCNode->setPosVar(ccp(sourcePosVarX, sourcePosVarY));
+    pCCNode->setSourcePosition(ccp(sourcePos.x, sourcePos.y));
+	pCCNode->setPosVar(ccp(sourcePosVar.x, sourcePosVar.y));
 	pCCNode->setLife(life);
 	pCCNode->setLifeVar(lifeVar);
 	pCCNode->setAngle(angle);
@@ -109,32 +160,47 @@ void QParticles::sync()
 	pCCNode->setStartSpinVar(startSpinVar);
 	pCCNode->setEndSpin(endSpin);
 	pCCNode->setEndSpinVar(endSpinVar);
-	pCCNode->setEmissionRate(emissionRate);
+	pCCNode->setEmissionRate(emitterRate);
 	pCCNode->setTotalParticles(totalParticles);
 	// TODO texture;
 	// TODO blendFunc
 	pCCNode->setOpacityModifyRGB(alphaModifiesColor);
 
-	// modeA
-	pCCNode->modeASetGravity(modeA.gravity.x, modeA.gravity.y);
-	pCCNode->modeASetSpeed(modeA.speed);
-	pCCNode->modeASetSpeedVar(modeA.speedVar);
-	pCCNode->modeASetTangentialAccel(modeA.tangentialAccel);
-	pCCNode->modeASetTangentialAccelVar(modeA.tangentialAccelVar);
-	pCCNode->modeASetRadialAccel(modeA.radialAccel);
-	pCCNode->modeASetRadialAccelVar(modeA.radialAccelVar);
+    if (emitterMode == kCCParticleModeGravity)
+    {
+    	// modeGravity (gravity)
+	    pCCNode->modeGravitySetGravity(modeGravity.gravity.x, modeGravity.gravity.y);
+	    pCCNode->modeGravitySetSpeed(modeGravity.speed);
+	    pCCNode->modeGravitySetSpeedVar(modeGravity.speedVar);
+	    pCCNode->modeGravitySetTangentialAccel(modeGravity.tangentialAccel);
+	    pCCNode->modeGravitySetTangentialAccelVar(modeGravity.tangentialAccelVar);
+	    pCCNode->modeGravitySetRadialAccel(modeGravity.radialAccel);
+	    pCCNode->modeGravitySetRadialAccelVar(modeGravity.radialAccelVar);
+    }
+    else
+    {
+	    // modeRadial (radial)
+        pCCNode->modeRadialSetStartRadius(modeRadial.startRadius);
+        pCCNode->modeRadialSetStartRadiusVar(modeRadial.startRadiusVar);
+        pCCNode->modeRadialSetEndRadius(modeRadial.endRadius);
+        pCCNode->modeRadialSetEndRadiusVar(modeRadial.endRadiusVar);
+        pCCNode->modeRadialSetRotatePerSecond(modeRadial.rotatePerSecond);
+        pCCNode->modeRadialSetRotatePerSecondVar(modeRadial.rotatePerSecondVar);
+    }
 
-	// TODO modeB
+    // Sync from CCNode back to QNode
+    particleCount = pCCNode->getParticleCount();
 }
 //------------------------------------------------------------------------------
 void QParticles::syncReverse()
 {
 	CCParticleSystemQuad2* pCCNode = (CCParticleSystemQuad2*)m_CCNode;
+    emitterMode = pCCNode->getEmitterMode();
 	duration = pCCNode->getDuration();
-	sourcePosX = pCCNode->getPositionX();
-	sourcePosY = pCCNode->getPositionY();
-	sourcePosVarX = pCCNode->getPosVar().x;
-	sourcePosVarY = pCCNode->getPosVar().y;
+    sourcePos.x = pCCNode->getSourcePosition().x;
+    sourcePos.y = pCCNode->getSourcePosition().y;
+	sourcePosVar.x = pCCNode->getPosVar().x;
+	sourcePosVar.y = pCCNode->getPosVar().y;
 	life = pCCNode->getLife();
 	lifeVar = pCCNode->getLifeVar();
 	angle = pCCNode->getAngle();
@@ -152,13 +218,34 @@ void QParticles::syncReverse()
 	startSpinVar = pCCNode->getStartSpinVar();
 	endSpin = pCCNode->getEndSpin();
 	endSpinVar = pCCNode->getEndSpinVar();
-	emissionRate = pCCNode->getEmissionRate();
-	totalParticles = pCCNode->getTotalParticles(); // TODO CALL SETUP FUNC?
+	emitterRate = pCCNode->getEmissionRate();
+	totalParticles = pCCNode->getTotalParticles();
 	// TODO texture;
 	// TODO blendFunc
 	alphaModifiesColor = pCCNode->getOpacityModifyRGB();
+
+    if (emitterMode == kCCParticleModeGravity)
+    {
+    	// modeGravity (gravity)
+        modeGravity.gravity.x = pCCNode->getGravity().x;
+        modeGravity.gravity.y = pCCNode->getGravity().y;
+        modeGravity.speed = pCCNode->getSpeed();
+        modeGravity.speedVar = pCCNode->getSpeedVar();
+        modeGravity.tangentialAccel = pCCNode->getTangentialAccel();
+        modeGravity.tangentialAccelVar = pCCNode->getTangentialAccelVar();
+        modeGravity.radialAccel = pCCNode->getRadialAccel();
+        modeGravity.radialAccelVar = pCCNode->getRadialAccelVar();
+    }
+    else
+    {
+	    // modeRadial (radial)
+        modeRadial.startRadius = pCCNode->getStartRadius();
+        modeRadial.startRadiusVar = pCCNode->getStartRadiusVar();
+        modeRadial.endRadius = pCCNode->getEndRadius();
+        modeRadial.endRadiusVar = pCCNode->getEndRadiusVar();
+        modeRadial.rotatePerSecond = pCCNode->getRotatePerSecond();
+        modeRadial.rotatePerSecondVar = pCCNode->getRotatePerSecondVar();
+    }
 }
-
-
 
 QUICK_NAMESPACE_END;

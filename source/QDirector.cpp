@@ -23,11 +23,12 @@
 #include "QDirector.h"
 #include "QLuaHelpers.h"
 #include "QScene.h"
+#include "QTransition.h"
 
 #include "cocos2d.h"
-#include "layers_scenes_transitions_nodes/CCTransition.h"
-#include "layers_scenes_transitions_nodes/CCTransitionPageTurn.h"
-#include "layers_scenes_transitions_nodes/CCTransitionProgress.h"
+#include "CCTransition.h"
+#include "CCTransitionPageTurn.h"
+#include "CCTransitionProgress.h"
 
 USING_NS_CC;
 QUICK_NAMESPACE_BEGIN;
@@ -41,6 +42,58 @@ QDirector* g_QDirector = NULL;
     }\
     else
 
+#define Q_OVERLAY_TRANSITION_CHECK(str, cls) \
+    if (name == str)\
+        pTransition = cls::create(t, scene);\
+    else\
+
+//------------------------------------------------------------------------------
+// Creates an Overlay Transition 
+//------------------------------------------------------------------------------
+static CCTransitionScene* createOverlayTransition(std::string& name, float t, CCScene* scene, bool show)
+{
+    CCTransitionScene * pTransition = NULL;
+
+    // Change with transition
+    Q_OVERLAY_TRANSITION_CHECK("rotoZoom", QTransitionRotoZoom)
+    Q_OVERLAY_TRANSITION_CHECK("jumpZoom", QTransitionJumpZoom)
+    Q_OVERLAY_TRANSITION_CHECK("slideInL", QTransitionSlideInL)
+    Q_OVERLAY_TRANSITION_CHECK("slideInR", QTransitionSlideInR)
+    Q_OVERLAY_TRANSITION_CHECK("slideInB", QTransitionSlideInB)
+    Q_OVERLAY_TRANSITION_CHECK("slideInT", QTransitionSlideInT)
+    Q_OVERLAY_TRANSITION_CHECK("shrinkGrow", QTransitionShrinkGrow)
+    Q_OVERLAY_TRANSITION_CHECK("flipX", QTransitionFlipX)
+    Q_OVERLAY_TRANSITION_CHECK("flipY", QTransitionFlipY)
+    Q_OVERLAY_TRANSITION_CHECK("flipAngular", QTransitionFlipAngular)
+    Q_OVERLAY_TRANSITION_CHECK("zoomFlipX", QTransitionZoomFlipX)
+    Q_OVERLAY_TRANSITION_CHECK("zoomFlipY", QTransitionZoomFlipY)
+    Q_OVERLAY_TRANSITION_CHECK("zoomFlipAngular", QTransitionZoomFlipAngular)
+    Q_OVERLAY_TRANSITION_CHECK("crossFade", QTransitionCrossFade)
+    Q_OVERLAY_TRANSITION_CHECK("turnOffTiles", QTransitionTurnOffTiles) 
+    Q_OVERLAY_TRANSITION_CHECK("splitCols", QTransitionSplitCols)
+    Q_OVERLAY_TRANSITION_CHECK("splitRows", QTransitionSplitRows)
+    Q_OVERLAY_TRANSITION_CHECK("fadeTR", QTransitionFadeTR)
+    Q_OVERLAY_TRANSITION_CHECK("fadeBL", QTransitionFadeBL)
+    Q_OVERLAY_TRANSITION_CHECK("fadeUp", QTransitionFadeUp)
+    Q_OVERLAY_TRANSITION_CHECK("fadeDown", QTransitionFadeDown)
+    Q_OVERLAY_TRANSITION_CHECK("progressRadialCCW", QTransitionProgressRadialCCW)
+    Q_OVERLAY_TRANSITION_CHECK("progressRadialCW", QTransitionProgressRadialCW)
+    Q_OVERLAY_TRANSITION_CHECK("progressHorizontal", QTransitionProgressHorizontal)
+    Q_OVERLAY_TRANSITION_CHECK("progressVertical", QTransitionProgressVertical)
+    Q_OVERLAY_TRANSITION_CHECK("progressInOut", QTransitionProgressInOut)
+    Q_OVERLAY_TRANSITION_CHECK("progressOutIn", QTransitionProgressOutIn)
+    Q_OVERLAY_TRANSITION_CHECK("fade", QTransitionFade)
+    if (name == "pageTurn")
+    {
+        pTransition = QTransitionPageTurn::create(t, scene, show);
+    }
+    else
+    {
+        QWarning("Unknown overlay transition %s used", name.c_str());
+    }
+
+    return pTransition;
+}
 //------------------------------------------------------------------------------
 // QDirector
 //------------------------------------------------------------------------------
@@ -77,6 +130,15 @@ QDirector::QDirector()
     _transitionType = "";
 
     _currentScene = NULL;
+    
+    m_OverlayTransitionScene = NULL;
+    _overlayTransitionScene = NULL;
+    _overlayTransitionTime = NULL;
+    _overlayTransitionType = "";
+
+    _overlayScene = NULL;
+
+    _modalOverlay = false;
 
     m_DrawingScene = NULL;
 }
@@ -108,6 +170,11 @@ void QDirector::cleanupTextures()
    	CCTextureCache::sharedTextureCache()->removeUnusedTextures();
 }
 //------------------------------------------------------------------------------
+void QDirector::startRendering()
+{
+    CCDirector::sharedDirector()->startRendering();
+}
+//------------------------------------------------------------------------------
 QScene* QDirector::getCurrentScene()
 {
     return _currentScene;
@@ -119,6 +186,129 @@ void QDirector::RunScene()
     CCScene* running_scene = ccd->getRunningScene();
     CCScene2* pDelegateScene = (CCScene2*)running_scene;
 
+    bool changeOverlay = false;
+    // Check if overlay is going to change its state
+    if (_overlayTransitionScene)
+    {
+        bool isShowing = (_overlayScene == NULL);
+
+        // Transition is not started yet
+        if (m_OverlayTransitionScene == NULL)
+        {            
+            // Overlay with transition
+            if (_overlayTransitionType.empty() == false)
+            {
+                CCScene * pNextScene = NULL;
+
+                if (isShowing == false)
+                {
+                    // Create empty scene to replace overlay
+                    pNextScene = CCScene::create();
+                    pNextScene->init();
+                    pNextScene->onEnter();
+                    _overlayScene->isSynced = false;
+                }
+                else
+                    pNextScene = (CCScene*)_overlayTransitionScene->m_CCNode;
+
+                m_OverlayTransitionScene = createOverlayTransition(_overlayTransitionType, _overlayTransitionTime, pNextScene, isShowing);
+
+                if (m_OverlayTransitionScene != NULL)
+                {                   
+                    // Setup transition 
+                    m_OverlayTransitionScene->retain();
+                    m_OverlayTransitionScene->onEnter();
+                    m_OverlayTransitionScene->onEnterTransitionDidFinish();                    
+
+                    ccd->setNotificationNode(m_OverlayTransitionScene);
+
+                    _currentScene->isSynced = false;
+                }
+                else
+                {
+                    // invalid filter name
+                    _overlayTransitionType.clear();
+
+                    // Unable to create a transition then do instant change
+                    if (isShowing == false)
+                        pNextScene->release();
+
+                    changeOverlay = true;
+                }
+            }
+            else
+                changeOverlay = true; // show overlay instantly
+        }
+        else
+        {
+            CCNode* pNotificationNode = ccd->getNotificationNode();
+
+            // Transition finished
+            if (pNotificationNode != m_OverlayTransitionScene)
+            {
+                m_OverlayTransitionScene->onExitTransitionDidStart();
+                m_OverlayTransitionScene->onExit();
+                m_OverlayTransitionScene->cleanup();
+
+                CC_SAFE_RELEASE_NULL(m_OverlayTransitionScene);
+
+                changeOverlay = true;
+            }
+        }
+    }
+    else
+    {
+        // Set overlay as delegate
+        if (_overlayScene != NULL)
+        {
+            pDelegateScene = (CCScene2*)_overlayScene->m_CCNode;
+        }
+    }
+
+
+    if (changeOverlay)
+    {
+        // Removing overlay
+        if (_overlayScene)
+        {
+            _overlayScene->m_CCNode->onExit();
+            _overlayScene->isSynced = true;
+            _overlayScene->m_CCNode->unscheduleUpdate();
+            ccd->setNotificationNode(NULL);
+
+            _overlayTransitionScene = NULL;
+            CallLUASideOverlayComplete();
+        }
+
+        _overlayScene = _overlayTransitionScene;
+        _overlayTransitionScene = NULL;
+        _currentScene->isSynced = true;
+
+        // Adding overlay
+        if (_overlayScene)
+        {
+            // It was an instant change
+            if(_overlayTransitionType.empty())
+                _overlayScene->m_CCNode->onEnter(); 
+            
+            if (_modalOverlay)
+            {
+                // Remove current scene from receiving notifications
+                pDelegateScene->setTouchEnabled(false);
+                pDelegateScene->setKeypadEnabled(false);
+                pDelegateScene->setAccelerometerEnabled(false);                
+            }
+
+            // Enable all interactions for the overlay
+            CCScene2 * pNode = (CCScene2*)_overlayScene->m_CCNode;            
+            pNode->scheduleUpdate();
+            ccd->setNotificationNode(pNode);
+            pDelegateScene = pNode;
+
+            _overlayScene->isSynced = true;            
+        }
+    }
+    
     if (m_TransitionScene != NULL)
     {
         // We are currently in a scene transition7
@@ -166,7 +356,7 @@ void QDirector::RunScene()
             if (pNextScene && (pNextScene != pCurrScene))
             {
                 // We need to start a scene transition here
-                //CCScene* outgoing_cc_scene = (CCScene*)pCurrScene->m_CCNode;
+                CCScene* outgoing_cc_scene = (CCScene*)pCurrScene->m_CCNode;
                 CCScene* incoming_cc_scene = (CCScene*)pNextScene->m_CCNode;
 
                 // Default to a direct transition
@@ -309,6 +499,15 @@ void QDirector::CallLUASideTransitionComplete()
     lua_pop(g_L, 1);
 }
 //------------------------------------------------------------------------------
+void QDirector::CallLUASideOverlayComplete()
+{
+    lua_getglobal(g_L, "director");
+    lua_getfield(g_L, -1, "_overlayComplete");    // On stack: director._overlayComplete
+    lua_getglobal(g_L, "director");
+    lua_call(g_L, 1, 0);
+    lua_pop(g_L, 1);
+}
+//------------------------------------------------------------------------------
 // Custom drawing
 // The Cocos2D drawing functions are not flexible enough for us, and
 // somewhat inefficient. So we have duplicated them here (into the Q
@@ -319,6 +518,7 @@ static CCGLProgram* s_pShader = NULL;
 static int s_nColorLocation = -1;
 static ccColor4F s_tColor = {1.0f,1.0f,1.0f,1.0f};
 static int s_nPointSizeLocation = -1;
+static GLfloat s_fPointSize = 1.0f;
 //------------------------------------------------------------------------------
 static void lazy_init( void )
 {
@@ -361,7 +561,7 @@ void QDirector::DrawPolyVert2F( const cocos2d::ccVertex2F* poli, unsigned int nu
     lazy_init();
 
     s_pShader->use();
-    s_pShader->setUniformsForBuiltins();
+    s_pShader->setUniformForModelViewProjectionMatrix();
     s_pShader->setUniformLocationWith4fv(s_nColorLocation, (GLfloat*) &s_tColor.r, 1);
 
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );

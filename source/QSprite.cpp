@@ -181,27 +181,77 @@ void CCSprite2::draw()
 //------------------------------------------------------------------------------
 // QSprite
 //------------------------------------------------------------------------------
-QSprite::QSprite()
+QSprite::QSprite(bool createCCNode)
 {
     xFlip = false;
     yFlip = false;
+    uvRect.x = uvRect.y = 0.0f;
+    uvRect.w = uvRect.h = 1.0f;
+
     blendMode = ""; // empty string means we get blendMode from the associated QAtlas
     timeScale = 1.0f;
     raisesAnimEvents = false;
     debugDrawTextureRegion = false;
 
 	// Cocos stuff
-	m_CCNode = new CCSprite2(this);
-	((CCSprite*)m_CCNode)->init();
+	if (createCCNode == true)
+    {
+	    m_CCNode = new CCSprite2(this);
+	    ((CCSprite*)m_CCNode)->init();
+        m_CCNode->setAnchorPoint(ccp(0, 0));
+    }
+	else
+	{
+		// By default, if we are not creating a CC node, we
+		// flag that we're not managing any CC node
+		m_ManageCCNodeLifeCycle = false;
+	}
+    m_pAnimation = NULL;
+    m_pAnimateAction = NULL;
+    m_pRunAction = NULL;
+    
+    m_pFilter = NULL;
+}
+//------------------------------------------------------------------------------
+QSprite::QSprite(CCSprite *sprite)
+{
+    uvRect.x = uvRect.y = 0.0f;
+    uvRect.w = uvRect.h = 1.0f;
+
+    blendMode = ""; // empty string means we get blendMode from the associated QAtlas
+    timeScale = 1.0f;
+    raisesAnimEvents = false;
+    debugDrawTextureRegion = false;
+
+    m_CCNode = new CCSprite2(this);
+    ((CCSprite*)m_CCNode)->initWithTexture(sprite->getTexture());
     m_CCNode->setAnchorPoint(ccp(0, 0));
+
+    CCPoint pos = sprite->getPosition();
+    x = pos.x;
+    y = pos.y;
+    CCRect bounds = sprite->boundingBox();
+    w = bounds.size.width;
+    h = bounds.size.height;
+    xScale = sprite->getScaleX();
+    yScale = sprite->getScaleY();
+    xSkew = sprite->getSkewX();
+    ySkew = sprite->getSkewY();
+    rotation = sprite->getRotation();
+    xFlip = sprite->isFlipX();
+    yFlip = sprite->isFlipY();
 
     m_pAnimation = NULL;
     m_pAnimateAction = NULL;
     m_pRunAction = NULL;
+
+    m_pFilter = NULL;
 }
 //------------------------------------------------------------------------------
 QSprite::~QSprite()
 {
+    CC_SAFE_DELETE(m_pFilter);
+    
     if ( m_pAnimateAction)
     {
         m_CCNode->stopAction(m_pRunAction);
@@ -211,15 +261,21 @@ QSprite::~QSprite()
 
 //    QTrace("QSprite destroyed");
 }
-
+//------------------------------------------------------------------------------
+CCSpriteFrame* QSprite::GetSpriteFrame() const
+{
+    // Note: Return values from m_pAnimateAction->GetFrame() are 1-based
+    int f = m_pAnimateAction ? (m_pAnimateAction->GetFrame()-1) : 0;
+    QAssert(m_pAnimation, "Sprite has no animation");
+    CCSpriteFrame* pSF = m_pAnimation->GetFrame(f); // frame input is 0-based
+    return pSF;
+}
 //------------------------------------------------------------------------------
 void QSprite::sync()
 {
     // Only sync if sync is enabled
     if (!isSynced)
-    {
         return;
-    }
 
     QNode::sync();
     
@@ -239,9 +295,7 @@ void QSprite::sync()
 
 		pCCNode->setColor(*(ccColor3B*)&color); // cast ccColor4B* to ccColor3B* should be OK
 
-        // updateTransform will assert if the sprite is not part of a batch.
-        if (pCCNode->getBatchNode())
-            pCCNode->updateTransform();
+		pCCNode->updateTransform();
 
         if (pCCNode->isFlipX() != xFlip)
             pCCNode->setFlipX(xFlip);
@@ -251,23 +305,70 @@ void QSprite::sync()
 
         // Process the blend function setup
         cocos2d::ccBlendFunc blend_func;
-        getBlendFunction( &blend_func);
+        GetBlendFunction( &blend_func);
         pCCNode->setBlendFunc( blend_func);
+        
+        // Handle filter change
+        if (m_LastFilter != filter.name)
+        {
+            CC_SAFE_DELETE(m_pFilter);
+            m_pFilter = QFilter::create(&filter, pCCNode);
+            m_LastFilter = filter.name;
+        }
+
+        if (m_pFilter)
+            m_pFilter->sync();
+
+        // UV rect
+		if	(
+			(uvRect.x != 0.0f) ||
+			(uvRect.y != 0.0f) ||
+			(uvRect.w != 1.0f) ||
+			(uvRect.h != 1.0f)
+			)
+		{
+			// Results will be probably be undesired if
+			// sprite has an animation (strictly speaking, if
+			// the SpriteFrame doesn't cover whole texture)
+			CCSpriteFrame* pSF = GetSpriteFrame();
+			CCRect sfr = pSF->getRectInPixels();
+#ifdef _DEBUG
+			if	(
+				(sfr.origin.x != 0.0f) ||
+				(sfr.origin.y != 0.0f) ||
+                (sfr.size.width != pCCNode->getTexture()->getPixelsWide()) ||
+				(sfr.size.height != pCCNode->getTexture()->getPixelsHigh())
+				)
+			{
+                if  (
+                    (uvRect.x < 0.0f) || (uvRect.x >= 1.0f) ||
+                    (uvRect.y < 0.0f) || (uvRect.y >= 1.0f) ||
+                    (uvRect.w < 0.0f) || (uvRect.w >= 1.0f) ||
+                    (uvRect.h < 0.0f) || (uvRect.h >= 1.0f)
+                    )
+                {
+    				QWarning("Sprite frame does not cover whole bitmap, and uvRect dimensions not within unit square: may have undesired results.");
+                }
+			}
+#endif
+	        CCRect tr(  sfr.origin.x + (uvRect.x * sfr.size.width),
+                        sfr.origin.y + (uvRect.y * sfr.size.height),
+                        uvRect.w * sfr.size.width,
+                        uvRect.h * sfr.size.height);
+			pCCNode->setTextureRect(tr);
+
+            // Update Sprite w,h from SpriteFrame and uvRect
+            w = sfr.size.width * uvRect.w;
+            h = sfr.size.height * uvRect.h;
+		}
 	}
 }
 //------------------------------------------------------------------------------
 QAtlas* QSprite::getAtlas() const
 {
-    // Note: Return values from m_pAnimateAction->GetFrame() are 1-based
-    // We need to convert them to 0-based, for passing into m_pAnimation->GetFrame()
-    int f = m_pAnimateAction ? (m_pAnimateAction->GetFrame()-1) : 0;
-
-    QAssert(m_pAnimation, "Sprite has no animation");
-    CCSpriteFrame* pSF = m_pAnimation->GetFrame(f); // frame input is 0-based
-    
+    CCSpriteFrame* pSF = GetSpriteFrame();
     cocos2d::CCTexture2D* pTex = pSF->getTexture();
-
-    QAtlas* pAtlas = (QAtlas*)(intptr_t)pTex->m_uID;
+    QAtlas* pAtlas = (QAtlas*)pTex->m_uID;
     return pAtlas;
 }
 //------------------------------------------------------------------------------
@@ -292,7 +393,6 @@ void QSprite::_play( int startFrame, int loopCount)
         m_pAnimateAction->SetPlaying( true);
     }
 }
-
 //------------------------------------------------------------------------------
 void QSprite::setFrame( int frame)
 {
@@ -381,7 +481,7 @@ int QSprite::get_frame(void)
     return frame;
 }
 //------------------------------------------------------------------------------
-void QSprite::getBlendFunction( cocos2d::ccBlendFunc *blend) const
+void QSprite::GetBlendFunction( cocos2d::ccBlendFunc *blend) const
 {
     if ( blendMode == "normal")
     {
@@ -405,14 +505,20 @@ void QSprite::getBlendFunction( cocos2d::ccBlendFunc *blend) const
     }
     else
     {
-        // Same as normal blend
-//        blend->src = GL_SRC_ALPHA;
-//        blend->dst = GL_ONE_MINUS_SRC_ALPHA;
-
         // Take from QAtlas blend mode
-        QAtlas* pAtlas = getAtlas();
-        blend->src = pAtlas->_blendSrc;
-        blend->dst = pAtlas->_blendDst;
+		if (m_pAnimation && m_pAnimateAction)
+		{
+			QAtlas* pAtlas = getAtlas();
+			blend->src = pAtlas->_blendSrc;
+			blend->dst = pAtlas->_blendDst;
+		}
+		else
+		{
+			// QSprite may just be a wrapper around CCSprite, with
+			// no QAtlas etc. set up
+			blend->src = ((CCSprite*)m_CCNode)->getBlendFunc().src;
+			blend->dst = ((CCSprite*)m_CCNode)->getBlendFunc().dst;
+		}
     }
 }
 

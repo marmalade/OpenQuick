@@ -1,23 +1,13 @@
 /*
- * (C) 2012-2013 Marmalade.
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * (C) 2001-2012 Marmalade. All Rights Reserved.
+ *
+ * This document is protected by copyright, and contains information
+ * proprietary to Marmalade.
+ *
+ * This file consists of source code released by Marmalade under
+ * the terms of the accompanying End User License Agreement (EULA).
+ * Please do not use this program/source code before you have read the
+ * EULA and have agreed to be bound by its terms.
  */
 
 #include "QPhysicsNodeProps.h"
@@ -125,6 +115,10 @@ void QNodeProps::_init(bool _isSensor)
     THIS IS OK, BECAUSE NODES ADDED TO THE PHYSICS SIMULATION SHOULD NOT HAVE PARENTS.
     */
     // Create Body
+    _x_backup = m_Node->x;
+    _y_backup = m_Node->y;
+    _rotation_backup = m_Node->rotation;
+
     float bx = g_Sim->scaleD2P(m_Node->x);
     float by = g_Sim->scaleD2P(m_Node->y);
     bodyDef.position.Set(bx, by);
@@ -200,9 +194,34 @@ void QNodeProps::_sync()
     {
         // Body dictates transform
 	    const b2Transform t = m_Body->GetTransform();
-        m_Node->x = g_Sim->scaleP2D(t.p.x);
-        m_Node->y = g_Sim->scaleP2D(t.p.y);
-        m_Node->rotation = g_Sim->angleP2D(t.q.GetAngle());
+        b2Vec2 nv;
+        nv.x = t.p.x;
+        nv.y = t.p.y;
+        float rot = t.q.GetAngle();
+        bool isChanged = false;
+        if(m_Node->x != _x_backup)
+        {
+            isChanged = true;
+            nv.x = g_Sim->scaleD2P(m_Node->x);
+        }
+        else
+            m_Node->x = g_Sim->scaleP2D(nv.x);
+        if(m_Node->y != _y_backup)
+        {
+            isChanged = true;
+            nv.y = g_Sim->scaleD2P(m_Node->y);
+        }
+        else
+            m_Node->y = g_Sim->scaleP2D(nv.y);
+        if(m_Node->rotation != _rotation_backup)
+        {
+            isChanged = true;
+            rot = g_Sim->angleP2D(m_Node->rotation);
+        }
+        else
+            m_Node->rotation = g_Sim->angleP2D(rot);
+        if(isChanged)
+            m_Body->SetTransform(nv, rot);
     }
     else
     {
@@ -211,6 +230,9 @@ void QNodeProps::_sync()
         float angle = g_Sim->angleD2P(m_Node->rotation);
         m_Body->SetTransform(pos, angle);
     }
+    _x_backup = m_Node->x;
+    _y_backup = m_Node->y;
+    _rotation_backup = m_Node->rotation;
 }
 //------------------------------------------------------------------------------
 void QNodeProps::applyForce(float fx, float fy, float px, float py)
@@ -218,6 +240,11 @@ void QNodeProps::applyForce(float fx, float fy, float px, float py)
     float ppx = g_Sim->scaleD2P(px);
     float ppy = g_Sim->scaleD2P(py);
     m_Body->ApplyForce(b2Vec2(fx, fy), b2Vec2(ppx, ppy));
+}
+//------------------------------------------------------------------------------
+void QNodeProps::applyForceToCenter(float fx, float fy)
+{
+    m_Body->ApplyForceToCenter(b2Vec2(fx, fy));
 }
 //------------------------------------------------------------------------------
 void QNodeProps::setAngularVelocity(float omega)
@@ -237,16 +264,15 @@ void QNodeProps::applyTorque(float torque)
 //------------------------------------------------------------------------------
 void QNodeProps::applyLinearImpulse(float ix, float iy, float px, float py)
 {
-    if (px == -1.0f)
-    {
-        m_Body->ApplyLinearImpulse(b2Vec2(ix, iy), m_Body->GetWorldCenter());
-    }
-    else
-    {
-        float ppx = g_Sim->scaleD2P(px);
-        float ppy = g_Sim->scaleD2P(py);
-        m_Body->ApplyLinearImpulse(b2Vec2(ix, iy), b2Vec2(ppx, ppy));
-    }
+    float ppx = g_Sim->scaleD2P(px);
+    float ppy = g_Sim->scaleD2P(py);
+    m_Body->ApplyLinearImpulse(b2Vec2(ix, iy), b2Vec2(ppx, ppy));
+}
+//------------------------------------------------------------------------------
+void QNodeProps::applyLinearImpulseToCenter(float ix, float iy)
+{
+    b2Vec2 nVec = m_Body->GetWorldCenter();
+    m_Body->ApplyLinearImpulse(b2Vec2(ix, iy), nVec);
 }
 //------------------------------------------------------------------------------
 void QNodeProps::applyAngularImpulse(float impulse)
@@ -271,6 +297,20 @@ void QNodeProps::getWorldPoint(float lx, float ly, float* wx, float* wy)
     b2Vec2 w = m_Body->GetWorldPoint(b2Vec2(plx, ply));
     *wx = g_Sim->scaleP2D(w.x);
     *wy = g_Sim->scaleP2D(w.y);
+}
+//------------------------------------------------------------------------------
+void QNodeProps::getWorldCenter(float* vx, float* vy)
+{
+    b2Vec2 w = m_Body->GetWorldCenter();
+    *vx = g_Sim->scaleP2D(w.x);
+    *vy = g_Sim->scaleP2D(w.y);
+}
+//------------------------------------------------------------------------------
+void QNodeProps::getLocalCenter(float* vx, float* vy)
+{
+    b2Vec2 w = m_Body->GetLocalCenter();
+    *vx = g_Sim->scaleP2D(w.x);
+    *vy = g_Sim->scaleP2D(w.y);
 }
 //------------------------------------------------------------------------------
 void QNodeProps::getWorldVector(float lx, float ly, float* wx, float* wy)
@@ -347,19 +387,27 @@ void QNodeProps::setGravityScale(float scale)
 {
     m_Body->SetGravityScale(scale);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
+//------------------------------------------------------------------------------
+void QNodeProps::setLinearVelocity(float ix, float iy)
+{
+    float pix = g_Sim->scaleD2P(ix);
+    float piy = g_Sim->scaleD2P(iy);
+    m_Body->SetLinearVelocity(b2Vec2(pix, piy));
+}
+//------------------------------------------------------------------------------
+void QNodeProps::getLinearVelocity(float* vx, float* vy)
+{
+   b2Vec2 tmp = m_Body->GetLinearVelocity();
+   *vx = g_Sim->scaleP2D(tmp.x);
+   *vy = g_Sim->scaleP2D(tmp.y);
+}
+//------------------------------------------------------------------------------
+void QNodeProps::setTransform(float ix, float iy, float iz)
+{
+    b2Vec2 pos(g_Sim->scaleD2P(ix), g_Sim->scaleD2P(iy));
+    float angle = g_Sim->angleD2P(iz);
+    m_Body->SetTransform(pos, angle);
+}  
 
 bool QNodeProps::get_isSensor()
 {
@@ -401,6 +449,8 @@ void QNodeProps::draw()
 
             // Scale rotational part of transform by object scale
             // NOTE: WE ASSUME NO MORE RENDERING WITHIN THIS NODE'S SPACE AFTER THIS!
+            float xCentre = radius - m_Node->xAnchor*radius*2;
+            float yCentre = radius - m_Node->yAnchor*radius*2;
 
             // Initialise null 4x4 matrix
             kmMat4 t44;

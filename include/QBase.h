@@ -31,6 +31,7 @@
 #define __Q_BASE_H
 
 #include "QDefines.h"
+//#include <string>
 
 // tolua_begin
 namespace quick {
@@ -39,15 +40,15 @@ namespace quick {
 //------------------------------------------------------------------------------
 // QBaseObject
 //------------------------------------------------------------------------------
-// Base class for all objects that need bridging to Lua
-// tolua_begin
-class QBaseObject
-{
+// Base class interface for all objects that need bridging to Lua
+class QBaseObject { // tolua_export
 public:
+    // tolua_begin
     QBaseObject() {};
     ~QBaseObject() {};
-};
-// tolua_end
+
+    // tolua_end
+}; // tolua_export
 
 // tolua_begin
 }

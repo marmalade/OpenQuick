@@ -40,19 +40,27 @@ end
 --------------------------------------------------------------------------------
 -- Private API
 --------------------------------------------------------------------------------
+QAnimation.serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+	return obj
+end
+
 --[[
 /*
 Initialise the peer table for the C++ class QAnimation.
 This must be called immediately after the QAnimation() constructor.
 */
 --]]
-function QAnimation:initAnimation(l)
-    if config.debug.traceGC == true then
-        getmetatable(l).__gc = QAnimation.newGC
-    end
+function QAnimation:initAnimation(n)
     local lp = {}
     setmetatable(lp, QAnimation)
-    tolua.setpeer(l, lp)
+    tolua.setpeer(n, lp)
+
+    local mt = getmetatable(n) 
+    mt.__serialize = QAnimation.serialize
+    if config.debug.traceGC == true then
+        mt.__gc = QAnimation.newGC
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -114,6 +122,10 @@ function director:createAnimation(values)
     end
 
     n:setDelay( values.delay or 1)
+
+     -- Store this animation in the current QScene object's atlas list
+--    dbg.print( "Adding animation to scene "..tostring(self.currentScene))
+    self.currentScene._animationList[n]  = n
 
     return n
 end

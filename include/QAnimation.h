@@ -51,6 +51,8 @@ class QAnimation { // tolua_export
 public:
     // BOUND, PRIVATE
     // tolua_begin
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
     QAnimation();
     ~QAnimation();
 

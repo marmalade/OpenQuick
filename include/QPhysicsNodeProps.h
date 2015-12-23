@@ -1,23 +1,13 @@
 /*
- * (C) 2012-2013 Marmalade.
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * (C) 2001-2012 Marmalade. All Rights Reserved.
+ *
+ * This document is protected by copyright, and contains information
+ * proprietary to Marmalade.
+ *
+ * This file consists of source code released by Marmalade under
+ * the terms of the accompanying End User License Agreement (EULA).
+ * Please do not use this program/source code before you have read the
+ * EULA and have agreed to be bound by its terms.
  */
 
 //------------------------------------------------------------------------------
@@ -47,6 +37,20 @@ namespace physics {
 #define MAX_SHAPE_POINTS 8
 
 class QNodeProps { // tolua_export
+private:
+    /**
+	Back up of x coordinate of the Node
+	*/
+	float _x_backup;
+	
+	/**
+	Back up of y coordinate of the Node
+	*/
+	float _y_backup;
+    /**
+	Back up of rotation of the Node
+	*/
+	float _rotation_backup;
 public:
     // BOUND, PRIVATE
     // tolua_begin
@@ -70,7 +74,7 @@ public:
 
 	// BOUND, PUBLIC
     /**
-    Apply a force at a world point. If the force is not
+    Apply a force at point in world coordinates. If the force is not
     applied at the center of mass, it will generate a torque and
     affect the angular velocity. This wakes up the body.
     @param fx The force x component, in display coordinates.
@@ -79,6 +83,14 @@ public:
     @param py The y coord of the point to apply the force to, in body coordinates
     */
     void applyForce(float fx, float fy, float px = 0.0f, float py = 0.0f);
+
+    /**
+    Apply a force to center of mass with count of offset dx and dy. If offset is not 0
+    it will generate a torque and affect the angular velocity. This wakes up the body.
+    @param fx The force x component, in display coordinates.
+    @param fy The force y component, in display coordinates.
+    */
+    void applyForceToCenter(float fx, float fy);
 
     /**
     Applies an angular impulse to the rigid body.
@@ -90,7 +102,7 @@ public:
     Set the angular velocity.
     @param omega the new angular velocity in radians/second.
     */
-    void setAngularVelocity(float32 omega);
+    void setAngularVelocity(float omega);
 
     /**
     Get the angular velocity.
@@ -107,15 +119,28 @@ public:
     void applyTorque(float32 torque);
 
     /**
-    Apply an impulse at a point. This immediately modifies the velocity.
+    Apply an impulse at a point in world coordinates. 
+    Apply an impulse at a center of mass if px = py = -1.
+    This immediately modifies the velocity.
     It also modifies the angular velocity if the point of application
-    is not at the center of mass. This wakes up the body.
+    is not at the center of mass. This wakes up the body. 
     @param ix The x coord of the world impulse vector, usually in N-seconds or kg-m/s.
     @param iy The y coord of the world impulse vector, usually in N-seconds or kg-m/s.
     @param px The x coord of the world position of the point to apply the impulse.
     @param py The y coord of the world position of the point to apply the impulse.
     */
-    void applyLinearImpulse(float ix, float iy, float px=-1.0f, float py=-1.0f);
+    void applyLinearImpulse(float ix, float iy, float px=0.0f, float py=0.0f);
+
+    /**
+    Apply an impulse at center mass with count of offset dx and dy.
+    This immediately modifies the velocity.
+    It also modifies the angular velocity if offset is not 0. This wakes up the body.
+    @param ix The x coord of the world impulse vector, usually in N-seconds or kg-m/s.
+    @param iy The y coord of the world impulse vector, usually in N-seconds or kg-m/s.
+    @param dx The x offset from center mass to apply impulse
+    @param dy The y offset from center mass to apply impulse
+    */
+    void applyLinearImpulseToCenter(float ix, float iy);
 
     /**
     Get the total mass of the body.
@@ -136,6 +161,17 @@ public:
     @return wx, wy The same point expressed in world coordinates.
     */
     void getWorldPoint(float lx, float ly, float* wx=0, float* wy=0);
+
+    /**
+    Get coordinates of center mass of body in world's coordinate system
+    @return vx, vy coordinates of center mass point
+    */
+    void getWorldCenter(float* vx, float* vy);
+    /**
+    Get coordinates of center mass of body in local coordinate system
+    @return vx, vy coordinates of center mass point
+    */
+    void getLocalCenter(float* vx, float* vy);
 
     /**
     Get the world coordinates of a vector given the local coordinates.
@@ -177,23 +213,62 @@ public:
     */
     void getLinearVelocityFromLocalPoint(float lx, float ly, float* vx=0, float* vy=0);
 
-    // Get the linear damping of the body.
+    /**
+    Get the linear damping of the body.
+    @return value of linear dumping
+    */
     float getLinearDamping();
 
-    // Set the linear damping of the body.
+    /**
+    Set the linear damping of the body.
+    @param linearDamping value of linear damping to set
+    */
     void setLinearDamping(float linearDamping);
-
-    // Get the angular damping of the body.
+    
+    /**
+    Get the angular damping of the body.
+    @return value of angular dumping
+    */
     float getAngularDamping();
 
-    // Set the angular damping of the body.
+    /**
+    Set the angular damping of the body.
+    @param angularDamping value of angular damping to set
+    */
     void setAngularDamping(float32 angularDamping);
 
-    // Get the gravity scale of the body.
+    /**
+    Get the gravity scale of the body.
+    @return value of gravity scale
+    */
     float getGravityScale();
 
-    // Set the gravity scale of the body.
+    /**
+    Set the gravity scale of the body.
+    @param scale value of gravity scale to set
+    */
     void setGravityScale(float scale);
+    
+    /**
+    Set the linear velocity of the body.
+    @param ix x-part of linear velocity vector of the body
+    @param iy y-part of linear velocity vector of the body
+    */
+    void setLinearVelocity(float ix, float iy);
+    
+    /**
+    Get the linear velocity of the body.
+    @return vx, vy The linear velocity of the body
+    */
+    void getLinearVelocity(float* vx, float* vy);
+    
+    /**
+    Set the location transformation of the body in world coordinates.
+    @param ix x-part of location point
+    @param iy y-part of location point
+    @param iz rotation angle of object
+    */
+    void setTransform(float ix, float iy, float iz);
 
     /**
     The friction value.

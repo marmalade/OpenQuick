@@ -1,6 +1,6 @@
 /*
 ** Lua binding: openquick_tolua
-** Generated automatically by tolua++-1.0.92 on 02/09/13 18:20:15.
+** Generated automatically by tolua++-1.0.92 on 12/23/15 13:14:00.
 */
 
 #ifndef __cplusplus
@@ -21,10 +21,12 @@ TOLUA_API int  tolua_openquick_tolua_open (lua_State* tolua_S);
 #include "include/QColor.h"
 #include "include/QDirector.h"
 #include "include/QEvent.h"
+#include "include/QFilter.h"
 #include "include/QFont.h"
 #include "include/QLabel.h"
 #include "include/QLines.h"
 #include "include/QNode.h"
+#include "include/QNodeGLProgram.h"
 #include "include/QMain.h"
 #include "include/QParticles.h"
 #include "include/QPhysics.h"
@@ -42,7 +44,9 @@ TOLUA_API int  tolua_openquick_tolua_open (lua_State* tolua_S);
 #include "include/QPhysicsJointGear.h"
 #include "include/QPhysicsJointRope.h"
 #include "include/QPhysicsNodeProps.h"
+#include "include/QRect.h"
 #include "include/QRectangle.h"
+#include "include/QRenderTexture.h"
 #include "include/QScene.h"
 #include "include/QSprite.h"
 #include "include/QLsqlite3.h"
@@ -50,6 +54,7 @@ TOLUA_API int  tolua_openquick_tolua_open (lua_State* tolua_S);
 #include "include/QTiledMap.h"
 #include "include/QTimer.h"
 #include "include/QTween.h"
+#include "include/QVec2.h"
 #include "include/QVector.h"
 
 /* function to release collected object via destructor */
@@ -58,6 +63,13 @@ TOLUA_API int  tolua_openquick_tolua_open (lua_State* tolua_S);
 static int tolua_collect_quick__QAnimation (lua_State* tolua_S)
 {
  quick::QAnimation* self = (quick::QAnimation*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_quick__QTiledMapObjectGroup (lua_State* tolua_S)
+{
+ quick::QTiledMapObjectGroup* self = (quick::QTiledMapObjectGroup*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -160,9 +172,16 @@ static int tolua_collect_quick__physics__QJointWeld (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_quick__physics__QJointPulley (lua_State* tolua_S)
+static int tolua_collect_quick__QNode (lua_State* tolua_S)
 {
- quick::physics::QJointPulley* self = (quick::physics::QJointPulley*) tolua_tousertype(tolua_S,1,0);
+ quick::QNode* self = (quick::QNode*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_quick__QTiledMapObject (lua_State* tolua_S)
+{
+ quick::QTiledMapObject* self = (quick::QTiledMapObject*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -188,6 +207,13 @@ static int tolua_collect_quick__QFont (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_quick__QNodeGLProgram (lua_State* tolua_S)
+{
+ quick::QNodeGLProgram* self = (quick::QNodeGLProgram*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_quick__QAudio (lua_State* tolua_S)
 {
  quick::QAudio* self = (quick::QAudio*) tolua_tousertype(tolua_S,1,0);
@@ -209,9 +235,37 @@ static int tolua_collect_quick__physics__QJoint (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_quick__QVec2 (lua_State* tolua_S)
+{
+ quick::QVec2* self = (quick::QVec2*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_quick__QTween (lua_State* tolua_S)
 {
  quick::QTween* self = (quick::QTween*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_quick__physics__QJointPulley (lua_State* tolua_S)
+{
+ quick::physics::QJointPulley* self = (quick::physics::QJointPulley*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_quick__QTiledMap (lua_State* tolua_S)
+{
+ quick::QTiledMap* self = (quick::QTiledMap*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_quick__QRect (lua_State* tolua_S)
+{
+ quick::QRect* self = (quick::QRect*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -230,9 +284,9 @@ static int tolua_collect_quick__physics__QJointRevolute (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_quick__QTiledMap (lua_State* tolua_S)
+static int tolua_collect_quick__QTiledMapLayer (lua_State* tolua_S)
 {
- quick::QTiledMap* self = (quick::QTiledMap*) tolua_tousertype(tolua_S,1,0);
+ quick::QTiledMapLayer* self = (quick::QTiledMapLayer*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -251,6 +305,13 @@ static int tolua_collect_quick__QBaseObject (lua_State* tolua_S)
 	return 0;
 }
 
+static int tolua_collect_quick__QRenderTexture (lua_State* tolua_S)
+{
+ quick::QRenderTexture* self = (quick::QRenderTexture*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
 static int tolua_collect_quick__QEventListener (lua_State* tolua_S)
 {
  quick::QEventListener* self = (quick::QEventListener*) tolua_tousertype(tolua_S,1,0);
@@ -258,27 +319,23 @@ static int tolua_collect_quick__QEventListener (lua_State* tolua_S)
 	return 0;
 }
 
-static int tolua_collect_quick__QNode (lua_State* tolua_S)
-{
- quick::QNode* self = (quick::QNode*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-
-/*
-This function is not used.  Updating to the latest version of cocos2dx will
-fix this issue.
 static int tolua_collect_cocos2d__ccColor4F (lua_State* tolua_S)
 {
  cocos2d::ccColor4F* self = (cocos2d::ccColor4F*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
-*/
 
 static int tolua_collect_quick__QParticles (lua_State* tolua_S)
 {
  quick::QParticles* self = (quick::QParticles*) tolua_tousertype(tolua_S,1,0);
+	Mtolua_delete(self);
+	return 0;
+}
+
+static int tolua_collect_quick__physics__QJointGear (lua_State* tolua_S)
+{
+ quick::physics::QJointGear* self = (quick::physics::QJointGear*) tolua_tousertype(tolua_S,1,0);
 	Mtolua_delete(self);
 	return 0;
 }
@@ -296,13 +353,6 @@ static int tolua_collect_quick__physics__QNodeProps (lua_State* tolua_S)
 	Mtolua_delete(self);
 	return 0;
 }
-
-static int tolua_collect_quick__physics__QJointGear (lua_State* tolua_S)
-{
- quick::physics::QJointGear* self = (quick::physics::QJointGear*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
 #endif
 
 
@@ -311,47 +361,124 @@ static void tolua_reg_types (lua_State* tolua_S)
 {
  tolua_usertype(tolua_S,"float32");
  tolua_usertype(tolua_S,"quick::QAnimation");
+ tolua_usertype(tolua_S,"quick::QTiledMapObjectGroup");
  tolua_usertype(tolua_S,"quick::physics::QJointDistance");
  tolua_usertype(tolua_S,"quick::QRectangle");
  tolua_usertype(tolua_S,"quick::physics::QJointFriction");
+ tolua_usertype(tolua_S,"quick::physics::QJointTouch");
  tolua_usertype(tolua_S,"quick::QScene");
  tolua_usertype(tolua_S,"quick::physics::QJointPrismatic");
  tolua_usertype(tolua_S,"quick::QColor");
+ tolua_usertype(tolua_S,"quick::QParticles::modeGravityStruct");
+ tolua_usertype(tolua_S,"quick::QVec2");
  tolua_usertype(tolua_S,"quick::QCircle");
+ tolua_usertype(tolua_S,"quick::QTween");
  tolua_usertype(tolua_S,"quick::physics::QJointRope");
  tolua_usertype(tolua_S,"quick::QSystem");
  tolua_usertype(tolua_S,"quick::QDirector");
  tolua_usertype(tolua_S,"quick::QVector");
- tolua_usertype(tolua_S,"quick::QParticles::modeBStruct");
+ tolua_usertype(tolua_S,"quick::QTiledMap");
+ tolua_usertype(tolua_S,"cocos2d::CCGLProgram");
+ tolua_usertype(tolua_S,"quick::QParticles::modeRadialStruct");
+ tolua_usertype(tolua_S,"quick::physics::QJointGear");
+ tolua_usertype(tolua_S,"quick::physics::QSim");
+ tolua_usertype(tolua_S,"quick::QTiledMapLayer");
+ tolua_usertype(tolua_S,"quick::QRenderTexture");
  tolua_usertype(tolua_S,"quick::physics::QJointWheel");
  tolua_usertype(tolua_S,"quick::physics::QJointWeld");
- tolua_usertype(tolua_S,"quick::QParticles::xyStruct");
+ tolua_usertype(tolua_S,"quick::QNode");
+ tolua_usertype(tolua_S,"quick::QTiledMapObject");
  tolua_usertype(tolua_S,"quick::QAtlas");
+ tolua_usertype(tolua_S,"cocos2d::CCTMXObjectGroup");
  tolua_usertype(tolua_S,"quick::QSprite");
  tolua_usertype(tolua_S,"quick::QFont");
- tolua_usertype(tolua_S,"quick::QTween");
+ tolua_usertype(tolua_S,"quick::QNodeGLProgram");
  tolua_usertype(tolua_S,"quick::QAudio");
  tolua_usertype(tolua_S,"quick::QLines");
  tolua_usertype(tolua_S,"quick::physics::QJoint");
- tolua_usertype(tolua_S,"quick::QEventListener");
+ tolua_usertype(tolua_S,"cocos2d::CCDictionary");
  tolua_usertype(tolua_S,"private cocos2d::CCSpriteFrameCache");
- tolua_usertype(tolua_S,"quick::QTiledMap");
+ tolua_usertype(tolua_S,"cocos2d::ccColor4F");
+ tolua_usertype(tolua_S,"std::vector<quick::QTiledMapObject*>");
  tolua_usertype(tolua_S,"quick::physics::QNodeProps");
- tolua_usertype(tolua_S,"quick::physics::QContact");
- tolua_usertype(tolua_S,"quick::physics::QJointGear");
+ tolua_usertype(tolua_S,"quick::QRect");
  tolua_usertype(tolua_S,"quick::QLabel");
- tolua_usertype(tolua_S,"quick::physics::QJointRevolute");
- tolua_usertype(tolua_S,"quick::QParticles::modeAStruct");
+ tolua_usertype(tolua_S,"quick::physics::QContact");
+ tolua_usertype(tolua_S,"cocos2d::CCTMXLayer");
  tolua_usertype(tolua_S,"quick::QTimer");
  tolua_usertype(tolua_S,"quick::QBaseObject");
- tolua_usertype(tolua_S,"quick::QNode");
- tolua_usertype(tolua_S,"cocos2d::ccColor4F");
- tolua_usertype(tolua_S,"quick::physics::QJointTouch");
+ tolua_usertype(tolua_S,"quick::physics::QJointPulley");
+ tolua_usertype(tolua_S,"quick::QEventListener");
+ tolua_usertype(tolua_S,"CCSprite");
  tolua_usertype(tolua_S,"quick::QParticles");
  tolua_usertype(tolua_S,"b2Body");
- tolua_usertype(tolua_S,"quick::physics::QJointPulley");
- tolua_usertype(tolua_S,"quick::physics::QSim");
+ tolua_usertype(tolua_S,"quick::physics::QJointRevolute");
+ tolua_usertype(tolua_S,"quick::QFilterData");
 }
+
+/* method: __tostring of class  quick::QAnimation */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QAnimation___tostring00
+static int tolua_openquick_tolua_quick_QAnimation___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QAnimation",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QAnimation* self = (quick::QAnimation*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QAnimation */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QAnimation___serialize00
+static int tolua_openquick_tolua_quick_QAnimation___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QAnimation",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QAnimation* self = (quick::QAnimation*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
 
 /* method: new of class  quick::QAnimation */
 #ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QAnimation_new00
@@ -569,6 +696,70 @@ static int tolua_openquick_tolua_quick_QAnimation_getDuration00(lua_State* tolua
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getDuration'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QAtlas */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QAtlas___tostring00
+static int tolua_openquick_tolua_quick_QAtlas___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QAtlas",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QAtlas* self = (quick::QAtlas*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QAtlas */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QAtlas___serialize00
+static int tolua_openquick_tolua_quick_QAtlas___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QAtlas",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QAtlas* self = (quick::QAtlas*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1393,62 +1584,259 @@ static int tolua_openquick_tolua_quick_QAudio_unloadSound00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: musicVolume of class  quick::QAudio */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QAudio_musicVolume
-static int tolua_get_quick__QAudio_musicVolume(lua_State* tolua_S)
+/* method: setSoundFrequency of class  quick::QAudio */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QAudio_setSoundFrequency00
+static int tolua_openquick_tolua_quick_QAudio_setSoundFrequency00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QAudio",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QAudio* self = (quick::QAudio*)  tolua_tousertype(tolua_S,1,0);
+  int frequency = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSoundFrequency'", NULL);
+#endif
+  {
+   self->setSoundFrequency(frequency);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSoundFrequency'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isSoundPlaying of class  quick::QAudio */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QAudio_isSoundPlaying00
+static int tolua_openquick_tolua_quick_QAudio_isSoundPlaying00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QAudio",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QAudio* self = (quick::QAudio*)  tolua_tousertype(tolua_S,1,0);
+  int channel = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isSoundPlaying'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isSoundPlaying(channel);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isSoundPlaying'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: get_streamVolume of class  quick::QAudio */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QAudio_get_streamVolume00
+static int tolua_openquick_tolua_quick_QAudio_get_streamVolume00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QAudio",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QAudio* self = (quick::QAudio*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'get_streamVolume'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->get_streamVolume();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'get_streamVolume'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: set_streamVolume of class  quick::QAudio */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QAudio_set_streamVolume00
+static int tolua_openquick_tolua_quick_QAudio_set_streamVolume00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QAudio",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QAudio* self = (quick::QAudio*)  tolua_tousertype(tolua_S,1,0);
+  float volume = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'set_streamVolume'", NULL);
+#endif
+  {
+   self->set_streamVolume(volume);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'set_streamVolume'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: get_soundVolume of class  quick::QAudio */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QAudio_get_soundVolume00
+static int tolua_openquick_tolua_quick_QAudio_get_soundVolume00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QAudio",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QAudio* self = (quick::QAudio*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'get_soundVolume'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->get_soundVolume();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'get_soundVolume'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: set_soundVolume of class  quick::QAudio */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QAudio_set_soundVolume00
+static int tolua_openquick_tolua_quick_QAudio_set_soundVolume00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QAudio",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QAudio* self = (quick::QAudio*)  tolua_tousertype(tolua_S,1,0);
+  float volume = ((float)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'set_soundVolume'", NULL);
+#endif
+  {
+   self->set_soundVolume(volume);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'set_soundVolume'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: streamVolume of class  quick::QAudio */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QAudio_streamVolume
+static int tolua_get_quick__QAudio_streamVolume(lua_State* tolua_S)
 {
   quick::QAudio* self = (quick::QAudio*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'musicVolume'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'streamVolume'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->get_musicVolume());
+  tolua_pushnumber(tolua_S,(lua_Number)self->get_streamVolume());
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: musicVolume of class  quick::QAudio */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QAudio_musicVolume
-static int tolua_set_quick__QAudio_musicVolume(lua_State* tolua_S)
+/* set function: streamVolume of class  quick::QAudio */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QAudio_streamVolume
+static int tolua_set_quick__QAudio_streamVolume(lua_State* tolua_S)
 {
   quick::QAudio* self = (quick::QAudio*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'musicVolume'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'streamVolume'",NULL);
   if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->set_musicVolume(((float)  tolua_tonumber(tolua_S,2,0))
+  self->set_streamVolume(((float)  tolua_tonumber(tolua_S,2,0))
 )
 ;
  return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: sfxVolume of class  quick::QAudio */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QAudio_sfxVolume
-static int tolua_get_quick__QAudio_sfxVolume(lua_State* tolua_S)
+/* get function: soundVolume of class  quick::QAudio */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QAudio_soundVolume
+static int tolua_get_quick__QAudio_soundVolume(lua_State* tolua_S)
 {
   quick::QAudio* self = (quick::QAudio*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sfxVolume'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'soundVolume'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->get_sfxVolume());
+  tolua_pushnumber(tolua_S,(lua_Number)self->get_soundVolume());
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: sfxVolume of class  quick::QAudio */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QAudio_sfxVolume
-static int tolua_set_quick__QAudio_sfxVolume(lua_State* tolua_S)
+/* set function: soundVolume of class  quick::QAudio */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QAudio_soundVolume
+static int tolua_set_quick__QAudio_soundVolume(lua_State* tolua_S)
 {
   quick::QAudio* self = (quick::QAudio*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sfxVolume'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'soundVolume'",NULL);
   if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->set_sfxVolume(((float)  tolua_tonumber(tolua_S,2,0))
+  self->set_soundVolume(((float)  tolua_tonumber(tolua_S,2,0))
 )
 ;
  return 0;
@@ -1536,6 +1924,102 @@ static int tolua_openquick_tolua_quick_QBaseObject_delete00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _getToLuaClassName of class  quick::QCircle */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QCircle__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QCircle__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QCircle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QCircle* self = (quick::QCircle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QCircle */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QCircle___tostring00
+static int tolua_openquick_tolua_quick_QCircle___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QCircle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QCircle* self = (quick::QCircle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QCircle */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QCircle___serialize00
+static int tolua_openquick_tolua_quick_QCircle___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QCircle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QCircle* self = (quick::QCircle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
  return 0;
 #endif
 }
@@ -1721,6 +2205,70 @@ static int tolua_set_quick__QCircle_radius(lua_State* tolua_S)
   self->radius = ((float)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QColor */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QColor___tostring00
+static int tolua_openquick_tolua_quick_QColor___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QColor",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QColor* self = (quick::QColor*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QColor */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QColor___serialize00
+static int tolua_openquick_tolua_quick_QColor___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QColor",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QColor* self = (quick::QColor*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -2165,6 +2713,70 @@ static int tolua_set_quick__QColor_unsigned_a(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: __tostring of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QDirector___tostring00
+static int tolua_openquick_tolua_quick_QDirector___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QDirector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QDirector___serialize00
+static int tolua_openquick_tolua_quick_QDirector___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QDirector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: new of class  quick::QDirector */
 #ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QDirector_new00
 static int tolua_openquick_tolua_quick_QDirector_new00(lua_State* tolua_S)
@@ -2406,6 +3018,156 @@ static int tolua_set_quick__QDirector__transitionType(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* get function: _overlayScene of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QDirector__overlayScene_ptr
+static int tolua_get_quick__QDirector__overlayScene_ptr(lua_State* tolua_S)
+{
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '_overlayScene'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)self->_overlayScene,"quick::QScene");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: _overlayScene of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QDirector__overlayScene_ptr
+static int tolua_set_quick__QDirector__overlayScene_ptr(lua_State* tolua_S)
+{
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '_overlayScene'",NULL);
+  if (!tolua_isusertype(tolua_S,2,"quick::QScene",0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->_overlayScene = ((quick::QScene*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: _overlayTransitionScene of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QDirector__overlayTransitionScene_ptr
+static int tolua_get_quick__QDirector__overlayTransitionScene_ptr(lua_State* tolua_S)
+{
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '_overlayTransitionScene'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)self->_overlayTransitionScene,"quick::QScene");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: _overlayTransitionScene of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QDirector__overlayTransitionScene_ptr
+static int tolua_set_quick__QDirector__overlayTransitionScene_ptr(lua_State* tolua_S)
+{
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '_overlayTransitionScene'",NULL);
+  if (!tolua_isusertype(tolua_S,2,"quick::QScene",0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->_overlayTransitionScene = ((quick::QScene*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: _overlayTransitionTime of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QDirector__overlayTransitionTime
+static int tolua_get_quick__QDirector__overlayTransitionTime(lua_State* tolua_S)
+{
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '_overlayTransitionTime'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->_overlayTransitionTime);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: _overlayTransitionTime of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QDirector__overlayTransitionTime
+static int tolua_set_quick__QDirector__overlayTransitionTime(lua_State* tolua_S)
+{
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '_overlayTransitionTime'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->_overlayTransitionTime = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: _overlayTransitionType of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QDirector__overlayTransitionType
+static int tolua_get_quick__QDirector__overlayTransitionType(lua_State* tolua_S)
+{
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '_overlayTransitionType'",NULL);
+#endif
+  tolua_pushcppstring(tolua_S,(const char*)self->_overlayTransitionType);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: _overlayTransitionType of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QDirector__overlayTransitionType
+static int tolua_set_quick__QDirector__overlayTransitionType(lua_State* tolua_S)
+{
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '_overlayTransitionType'",NULL);
+  if (!tolua_iscppstring(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->_overlayTransitionType = ((std::string)  tolua_tocppstring(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: _modalOverlay of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QDirector__modalOverlay
+static int tolua_get_quick__QDirector__modalOverlay(lua_State* tolua_S)
+{
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '_modalOverlay'",NULL);
+#endif
+  tolua_pushboolean(tolua_S,(bool)self->_modalOverlay);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: _modalOverlay of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QDirector__modalOverlay
+static int tolua_set_quick__QDirector__modalOverlay(lua_State* tolua_S)
+{
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable '_modalOverlay'",NULL);
+  if (!tolua_isboolean(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->_modalOverlay = ((bool)  tolua_toboolean(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: nodesColor of class  quick::QDirector */
 #ifndef TOLUA_DISABLE_tolua_get_quick__QDirector_nodesColor
 static int tolua_get_quick__QDirector_nodesColor(lua_State* tolua_S)
@@ -2557,6 +3319,37 @@ static int tolua_openquick_tolua_quick_QDirector_cleanupTextures00(lua_State* to
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'cleanupTextures'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: startRendering of class  quick::QDirector */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QDirector_startRendering00
+static int tolua_openquick_tolua_quick_QDirector_startRendering00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QDirector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QDirector* self = (quick::QDirector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'startRendering'", NULL);
+#endif
+  {
+   self->startRendering();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'startRendering'.",&tolua_err);
  return 0;
 #endif
 }
@@ -2772,6 +3565,490 @@ static int tolua_openquick_tolua_quick_QEventListener_delete00(lua_State* tolua_
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* get function: name of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_name
+static int tolua_get_quick__QFilterData_name(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'name'",NULL);
+#endif
+  tolua_pushcppstring(tolua_S,(const char*)self->name);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: name of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_name
+static int tolua_set_quick__QFilterData_name(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'name'",NULL);
+  if (!tolua_iscppstring(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->name = ((std::string)  tolua_tocppstring(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: x of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_x
+static int tolua_get_quick__QFilterData_x(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->x);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: x of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_x
+static int tolua_set_quick__QFilterData_x(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->x = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: y of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_y
+static int tolua_get_quick__QFilterData_y(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->y);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: y of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_y
+static int tolua_set_quick__QFilterData_y(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->y = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: angle of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_angle
+static int tolua_get_quick__QFilterData_angle(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'angle'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->angle);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: angle of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_angle
+static int tolua_set_quick__QFilterData_angle(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'angle'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->angle = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: intensity of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_intensity
+static int tolua_get_quick__QFilterData_intensity(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'intensity'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->intensity);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: intensity of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_intensity
+static int tolua_set_quick__QFilterData_intensity(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'intensity'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->intensity = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: contrast of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_contrast
+static int tolua_get_quick__QFilterData_contrast(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'contrast'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->contrast);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: contrast of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_contrast
+static int tolua_set_quick__QFilterData_contrast(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'contrast'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->contrast = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: sensitivity of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_sensitivity
+static int tolua_get_quick__QFilterData_sensitivity(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sensitivity'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->sensitivity);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: sensitivity of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_sensitivity
+static int tolua_set_quick__QFilterData_sensitivity(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sensitivity'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->sensitivity = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: smoothing of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_smoothing
+static int tolua_get_quick__QFilterData_smoothing(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'smoothing'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->smoothing);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: smoothing of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_smoothing
+static int tolua_set_quick__QFilterData_smoothing(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'smoothing'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->smoothing = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: radius of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_radius
+static int tolua_get_quick__QFilterData_radius(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'radius'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->radius);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: radius of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_radius
+static int tolua_set_quick__QFilterData_radius(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'radius'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->radius = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: scale of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_scale
+static int tolua_get_quick__QFilterData_scale(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'scale'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->scale);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: scale of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_scale
+static int tolua_set_quick__QFilterData_scale(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'scale'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->scale = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: spacing of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_spacing
+static int tolua_get_quick__QFilterData_spacing(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'spacing'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->spacing);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: spacing of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_spacing
+static int tolua_set_quick__QFilterData_spacing(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'spacing'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->spacing = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: lineWidth of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_lineWidth
+static int tolua_get_quick__QFilterData_lineWidth(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'lineWidth'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->lineWidth);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: lineWidth of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_lineWidth
+static int tolua_set_quick__QFilterData_lineWidth(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'lineWidth'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->lineWidth = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: exposure of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_exposure
+static int tolua_get_quick__QFilterData_exposure(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'exposure'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->exposure);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: exposure of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_exposure
+static int tolua_set_quick__QFilterData_exposure(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'exposure'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->exposure = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: color of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QFilterData_color
+static int tolua_get_quick__QFilterData_color(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'color'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->color,"quick::QColor");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: color of class  quick::QFilterData */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QFilterData_color
+static int tolua_set_quick__QFilterData_color(lua_State* tolua_S)
+{
+  quick::QFilterData* self = (quick::QFilterData*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'color'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QColor",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->color = *((quick::QColor*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QFont */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QFont___tostring00
+static int tolua_openquick_tolua_quick_QFont___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QFont",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QFont* self = (quick::QFont*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QFont */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QFont___serialize00
+static int tolua_openquick_tolua_quick_QFont___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QFont",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QFont* self = (quick::QFont*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: new of class  quick::QFont */
 #ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QFont_new00
 static int tolua_openquick_tolua_quick_QFont_new00(lua_State* tolua_S)
@@ -2951,6 +4228,102 @@ static int tolua_set_quick__QFont_fileName(lua_State* tolua_S)
 )
 ;
  return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _getToLuaClassName of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QLabel__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QLabel__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QLabel",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QLabel___tostring00
+static int tolua_openquick_tolua_quick_QLabel___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QLabel",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QLabel___serialize00
+static int tolua_openquick_tolua_quick_QLabel___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QLabel",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -3288,6 +4661,186 @@ static int tolua_set_quick__QLabel_textTouchableBorder(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* get function: textBorderTop of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QLabel_textBorderTop
+static int tolua_get_quick__QLabel_textBorderTop(lua_State* tolua_S)
+{
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'textBorderTop'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->textBorderTop);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: textBorderTop of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QLabel_textBorderTop
+static int tolua_set_quick__QLabel_textBorderTop(lua_State* tolua_S)
+{
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'textBorderTop'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->textBorderTop = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: textBorderBottom of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QLabel_textBorderBottom
+static int tolua_get_quick__QLabel_textBorderBottom(lua_State* tolua_S)
+{
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'textBorderBottom'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->textBorderBottom);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: textBorderBottom of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QLabel_textBorderBottom
+static int tolua_set_quick__QLabel_textBorderBottom(lua_State* tolua_S)
+{
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'textBorderBottom'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->textBorderBottom = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: textBorderLeft of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QLabel_textBorderLeft
+static int tolua_get_quick__QLabel_textBorderLeft(lua_State* tolua_S)
+{
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'textBorderLeft'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->textBorderLeft);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: textBorderLeft of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QLabel_textBorderLeft
+static int tolua_set_quick__QLabel_textBorderLeft(lua_State* tolua_S)
+{
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'textBorderLeft'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->textBorderLeft = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: textBorderRight of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QLabel_textBorderRight
+static int tolua_get_quick__QLabel_textBorderRight(lua_State* tolua_S)
+{
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'textBorderRight'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->textBorderRight);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: textBorderRight of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QLabel_textBorderRight
+static int tolua_set_quick__QLabel_textBorderRight(lua_State* tolua_S)
+{
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'textBorderRight'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->textBorderRight = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: textXScale of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QLabel_textXScale
+static int tolua_get_quick__QLabel_textXScale(lua_State* tolua_S)
+{
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'textXScale'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->textXScale);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: textXScale of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QLabel_textXScale
+static int tolua_set_quick__QLabel_textXScale(lua_State* tolua_S)
+{
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'textXScale'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->textXScale = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: textYScale of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QLabel_textYScale
+static int tolua_get_quick__QLabel_textYScale(lua_State* tolua_S)
+{
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'textYScale'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->textYScale);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: textYScale of class  quick::QLabel */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QLabel_textYScale
+static int tolua_set_quick__QLabel_textYScale(lua_State* tolua_S)
+{
+  quick::QLabel* self = (quick::QLabel*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'textYScale'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->textYScale = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: xText of class  quick::QLabel */
 #ifndef TOLUA_DISABLE_tolua_get_quick__QLabel_xText
 static int tolua_get_quick__QLabel_xText(lua_State* tolua_S)
@@ -3409,6 +4962,102 @@ static int tolua_set_quick__QLabel_hText(lua_State* tolua_S)
 )
 ;
  return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _getToLuaClassName of class  quick::QLines */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QLines__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QLines__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QLines",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QLines* self = (quick::QLines*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QLines */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QLines___tostring00
+static int tolua_openquick_tolua_quick_QLines___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QLines",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QLines* self = (quick::QLines*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QLines */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QLines___serialize00
+static int tolua_openquick_tolua_quick_QLines___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QLines",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QLines* self = (quick::QLines*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -3621,6 +5270,170 @@ static int tolua_openquick_tolua_quick_QLines_sync00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'sync'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isPointInside of class  quick::QLines */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QLines_isPointInside00
+static int tolua_openquick_tolua_quick_QLines_isPointInside00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QLines",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QLines* self = (quick::QLines*)  tolua_tousertype(tolua_S,1,0);
+  float x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float y = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isPointInside'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isPointInside(x,y);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isPointInside'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isClosed of class  quick::QLines */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QLines_isClosed00
+static int tolua_openquick_tolua_quick_QLines_isClosed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QLines",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QLines* self = (quick::QLines*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isClosed'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isClosed();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isClosed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _getToLuaClassName of class  quick::QNode */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNode__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QNode__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNode* self = (quick::QNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QNode */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNode___tostring00
+static int tolua_openquick_tolua_quick_QNode___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNode* self = (quick::QNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QNode */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNode___serialize00
+static int tolua_openquick_tolua_quick_QNode___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNode* self = (quick::QNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
  return 0;
 #endif
 }
@@ -4089,37 +5902,63 @@ static int tolua_openquick_tolua_quick_QNode_sync00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: isPointInside of class  quick::QNode */
-#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNode_isPointInside00
-static int tolua_openquick_tolua_quick_QNode_isPointInside00(lua_State* tolua_S)
+/* method: reverseSync of class  quick::QNode */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNode_reverseSync00
+static int tolua_openquick_tolua_quick_QNode_reverseSync00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"quick::QNode",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
   quick::QNode* self = (quick::QNode*)  tolua_tousertype(tolua_S,1,0);
-  float x = ((float)  tolua_tonumber(tolua_S,2,0));
-  float y = ((float)  tolua_tonumber(tolua_S,3,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isPointInside'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverseSync'", NULL);
 #endif
   {
-   bool tolua_ret = (bool)  self->isPointInside(x,y);
-   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+   self->reverseSync();
   }
  }
- return 1;
+ return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'isPointInside'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'reverseSync'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: visit of class  quick::QNode */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNode_visit00
+static int tolua_openquick_tolua_quick_QNode_visit00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNode* self = (quick::QNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'visit'", NULL);
+#endif
+  {
+   self->visit();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'visit'.",&tolua_err);
  return 0;
 #endif
 }
@@ -4193,6 +6032,124 @@ static int tolua_openquick_tolua_quick_QNode_setColor01(lua_State* tolua_S)
  return 0;
 tolua_lerror:
  return tolua_openquick_tolua_quick_QNode_setColor00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isPointInside of class  quick::QNode */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNode_isPointInside00
+static int tolua_openquick_tolua_quick_QNode_isPointInside00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNode",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNode* self = (quick::QNode*)  tolua_tousertype(tolua_S,1,0);
+  float x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float y = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isPointInside'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isPointInside(x,y);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isPointInside'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPointInWorldSpace of class  quick::QNode */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNode_getPointInWorldSpace00
+static int tolua_openquick_tolua_quick_QNode_getPointInWorldSpace00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNode",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,6,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNode* self = (quick::QNode*)  tolua_tousertype(tolua_S,1,0);
+  float lx = ((float)  tolua_tonumber(tolua_S,2,0));
+  float ly = ((float)  tolua_tonumber(tolua_S,3,0));
+  float wx = ((float)  tolua_tonumber(tolua_S,4,0));
+  float wy = ((float)  tolua_tonumber(tolua_S,5,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPointInWorldSpace'", NULL);
+#endif
+  {
+   self->getPointInWorldSpace(lx,ly,wx,wy);
+   tolua_pushnumber(tolua_S,(lua_Number)wx);
+   tolua_pushnumber(tolua_S,(lua_Number)wy);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPointInWorldSpace'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPointInLocalSpace of class  quick::QNode */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNode_getPointInLocalSpace00
+static int tolua_openquick_tolua_quick_QNode_getPointInLocalSpace00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNode",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,6,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNode* self = (quick::QNode*)  tolua_tousertype(tolua_S,1,0);
+  float wx = ((float)  tolua_tonumber(tolua_S,2,0));
+  float wy = ((float)  tolua_tonumber(tolua_S,3,0));
+  float lx = ((float)  tolua_tonumber(tolua_S,4,0));
+  float ly = ((float)  tolua_tonumber(tolua_S,5,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPointInLocalSpace'", NULL);
+#endif
+  {
+   self->getPointInLocalSpace(wx,wy,lx,ly);
+   tolua_pushnumber(tolua_S,(lua_Number)lx);
+   tolua_pushnumber(tolua_S,(lua_Number)ly);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPointInLocalSpace'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -4445,6 +6402,71 @@ static int tolua_openquick_tolua_quick_QNode_getTweensTimeScale00(lua_State* tol
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getTweensTimeScale'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setGLProgram of class  quick::QNode */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNode_setGLProgram00
+static int tolua_openquick_tolua_quick_QNode_setGLProgram00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNode",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNode* self = (quick::QNode*)  tolua_tousertype(tolua_S,1,0);
+  quick::QNodeGLProgram* pProg = ((quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setGLProgram'", NULL);
+#endif
+  {
+   self->setGLProgram(pProg);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setGLProgram'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getGLProgram of class  quick::QNode */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNode_getGLProgram00
+static int tolua_openquick_tolua_quick_QNode_getGLProgram00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNode",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNode* self = (quick::QNode*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getGLProgram'", NULL);
+#endif
+  {
+   quick::QNodeGLProgram* tolua_ret = (quick::QNodeGLProgram*)  self->getGLProgram();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QNodeGLProgram");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getGLProgram'.",&tolua_err);
  return 0;
 #endif
 }
@@ -5170,6 +7192,1111 @@ static int tolua_set_quick__QNode_isTouchable(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: _getToLuaClassName of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QNodeGLProgram__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram___tostring00
+static int tolua_openquick_tolua_quick_QNodeGLProgram___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram___serialize00
+static int tolua_openquick_tolua_quick_QNodeGLProgram___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_new00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   quick::QNodeGLProgram* tolua_ret = (quick::QNodeGLProgram*)  Mtolua_new((quick::QNodeGLProgram)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QNodeGLProgram");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_new00_local
+static int tolua_openquick_tolua_quick_QNodeGLProgram_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   quick::QNodeGLProgram* tolua_ret = (quick::QNodeGLProgram*)  Mtolua_new((quick::QNodeGLProgram)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QNodeGLProgram");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_delete00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: initWithVertexShaderByteArray of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_initWithVertexShaderByteArray00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_initWithVertexShaderByteArray00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  const char* vShaderByteArray = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* fShaderByteArray = ((const char*)  tolua_tostring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithVertexShaderByteArray'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->initWithVertexShaderByteArray(vShaderByteArray,fShaderByteArray);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'initWithVertexShaderByteArray'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: initWithVertexShaderFilename of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_initWithVertexShaderFilename00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_initWithVertexShaderFilename00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  const char* vShaderFilename = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* fShaderFilename = ((const char*)  tolua_tostring(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initWithVertexShaderFilename'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->initWithVertexShaderFilename(vShaderFilename,fShaderFilename);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'initWithVertexShaderFilename'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: addAttribute of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_addAttribute00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_addAttribute00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  const char* attributeName = ((const char*)  tolua_tostring(tolua_S,2,0));
+  unsigned int index = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'addAttribute'", NULL);
+#endif
+  {
+   self->addAttribute(attributeName,index);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'addAttribute'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: link of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_link00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_link00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'link'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->link();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'link'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: use of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_use00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_use00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'use'", NULL);
+#endif
+  {
+   self->use();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'use'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: updateUniforms of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_updateUniforms00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_updateUniforms00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'updateUniforms'", NULL);
+#endif
+  {
+   self->updateUniforms();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'updateUniforms'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith1i of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith1i00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith1i00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  int location = ((int)  tolua_tonumber(tolua_S,2,0));
+  int i1 = ((int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith1i'", NULL);
+#endif
+  {
+   self->setUniformLocationWith1i(location,i1);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith1i'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith1f of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith1f00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith1f00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  int location = ((int)  tolua_tonumber(tolua_S,2,0));
+  float f1 = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith1f'", NULL);
+#endif
+  {
+   self->setUniformLocationWith1f(location,f1);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith1f'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith2f of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith2f00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith2f00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  int location = ((int)  tolua_tonumber(tolua_S,2,0));
+  float f1 = ((float)  tolua_tonumber(tolua_S,3,0));
+  float f2 = ((float)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith2f'", NULL);
+#endif
+  {
+   self->setUniformLocationWith2f(location,f1,f2);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith2f'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith3f of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith3f00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith3f00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,6,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  int location = ((int)  tolua_tonumber(tolua_S,2,0));
+  float f1 = ((float)  tolua_tonumber(tolua_S,3,0));
+  float f2 = ((float)  tolua_tonumber(tolua_S,4,0));
+  float f3 = ((float)  tolua_tonumber(tolua_S,5,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith3f'", NULL);
+#endif
+  {
+   self->setUniformLocationWith3f(location,f1,f2,f3);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith3f'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith4f of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith4f00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith4f00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,7,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  int location = ((int)  tolua_tonumber(tolua_S,2,0));
+  float f1 = ((float)  tolua_tonumber(tolua_S,3,0));
+  float f2 = ((float)  tolua_tonumber(tolua_S,4,0));
+  float f3 = ((float)  tolua_tonumber(tolua_S,5,0));
+  float f4 = ((float)  tolua_tonumber(tolua_S,6,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith4f'", NULL);
+#endif
+  {
+   self->setUniformLocationWith4f(location,f1,f2,f3,f4);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith4f'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith2fv of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith2fv00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith2fv00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  int location = ((int)  tolua_tonumber(tolua_S,2,0));
+  float floats = ((float)  tolua_tonumber(tolua_S,3,0));
+  unsigned int numberOfArrays = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith2fv'", NULL);
+#endif
+  {
+   self->setUniformLocationWith2fv(location,&floats,numberOfArrays);
+   tolua_pushnumber(tolua_S,(lua_Number)floats);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith2fv'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith3fv of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith3fv00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith3fv00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  int location = ((int)  tolua_tonumber(tolua_S,2,0));
+  float floats = ((float)  tolua_tonumber(tolua_S,3,0));
+  unsigned int numberOfArrays = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith3fv'", NULL);
+#endif
+  {
+   self->setUniformLocationWith3fv(location,&floats,numberOfArrays);
+   tolua_pushnumber(tolua_S,(lua_Number)floats);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith3fv'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWith4fv of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith4fv00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith4fv00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  int location = ((int)  tolua_tonumber(tolua_S,2,0));
+  float floats = ((float)  tolua_tonumber(tolua_S,3,0));
+  unsigned int numberOfArrays = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWith4fv'", NULL);
+#endif
+  {
+   self->setUniformLocationWith4fv(location,&floats,numberOfArrays);
+   tolua_pushnumber(tolua_S,(lua_Number)floats);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUniformLocationWith4fv'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformLocationWithMatrix4fv of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWithMatrix4fv00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWithMatrix4fv00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  int location = ((int)  tolua_tonumber(tolua_S,2,0));
+  float matrixArray = ((float)  tolua_tonumber(tolua_S,3,0));
+  unsigned int numberOfMatrices = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformLocationWithMatrix4fv'", NULL);
+#endif
+  {
+   self->setUniformLocationWithMatrix4fv(location,&matrixArray,numberOfMatrices);
+   tolua_pushnumber(tolua_S,(lua_Number)matrixArray);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUniformLocationWithMatrix4fv'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformsForBuiltins of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_setUniformsForBuiltins00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_setUniformsForBuiltins00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformsForBuiltins'", NULL);
+#endif
+  {
+   self->setUniformsForBuiltins();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUniformsForBuiltins'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setUniformForModelViewProjectionMatrix of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_setUniformForModelViewProjectionMatrix00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_setUniformForModelViewProjectionMatrix00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setUniformForModelViewProjectionMatrix'", NULL);
+#endif
+  {
+   self->setUniformForModelViewProjectionMatrix();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setUniformForModelViewProjectionMatrix'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getUniformLocation of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_getUniformLocation00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_getUniformLocation00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  const char* szUniformName = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getUniformLocation'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getUniformLocation(szUniformName);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getUniformLocation'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: mapTextureToUniform of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_mapTextureToUniform00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_mapTextureToUniform00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+  const char* szUniformName = ((const char*)  tolua_tostring(tolua_S,2,0));
+  const char* szTextureFile = ((const char*)  tolua_tostring(tolua_S,3,0));
+  int nTextureInd = ((int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'mapTextureToUniform'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->mapTextureToUniform(szUniformName,szTextureFile,nTextureInd);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'mapTextureToUniform'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: vertexShaderLog of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_vertexShaderLog00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_vertexShaderLog00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'vertexShaderLog'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->vertexShaderLog();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'vertexShaderLog'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: fragmentShaderLog of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_fragmentShaderLog00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_fragmentShaderLog00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'fragmentShaderLog'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->fragmentShaderLog();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'fragmentShaderLog'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: programLog of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_programLog00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_programLog00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'programLog'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->programLog();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'programLog'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reset of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_reset00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_reset00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reset'", NULL);
+#endif
+  {
+   self->reset();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reset'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getProgram of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram_getProgram00
+static int tolua_openquick_tolua_quick_QNodeGLProgram_getProgram00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getProgram'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = (unsigned int)  self->getProgram();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getProgram'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _createCCGLProgram of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QNodeGLProgram__createCCGLProgram00
+static int tolua_openquick_tolua_quick_QNodeGLProgram__createCCGLProgram00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QNodeGLProgram",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_createCCGLProgram'", NULL);
+#endif
+  {
+   self->_createCCGLProgram();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_createCCGLProgram'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: m_CCProgram of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QNodeGLProgram_m_CCProgram_ptr
+static int tolua_get_quick__QNodeGLProgram_m_CCProgram_ptr(lua_State* tolua_S)
+{
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'm_CCProgram'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)self->m_CCProgram,"cocos2d::CCGLProgram");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: m_CCProgram of class  quick::QNodeGLProgram */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QNodeGLProgram_m_CCProgram_ptr
+static int tolua_set_quick__QNodeGLProgram_m_CCProgram_ptr(lua_State* tolua_S)
+{
+  quick::QNodeGLProgram* self = (quick::QNodeGLProgram*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'm_CCProgram'",NULL);
+  if (!tolua_isusertype(tolua_S,2,"cocos2d::CCGLProgram",0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->m_CCProgram = ((cocos2d::CCGLProgram*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: quick::MainLuaPrecompileFile */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_MainLuaPrecompileFile00
+static int tolua_openquick_tolua_quick_MainLuaPrecompileFile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isstring(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* filename = ((const char*)  tolua_tostring(tolua_S,1,0));
+  {
+   bool tolua_ret = (bool)  quick::MainLuaPrecompileFile(filename);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'MainLuaPrecompileFile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* function: quick::MainLuaLoadFile */
 #ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_MainLuaLoadFile00
 static int tolua_openquick_tolua_quick_MainLuaLoadFile00(lua_State* tolua_S)
@@ -5186,11 +8313,10 @@ static int tolua_openquick_tolua_quick_MainLuaLoadFile00(lua_State* tolua_S)
  {
   const char* filename = ((const char*)  tolua_tostring(tolua_S,1,0));
   {
-   std::string tolua_ret = (std::string)  quick::MainLuaLoadFile(filename);
-   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+   quick::MainLuaLoadFile(filename);
   }
  }
- return 1;
+ return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'MainLuaLoadFile'.",&tolua_err);
@@ -5222,6 +8348,115 @@ static int tolua_openquick_tolua_quick_MainLuaDoFile00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'MainLuaDoFile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: quick::MainGetVersionString */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_MainGetVersionString00
+static int tolua_openquick_tolua_quick_MainGetVersionString00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnoobj(tolua_S,1,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   const char* tolua_ret = (const char*)  quick::MainGetVersionString();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'MainGetVersionString'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: quick::startFileConcat */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_startFileConcat00
+static int tolua_openquick_tolua_quick_startFileConcat00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isstring(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const char* filename = ((const char*)  tolua_tostring(tolua_S,1,0));
+  {
+   quick::startFileConcat(filename);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'startFileConcat'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: quick::endFileConcat */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_endFileConcat00
+static int tolua_openquick_tolua_quick_endFileConcat00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnoobj(tolua_S,1,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   bool tolua_ret = (bool)  quick::endFileConcat();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'endFileConcat'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: quick::isFileConcatInProgress */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_isFileConcatInProgress00
+static int tolua_openquick_tolua_quick_isFileConcatInProgress00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnoobj(tolua_S,1,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   bool tolua_ret = (bool)  quick::isFileConcatInProgress();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isFileConcatInProgress'.",&tolua_err);
  return 0;
 #endif
 }
@@ -5276,6 +8511,102 @@ static int tolua_openquick_tolua_quick_MainPrint00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'MainPrint'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _getToLuaClassName of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QParticles__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QParticles__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QParticles",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QParticles___tostring00
+static int tolua_openquick_tolua_quick_QParticles___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QParticles",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QParticles___serialize00
+static int tolua_openquick_tolua_quick_QParticles___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QParticles",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
  return 0;
 #endif
 }
@@ -5367,101 +8698,41 @@ static int tolua_openquick_tolua_quick_QParticles_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: x of class  xyStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__xyStruct_x
-static int tolua_get_quick__QParticles__xyStruct_x(lua_State* tolua_S)
+/* get function: gravity of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeGravityStruct_gravity
+static int tolua_get_quick__QParticles__modeGravityStruct_gravity(lua_State* tolua_S)
 {
-  quick::QParticles::xyStruct* self = (quick::QParticles::xyStruct*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
-#endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->x);
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: x of class  xyStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__xyStruct_x
-static int tolua_set_quick__QParticles__xyStruct_x(lua_State* tolua_S)
-{
-  quick::QParticles::xyStruct* self = (quick::QParticles::xyStruct*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->x = ((float)  tolua_tonumber(tolua_S,2,0))
-;
- return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* get function: y of class  xyStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__xyStruct_y
-static int tolua_get_quick__QParticles__xyStruct_y(lua_State* tolua_S)
-{
-  quick::QParticles::xyStruct* self = (quick::QParticles::xyStruct*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
-#endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->y);
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: y of class  xyStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__xyStruct_y
-static int tolua_set_quick__QParticles__xyStruct_y(lua_State* tolua_S)
-{
-  quick::QParticles::xyStruct* self = (quick::QParticles::xyStruct*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->y = ((float)  tolua_tonumber(tolua_S,2,0))
-;
- return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* get function: gravity of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeAStruct_gravity
-static int tolua_get_quick__QParticles__modeAStruct_gravity(lua_State* tolua_S)
-{
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'gravity'",NULL);
 #endif
-   tolua_pushusertype(tolua_S,(void*)&self->gravity,"quick::QParticles::xyStruct");
+   tolua_pushusertype(tolua_S,(void*)&self->gravity,"quick::QVec2");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: gravity of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeAStruct_gravity
-static int tolua_set_quick__QParticles__modeAStruct_gravity(lua_State* tolua_S)
+/* set function: gravity of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeGravityStruct_gravity
+static int tolua_set_quick__QParticles__modeGravityStruct_gravity(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'gravity'",NULL);
-  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QParticles::xyStruct",0,&tolua_err)))
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QVec2",0,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->gravity = *((quick::QParticles::xyStruct*)  tolua_tousertype(tolua_S,2,0))
+  self->gravity = *((quick::QVec2*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: speed of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeAStruct_speed
-static int tolua_get_quick__QParticles__modeAStruct_speed(lua_State* tolua_S)
+/* get function: speed of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeGravityStruct_speed
+static int tolua_get_quick__QParticles__modeGravityStruct_speed(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'speed'",NULL);
 #endif
@@ -5470,11 +8741,11 @@ static int tolua_get_quick__QParticles__modeAStruct_speed(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: speed of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeAStruct_speed
-static int tolua_set_quick__QParticles__modeAStruct_speed(lua_State* tolua_S)
+/* set function: speed of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeGravityStruct_speed
+static int tolua_set_quick__QParticles__modeGravityStruct_speed(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'speed'",NULL);
@@ -5487,11 +8758,11 @@ static int tolua_set_quick__QParticles__modeAStruct_speed(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: speedVar of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeAStruct_speedVar
-static int tolua_get_quick__QParticles__modeAStruct_speedVar(lua_State* tolua_S)
+/* get function: speedVar of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeGravityStruct_speedVar
+static int tolua_get_quick__QParticles__modeGravityStruct_speedVar(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'speedVar'",NULL);
 #endif
@@ -5500,11 +8771,11 @@ static int tolua_get_quick__QParticles__modeAStruct_speedVar(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: speedVar of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeAStruct_speedVar
-static int tolua_set_quick__QParticles__modeAStruct_speedVar(lua_State* tolua_S)
+/* set function: speedVar of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeGravityStruct_speedVar
+static int tolua_set_quick__QParticles__modeGravityStruct_speedVar(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'speedVar'",NULL);
@@ -5517,11 +8788,11 @@ static int tolua_set_quick__QParticles__modeAStruct_speedVar(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: tangentialAccel of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeAStruct_tangentialAccel
-static int tolua_get_quick__QParticles__modeAStruct_tangentialAccel(lua_State* tolua_S)
+/* get function: tangentialAccel of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeGravityStruct_tangentialAccel
+static int tolua_get_quick__QParticles__modeGravityStruct_tangentialAccel(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tangentialAccel'",NULL);
 #endif
@@ -5530,11 +8801,11 @@ static int tolua_get_quick__QParticles__modeAStruct_tangentialAccel(lua_State* t
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: tangentialAccel of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeAStruct_tangentialAccel
-static int tolua_set_quick__QParticles__modeAStruct_tangentialAccel(lua_State* tolua_S)
+/* set function: tangentialAccel of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeGravityStruct_tangentialAccel
+static int tolua_set_quick__QParticles__modeGravityStruct_tangentialAccel(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tangentialAccel'",NULL);
@@ -5547,11 +8818,11 @@ static int tolua_set_quick__QParticles__modeAStruct_tangentialAccel(lua_State* t
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: tangentialAccelVar of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeAStruct_tangentialAccelVar
-static int tolua_get_quick__QParticles__modeAStruct_tangentialAccelVar(lua_State* tolua_S)
+/* get function: tangentialAccelVar of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeGravityStruct_tangentialAccelVar
+static int tolua_get_quick__QParticles__modeGravityStruct_tangentialAccelVar(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tangentialAccelVar'",NULL);
 #endif
@@ -5560,11 +8831,11 @@ static int tolua_get_quick__QParticles__modeAStruct_tangentialAccelVar(lua_State
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: tangentialAccelVar of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeAStruct_tangentialAccelVar
-static int tolua_set_quick__QParticles__modeAStruct_tangentialAccelVar(lua_State* tolua_S)
+/* set function: tangentialAccelVar of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeGravityStruct_tangentialAccelVar
+static int tolua_set_quick__QParticles__modeGravityStruct_tangentialAccelVar(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tangentialAccelVar'",NULL);
@@ -5577,11 +8848,11 @@ static int tolua_set_quick__QParticles__modeAStruct_tangentialAccelVar(lua_State
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: radialAccel of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeAStruct_radialAccel
-static int tolua_get_quick__QParticles__modeAStruct_radialAccel(lua_State* tolua_S)
+/* get function: radialAccel of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeGravityStruct_radialAccel
+static int tolua_get_quick__QParticles__modeGravityStruct_radialAccel(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'radialAccel'",NULL);
 #endif
@@ -5590,11 +8861,11 @@ static int tolua_get_quick__QParticles__modeAStruct_radialAccel(lua_State* tolua
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: radialAccel of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeAStruct_radialAccel
-static int tolua_set_quick__QParticles__modeAStruct_radialAccel(lua_State* tolua_S)
+/* set function: radialAccel of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeGravityStruct_radialAccel
+static int tolua_set_quick__QParticles__modeGravityStruct_radialAccel(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'radialAccel'",NULL);
@@ -5607,11 +8878,11 @@ static int tolua_set_quick__QParticles__modeAStruct_radialAccel(lua_State* tolua
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: radialAccelVar of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeAStruct_radialAccelVar
-static int tolua_get_quick__QParticles__modeAStruct_radialAccelVar(lua_State* tolua_S)
+/* get function: radialAccelVar of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeGravityStruct_radialAccelVar
+static int tolua_get_quick__QParticles__modeGravityStruct_radialAccelVar(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'radialAccelVar'",NULL);
 #endif
@@ -5620,11 +8891,11 @@ static int tolua_get_quick__QParticles__modeAStruct_radialAccelVar(lua_State* to
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: radialAccelVar of class  modeAStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeAStruct_radialAccelVar
-static int tolua_set_quick__QParticles__modeAStruct_radialAccelVar(lua_State* tolua_S)
+/* set function: radialAccelVar of class  modeGravityStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeGravityStruct_radialAccelVar
+static int tolua_set_quick__QParticles__modeGravityStruct_radialAccelVar(lua_State* tolua_S)
 {
-  quick::QParticles::modeAStruct* self = (quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeGravityStruct* self = (quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'radialAccelVar'",NULL);
@@ -5637,11 +8908,11 @@ static int tolua_set_quick__QParticles__modeAStruct_radialAccelVar(lua_State* to
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: startRadius of class  modeBStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeBStruct_startRadius
-static int tolua_get_quick__QParticles__modeBStruct_startRadius(lua_State* tolua_S)
+/* get function: startRadius of class  modeRadialStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeRadialStruct_startRadius
+static int tolua_get_quick__QParticles__modeRadialStruct_startRadius(lua_State* tolua_S)
 {
-  quick::QParticles::modeBStruct* self = (quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeRadialStruct* self = (quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'startRadius'",NULL);
 #endif
@@ -5650,11 +8921,11 @@ static int tolua_get_quick__QParticles__modeBStruct_startRadius(lua_State* tolua
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: startRadius of class  modeBStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeBStruct_startRadius
-static int tolua_set_quick__QParticles__modeBStruct_startRadius(lua_State* tolua_S)
+/* set function: startRadius of class  modeRadialStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeRadialStruct_startRadius
+static int tolua_set_quick__QParticles__modeRadialStruct_startRadius(lua_State* tolua_S)
 {
-  quick::QParticles::modeBStruct* self = (quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeRadialStruct* self = (quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'startRadius'",NULL);
@@ -5667,11 +8938,11 @@ static int tolua_set_quick__QParticles__modeBStruct_startRadius(lua_State* tolua
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: startRadiusVar of class  modeBStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeBStruct_startRadiusVar
-static int tolua_get_quick__QParticles__modeBStruct_startRadiusVar(lua_State* tolua_S)
+/* get function: startRadiusVar of class  modeRadialStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeRadialStruct_startRadiusVar
+static int tolua_get_quick__QParticles__modeRadialStruct_startRadiusVar(lua_State* tolua_S)
 {
-  quick::QParticles::modeBStruct* self = (quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeRadialStruct* self = (quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'startRadiusVar'",NULL);
 #endif
@@ -5680,11 +8951,11 @@ static int tolua_get_quick__QParticles__modeBStruct_startRadiusVar(lua_State* to
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: startRadiusVar of class  modeBStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeBStruct_startRadiusVar
-static int tolua_set_quick__QParticles__modeBStruct_startRadiusVar(lua_State* tolua_S)
+/* set function: startRadiusVar of class  modeRadialStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeRadialStruct_startRadiusVar
+static int tolua_set_quick__QParticles__modeRadialStruct_startRadiusVar(lua_State* tolua_S)
 {
-  quick::QParticles::modeBStruct* self = (quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeRadialStruct* self = (quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'startRadiusVar'",NULL);
@@ -5697,11 +8968,11 @@ static int tolua_set_quick__QParticles__modeBStruct_startRadiusVar(lua_State* to
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: endRadius of class  modeBStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeBStruct_endRadius
-static int tolua_get_quick__QParticles__modeBStruct_endRadius(lua_State* tolua_S)
+/* get function: endRadius of class  modeRadialStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeRadialStruct_endRadius
+static int tolua_get_quick__QParticles__modeRadialStruct_endRadius(lua_State* tolua_S)
 {
-  quick::QParticles::modeBStruct* self = (quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeRadialStruct* self = (quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'endRadius'",NULL);
 #endif
@@ -5710,11 +8981,11 @@ static int tolua_get_quick__QParticles__modeBStruct_endRadius(lua_State* tolua_S
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: endRadius of class  modeBStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeBStruct_endRadius
-static int tolua_set_quick__QParticles__modeBStruct_endRadius(lua_State* tolua_S)
+/* set function: endRadius of class  modeRadialStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeRadialStruct_endRadius
+static int tolua_set_quick__QParticles__modeRadialStruct_endRadius(lua_State* tolua_S)
 {
-  quick::QParticles::modeBStruct* self = (quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeRadialStruct* self = (quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'endRadius'",NULL);
@@ -5727,11 +8998,11 @@ static int tolua_set_quick__QParticles__modeBStruct_endRadius(lua_State* tolua_S
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: endRadiusVar of class  modeBStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeBStruct_endRadiusVar
-static int tolua_get_quick__QParticles__modeBStruct_endRadiusVar(lua_State* tolua_S)
+/* get function: endRadiusVar of class  modeRadialStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeRadialStruct_endRadiusVar
+static int tolua_get_quick__QParticles__modeRadialStruct_endRadiusVar(lua_State* tolua_S)
 {
-  quick::QParticles::modeBStruct* self = (quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeRadialStruct* self = (quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'endRadiusVar'",NULL);
 #endif
@@ -5740,11 +9011,11 @@ static int tolua_get_quick__QParticles__modeBStruct_endRadiusVar(lua_State* tolu
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: endRadiusVar of class  modeBStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeBStruct_endRadiusVar
-static int tolua_set_quick__QParticles__modeBStruct_endRadiusVar(lua_State* tolua_S)
+/* set function: endRadiusVar of class  modeRadialStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeRadialStruct_endRadiusVar
+static int tolua_set_quick__QParticles__modeRadialStruct_endRadiusVar(lua_State* tolua_S)
 {
-  quick::QParticles::modeBStruct* self = (quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeRadialStruct* self = (quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'endRadiusVar'",NULL);
@@ -5757,11 +9028,11 @@ static int tolua_set_quick__QParticles__modeBStruct_endRadiusVar(lua_State* tolu
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: rotatePerSecond of class  modeBStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeBStruct_rotatePerSecond
-static int tolua_get_quick__QParticles__modeBStruct_rotatePerSecond(lua_State* tolua_S)
+/* get function: rotatePerSecond of class  modeRadialStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeRadialStruct_rotatePerSecond
+static int tolua_get_quick__QParticles__modeRadialStruct_rotatePerSecond(lua_State* tolua_S)
 {
-  quick::QParticles::modeBStruct* self = (quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeRadialStruct* self = (quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'rotatePerSecond'",NULL);
 #endif
@@ -5770,11 +9041,11 @@ static int tolua_get_quick__QParticles__modeBStruct_rotatePerSecond(lua_State* t
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: rotatePerSecond of class  modeBStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeBStruct_rotatePerSecond
-static int tolua_set_quick__QParticles__modeBStruct_rotatePerSecond(lua_State* tolua_S)
+/* set function: rotatePerSecond of class  modeRadialStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeRadialStruct_rotatePerSecond
+static int tolua_set_quick__QParticles__modeRadialStruct_rotatePerSecond(lua_State* tolua_S)
 {
-  quick::QParticles::modeBStruct* self = (quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeRadialStruct* self = (quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'rotatePerSecond'",NULL);
@@ -5787,11 +9058,11 @@ static int tolua_set_quick__QParticles__modeBStruct_rotatePerSecond(lua_State* t
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: rotatePerSecondVar of class  modeBStruct */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeBStruct_rotatePerSecondVar
-static int tolua_get_quick__QParticles__modeBStruct_rotatePerSecondVar(lua_State* tolua_S)
+/* get function: rotatePerSecondVar of class  modeRadialStruct */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__modeRadialStruct_rotatePerSecondVar
+static int tolua_get_quick__QParticles__modeRadialStruct_rotatePerSecondVar(lua_State* tolua_S)
 {
-  quick::QParticles::modeBStruct* self = (quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeRadialStruct* self = (quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'rotatePerSecondVar'",NULL);
 #endif
@@ -5800,11 +9071,11 @@ static int tolua_get_quick__QParticles__modeBStruct_rotatePerSecondVar(lua_State
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: rotatePerSecondVar of class  modeBStruct */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeBStruct_rotatePerSecondVar
-static int tolua_set_quick__QParticles__modeBStruct_rotatePerSecondVar(lua_State* tolua_S)
+/* set function: rotatePerSecondVar of class  modeRadialStruct */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles__modeRadialStruct_rotatePerSecondVar
+static int tolua_set_quick__QParticles__modeRadialStruct_rotatePerSecondVar(lua_State* tolua_S)
 {
-  quick::QParticles::modeBStruct* self = (quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,1,0);
+  quick::QParticles::modeRadialStruct* self = (quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
   if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'rotatePerSecondVar'",NULL);
@@ -5814,41 +9085,6 @@ static int tolua_set_quick__QParticles__modeBStruct_rotatePerSecondVar(lua_State
   self->rotatePerSecondVar = ((float)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: init of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QParticles_init00
-static int tolua_openquick_tolua_quick_QParticles_init00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"quick::QParticles",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,4,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
-  const char* plist = ((const char*)  tolua_tostring(tolua_S,2,0));
-  int numParticles = ((int)  tolua_tonumber(tolua_S,3,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'init'", NULL);
-#endif
-  {
-   self->init(plist,numParticles);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'init'.",&tolua_err);
- return 0;
-#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -6011,6 +9247,70 @@ static int tolua_openquick_tolua_quick_QParticles_isFull00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: isActive of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QParticles_isActive00
+static int tolua_openquick_tolua_quick_QParticles_isActive00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QParticles",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isActive'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isActive();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isActive'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getNumParticles of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QParticles_getNumParticles00
+static int tolua_openquick_tolua_quick_QParticles_getNumParticles00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"const quick::QParticles",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  const quick::QParticles* self = (const quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getNumParticles'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->getNumParticles();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getNumParticles'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: update of class  quick::QParticles */
 #ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QParticles_update00
 static int tolua_openquick_tolua_quick_QParticles_update00(lua_State* tolua_S)
@@ -6106,61 +9406,91 @@ static int tolua_openquick_tolua_quick_QParticles_syncReverse00(lua_State* tolua
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: modeA of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_modeA
-static int tolua_get_quick__QParticles_modeA(lua_State* tolua_S)
+/* get function: modeGravity of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_modeGravity
+static int tolua_get_quick__QParticles_modeGravity(lua_State* tolua_S)
 {
   quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'modeA'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'modeGravity'",NULL);
 #endif
-   tolua_pushusertype(tolua_S,(void*)&self->modeA,"quick::QParticles::modeAStruct");
+   tolua_pushusertype(tolua_S,(void*)&self->modeGravity,"quick::QParticles::modeGravityStruct");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: modeA of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_modeA
-static int tolua_set_quick__QParticles_modeA(lua_State* tolua_S)
+/* set function: modeGravity of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_modeGravity
+static int tolua_set_quick__QParticles_modeGravity(lua_State* tolua_S)
 {
   quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'modeA'",NULL);
-  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QParticles::modeAStruct",0,&tolua_err)))
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'modeGravity'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QParticles::modeGravityStruct",0,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->modeA = *((quick::QParticles::modeAStruct*)  tolua_tousertype(tolua_S,2,0))
+  self->modeGravity = *((quick::QParticles::modeGravityStruct*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: modeB of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_modeB
-static int tolua_get_quick__QParticles_modeB(lua_State* tolua_S)
+/* get function: modeRadial of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_modeRadial
+static int tolua_get_quick__QParticles_modeRadial(lua_State* tolua_S)
 {
   quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'modeB'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'modeRadial'",NULL);
 #endif
-   tolua_pushusertype(tolua_S,(void*)&self->modeB,"quick::QParticles::modeBStruct");
+   tolua_pushusertype(tolua_S,(void*)&self->modeRadial,"quick::QParticles::modeRadialStruct");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: modeB of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_modeB
-static int tolua_set_quick__QParticles_modeB(lua_State* tolua_S)
+/* set function: modeRadial of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_modeRadial
+static int tolua_set_quick__QParticles_modeRadial(lua_State* tolua_S)
 {
   quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'modeB'",NULL);
-  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QParticles::modeBStruct",0,&tolua_err)))
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'modeRadial'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QParticles::modeRadialStruct",0,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->modeB = *((quick::QParticles::modeBStruct*)  tolua_tousertype(tolua_S,2,0))
+  self->modeRadial = *((quick::QParticles::modeRadialStruct*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: totalParticles of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_totalParticles
+static int tolua_get_quick__QParticles_totalParticles(lua_State* tolua_S)
+{
+  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'totalParticles'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->totalParticles);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: totalParticles of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_totalParticles
+static int tolua_set_quick__QParticles_totalParticles(lua_State* tolua_S)
+{
+  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'totalParticles'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->totalParticles = ((int)  tolua_tonumber(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6196,6 +9526,66 @@ static int tolua_set_quick__QParticles_particleCount(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* get function: emitterMode of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_emitterMode
+static int tolua_get_quick__QParticles_emitterMode(lua_State* tolua_S)
+{
+  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'emitterMode'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->emitterMode);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: emitterMode of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_emitterMode
+static int tolua_set_quick__QParticles_emitterMode(lua_State* tolua_S)
+{
+  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'emitterMode'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->emitterMode = ((int)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: emitterRate of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_emitterRate
+static int tolua_get_quick__QParticles_emitterRate(lua_State* tolua_S)
+{
+  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'emitterRate'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->emitterRate);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: emitterRate of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_emitterRate
+static int tolua_set_quick__QParticles_emitterRate(lua_State* tolua_S)
+{
+  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'emitterRate'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->emitterRate = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: duration of class  quick::QParticles */
 #ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_duration
 static int tolua_get_quick__QParticles_duration(lua_State* tolua_S)
@@ -6226,121 +9616,61 @@ static int tolua_set_quick__QParticles_duration(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: sourcePosX of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_sourcePosX
-static int tolua_get_quick__QParticles_sourcePosX(lua_State* tolua_S)
+/* get function: sourcePos of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_sourcePos
+static int tolua_get_quick__QParticles_sourcePos(lua_State* tolua_S)
 {
   quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sourcePosX'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sourcePos'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->sourcePosX);
+   tolua_pushusertype(tolua_S,(void*)&self->sourcePos,"quick::QVec2");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: sourcePosX of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_sourcePosX
-static int tolua_set_quick__QParticles_sourcePosX(lua_State* tolua_S)
+/* set function: sourcePos of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_sourcePos
+static int tolua_set_quick__QParticles_sourcePos(lua_State* tolua_S)
 {
   quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sourcePosX'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sourcePos'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QVec2",0,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->sourcePosX = ((float)  tolua_tonumber(tolua_S,2,0))
+  self->sourcePos = *((quick::QVec2*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: sourcePosY of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_sourcePosY
-static int tolua_get_quick__QParticles_sourcePosY(lua_State* tolua_S)
+/* get function: sourcePosVar of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_sourcePosVar
+static int tolua_get_quick__QParticles_sourcePosVar(lua_State* tolua_S)
 {
   quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sourcePosY'",NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sourcePosVar'",NULL);
 #endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->sourcePosY);
+   tolua_pushusertype(tolua_S,(void*)&self->sourcePosVar,"quick::QVec2");
  return 1;
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* set function: sourcePosY of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_sourcePosY
-static int tolua_set_quick__QParticles_sourcePosY(lua_State* tolua_S)
+/* set function: sourcePosVar of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_sourcePosVar
+static int tolua_set_quick__QParticles_sourcePosVar(lua_State* tolua_S)
 {
   quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
   tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sourcePosY'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sourcePosVar'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QVec2",0,&tolua_err)))
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
-  self->sourcePosY = ((float)  tolua_tonumber(tolua_S,2,0))
-;
- return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* get function: sourcePosVarX of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_sourcePosVarX
-static int tolua_get_quick__QParticles_sourcePosVarX(lua_State* tolua_S)
-{
-  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sourcePosVarX'",NULL);
-#endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->sourcePosVarX);
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: sourcePosVarX of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_sourcePosVarX
-static int tolua_set_quick__QParticles_sourcePosVarX(lua_State* tolua_S)
-{
-  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sourcePosVarX'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->sourcePosVarX = ((float)  tolua_tonumber(tolua_S,2,0))
-;
- return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* get function: sourcePosVarY of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_sourcePosVarY
-static int tolua_get_quick__QParticles_sourcePosVarY(lua_State* tolua_S)
-{
-  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sourcePosVarY'",NULL);
-#endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->sourcePosVarY);
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: sourcePosVarY of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_sourcePosVarY
-static int tolua_set_quick__QParticles_sourcePosVarY(lua_State* tolua_S)
-{
-  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'sourcePosVarY'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->sourcePosVarY = ((float)  tolua_tonumber(tolua_S,2,0))
+  self->sourcePosVar = *((quick::QVec2*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
@@ -6826,66 +10156,6 @@ static int tolua_set_quick__QParticles_endSpinVar(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* get function: emissionRate of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_emissionRate
-static int tolua_get_quick__QParticles_emissionRate(lua_State* tolua_S)
-{
-  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'emissionRate'",NULL);
-#endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->emissionRate);
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: emissionRate of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_emissionRate
-static int tolua_set_quick__QParticles_emissionRate(lua_State* tolua_S)
-{
-  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'emissionRate'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->emissionRate = ((float)  tolua_tonumber(tolua_S,2,0))
-;
- return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* get function: totalParticles of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_totalParticles
-static int tolua_get_quick__QParticles_totalParticles(lua_State* tolua_S)
-{
-  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'totalParticles'",NULL);
-#endif
-  tolua_pushnumber(tolua_S,(lua_Number)self->totalParticles);
- return 1;
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* set function: totalParticles of class  quick::QParticles */
-#ifndef TOLUA_DISABLE_tolua_set_quick__QParticles_totalParticles
-static int tolua_set_quick__QParticles_totalParticles(lua_State* tolua_S)
-{
-  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  tolua_Error tolua_err;
-  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'totalParticles'",NULL);
-  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
-   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
-#endif
-  self->totalParticles = ((int)  tolua_tonumber(tolua_S,2,0))
-;
- return 0;
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* get function: alphaModifiesColor of class  quick::QParticles */
 #ifndef TOLUA_DISABLE_tolua_get_quick__QParticles_alphaModifiesColor
 static int tolua_get_quick__QParticles_alphaModifiesColor(lua_State* tolua_S)
@@ -6916,6 +10186,72 @@ static int tolua_set_quick__QParticles_alphaModifiesColor(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: _initWithPlist of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QParticles__initWithPlist00
+static int tolua_openquick_tolua_quick_QParticles__initWithPlist00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QParticles",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+  const char* plist = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_initWithPlist'", NULL);
+#endif
+  {
+   self->_initWithPlist(plist);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_initWithPlist'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _initWithNumber of class  quick::QParticles */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QParticles__initWithNumber00
+static int tolua_openquick_tolua_quick_QParticles__initWithNumber00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QParticles",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QParticles* self = (quick::QParticles*)  tolua_tousertype(tolua_S,1,0);
+  int numParticles = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_initWithNumber'", NULL);
+#endif
+  {
+   self->_initWithNumber(numParticles);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_initWithNumber'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: _atlas of class  quick::QParticles */
 #ifndef TOLUA_DISABLE_tolua_get_quick__QParticles__atlas_ptr
 static int tolua_get_quick__QParticles__atlas_ptr(lua_State* tolua_S)
@@ -6943,6 +10279,70 @@ static int tolua_set_quick__QParticles__atlas_ptr(lua_State* tolua_S)
   self->_atlas = ((quick::QAtlas*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::physics::QSim */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_physics_QSim___tostring00
+static int tolua_openquick_tolua_quick_physics_QSim___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::physics::QSim",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::physics::QSim* self = (quick::physics::QSim*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::physics::QSim */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_physics_QSim___serialize00
+static int tolua_openquick_tolua_quick_physics_QSim___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::physics::QSim",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::physics::QSim* self = (quick::physics::QSim*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -11272,6 +14672,41 @@ static int tolua_openquick_tolua_quick_physics_QNodeProps_applyForce00(lua_State
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: applyForceToCenter of class  quick::physics::QNodeProps */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_physics_QNodeProps_applyForceToCenter00
+static int tolua_openquick_tolua_quick_physics_QNodeProps_applyForceToCenter00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::physics::QNodeProps",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::physics::QNodeProps* self = (quick::physics::QNodeProps*)  tolua_tousertype(tolua_S,1,0);
+  float fx = ((float)  tolua_tonumber(tolua_S,2,0));
+  float fy = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'applyForceToCenter'", NULL);
+#endif
+  {
+   self->applyForceToCenter(fx,fy);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'applyForceToCenter'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: applyAngularImpulse of class  quick::physics::QNodeProps */
 #ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_physics_QNodeProps_applyAngularImpulse00
 static int tolua_openquick_tolua_quick_physics_QNodeProps_applyAngularImpulse00(lua_State* tolua_S)
@@ -11313,7 +14748,7 @@ static int tolua_openquick_tolua_quick_physics_QNodeProps_setAngularVelocity00(l
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"quick::physics::QNodeProps",0,&tolua_err) ||
-     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"float32",0,&tolua_err)) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
@@ -11321,7 +14756,7 @@ static int tolua_openquick_tolua_quick_physics_QNodeProps_setAngularVelocity00(l
 #endif
  {
   quick::physics::QNodeProps* self = (quick::physics::QNodeProps*)  tolua_tousertype(tolua_S,1,0);
-  float32 omega = *((float32*)  tolua_tousertype(tolua_S,2,0));
+  float omega = ((float)  tolua_tonumber(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setAngularVelocity'", NULL);
 #endif
@@ -11424,8 +14859,8 @@ static int tolua_openquick_tolua_quick_physics_QNodeProps_applyLinearImpulse00(l
   quick::physics::QNodeProps* self = (quick::physics::QNodeProps*)  tolua_tousertype(tolua_S,1,0);
   float ix = ((float)  tolua_tonumber(tolua_S,2,0));
   float iy = ((float)  tolua_tonumber(tolua_S,3,0));
-  float px = ((float)  tolua_tonumber(tolua_S,4,-1.0f));
-  float py = ((float)  tolua_tonumber(tolua_S,5,-1.0f));
+  float px = ((float)  tolua_tonumber(tolua_S,4,0.0f));
+  float py = ((float)  tolua_tonumber(tolua_S,5,0.0f));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'applyLinearImpulse'", NULL);
 #endif
@@ -11437,6 +14872,41 @@ static int tolua_openquick_tolua_quick_physics_QNodeProps_applyLinearImpulse00(l
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'applyLinearImpulse'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: applyLinearImpulseToCenter of class  quick::physics::QNodeProps */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_physics_QNodeProps_applyLinearImpulseToCenter00
+static int tolua_openquick_tolua_quick_physics_QNodeProps_applyLinearImpulseToCenter00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::physics::QNodeProps",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::physics::QNodeProps* self = (quick::physics::QNodeProps*)  tolua_tousertype(tolua_S,1,0);
+  float ix = ((float)  tolua_tonumber(tolua_S,2,0));
+  float iy = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'applyLinearImpulseToCenter'", NULL);
+#endif
+  {
+   self->applyLinearImpulseToCenter(ix,iy);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'applyLinearImpulseToCenter'.",&tolua_err);
  return 0;
 #endif
 }
@@ -11542,6 +15012,80 @@ static int tolua_openquick_tolua_quick_physics_QNodeProps_getWorldPoint00(lua_St
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'getWorldPoint'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getWorldCenter of class  quick::physics::QNodeProps */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_physics_QNodeProps_getWorldCenter00
+static int tolua_openquick_tolua_quick_physics_QNodeProps_getWorldCenter00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::physics::QNodeProps",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::physics::QNodeProps* self = (quick::physics::QNodeProps*)  tolua_tousertype(tolua_S,1,0);
+  float vx = ((float)  tolua_tonumber(tolua_S,2,0));
+  float vy = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getWorldCenter'", NULL);
+#endif
+  {
+   self->getWorldCenter(&vx,&vy);
+   tolua_pushnumber(tolua_S,(lua_Number)vx);
+   tolua_pushnumber(tolua_S,(lua_Number)vy);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getWorldCenter'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getLocalCenter of class  quick::physics::QNodeProps */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_physics_QNodeProps_getLocalCenter00
+static int tolua_openquick_tolua_quick_physics_QNodeProps_getLocalCenter00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::physics::QNodeProps",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::physics::QNodeProps* self = (quick::physics::QNodeProps*)  tolua_tousertype(tolua_S,1,0);
+  float vx = ((float)  tolua_tonumber(tolua_S,2,0));
+  float vy = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLocalCenter'", NULL);
+#endif
+  {
+   self->getLocalCenter(&vx,&vy);
+   tolua_pushnumber(tolua_S,(lua_Number)vx);
+   tolua_pushnumber(tolua_S,(lua_Number)vy);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getLocalCenter'.",&tolua_err);
  return 0;
 #endif
 }
@@ -11947,6 +15491,115 @@ static int tolua_openquick_tolua_quick_physics_QNodeProps_setGravityScale00(lua_
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setLinearVelocity of class  quick::physics::QNodeProps */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_physics_QNodeProps_setLinearVelocity00
+static int tolua_openquick_tolua_quick_physics_QNodeProps_setLinearVelocity00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::physics::QNodeProps",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::physics::QNodeProps* self = (quick::physics::QNodeProps*)  tolua_tousertype(tolua_S,1,0);
+  float ix = ((float)  tolua_tonumber(tolua_S,2,0));
+  float iy = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setLinearVelocity'", NULL);
+#endif
+  {
+   self->setLinearVelocity(ix,iy);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setLinearVelocity'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getLinearVelocity of class  quick::physics::QNodeProps */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_physics_QNodeProps_getLinearVelocity00
+static int tolua_openquick_tolua_quick_physics_QNodeProps_getLinearVelocity00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::physics::QNodeProps",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::physics::QNodeProps* self = (quick::physics::QNodeProps*)  tolua_tousertype(tolua_S,1,0);
+  float vx = ((float)  tolua_tonumber(tolua_S,2,0));
+  float vy = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLinearVelocity'", NULL);
+#endif
+  {
+   self->getLinearVelocity(&vx,&vy);
+   tolua_pushnumber(tolua_S,(lua_Number)vx);
+   tolua_pushnumber(tolua_S,(lua_Number)vy);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getLinearVelocity'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTransform of class  quick::physics::QNodeProps */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_physics_QNodeProps_setTransform00
+static int tolua_openquick_tolua_quick_physics_QNodeProps_setTransform00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::physics::QNodeProps",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::physics::QNodeProps* self = (quick::physics::QNodeProps*)  tolua_tousertype(tolua_S,1,0);
+  float ix = ((float)  tolua_tonumber(tolua_S,2,0));
+  float iy = ((float)  tolua_tonumber(tolua_S,3,0));
+  float iz = ((float)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTransform'", NULL);
+#endif
+  {
+   self->setTransform(ix,iy,iz);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setTransform'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: friction of class  quick::physics::QNodeProps */
 #ifndef TOLUA_DISABLE_tolua_get_quick__physics__QNodeProps_friction
 static int tolua_get_quick__physics__QNodeProps_friction(lua_State* tolua_S)
@@ -12222,6 +15875,404 @@ static int tolua_set_quick__physics__QNodeProps_debugDrawColor(lua_State* tolua_
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: _getToLuaClassName of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRect__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QRect__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRect",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRect* self = (quick::QRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRect___tostring00
+static int tolua_openquick_tolua_quick_QRect___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRect",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRect* self = (quick::QRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRect___serialize00
+static int tolua_openquick_tolua_quick_QRect___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRect",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRect* self = (quick::QRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRect_new00
+static int tolua_openquick_tolua_quick_QRect_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QRect",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   quick::QRect* tolua_ret = (quick::QRect*)  Mtolua_new((quick::QRect)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QRect");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRect_new00_local
+static int tolua_openquick_tolua_quick_QRect_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QRect",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   quick::QRect* tolua_ret = (quick::QRect*)  Mtolua_new((quick::QRect)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QRect");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRect_delete00
+static int tolua_openquick_tolua_quick_QRect_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRect",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRect* self = (quick::QRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: x of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QRect_x
+static int tolua_get_quick__QRect_x(lua_State* tolua_S)
+{
+  quick::QRect* self = (quick::QRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->x);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: x of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QRect_x
+static int tolua_set_quick__QRect_x(lua_State* tolua_S)
+{
+  quick::QRect* self = (quick::QRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->x = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: y of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QRect_y
+static int tolua_get_quick__QRect_y(lua_State* tolua_S)
+{
+  quick::QRect* self = (quick::QRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->y);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: y of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QRect_y
+static int tolua_set_quick__QRect_y(lua_State* tolua_S)
+{
+  quick::QRect* self = (quick::QRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->y = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: w of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QRect_w
+static int tolua_get_quick__QRect_w(lua_State* tolua_S)
+{
+  quick::QRect* self = (quick::QRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'w'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->w);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: w of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QRect_w
+static int tolua_set_quick__QRect_w(lua_State* tolua_S)
+{
+  quick::QRect* self = (quick::QRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'w'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->w = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: h of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QRect_h
+static int tolua_get_quick__QRect_h(lua_State* tolua_S)
+{
+  quick::QRect* self = (quick::QRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'h'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->h);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: h of class  quick::QRect */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QRect_h
+static int tolua_set_quick__QRect_h(lua_State* tolua_S)
+{
+  quick::QRect* self = (quick::QRect*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'h'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->h = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _getToLuaClassName of class  quick::QRectangle */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRectangle__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QRectangle__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRectangle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRectangle* self = (quick::QRectangle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QRectangle */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRectangle___tostring00
+static int tolua_openquick_tolua_quick_QRectangle___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRectangle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRectangle* self = (quick::QRectangle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QRectangle */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRectangle___serialize00
+static int tolua_openquick_tolua_quick_QRectangle___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRectangle",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRectangle* self = (quick::QRectangle*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: new of class  quick::QRectangle */
 #ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRectangle_new00
 static int tolua_openquick_tolua_quick_QRectangle_new00(lua_State* tolua_S)
@@ -12334,6 +16385,565 @@ static int tolua_openquick_tolua_quick_QRectangle_sync00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'sync'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _getToLuaClassName of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QRenderTexture__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture_new00
+static int tolua_openquick_tolua_quick_QRenderTexture_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,7,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,8,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  int w = ((int)  tolua_tonumber(tolua_S,2,0));
+  int h = ((int)  tolua_tonumber(tolua_S,3,0));
+  int eFormat = ((int)  tolua_tonumber(tolua_S,4,0));
+  unsigned int uDepthStencilFormat = ((unsigned int)  tolua_tonumber(tolua_S,5,0));
+  int x = ((int)  tolua_tonumber(tolua_S,6,0));
+  int y = ((int)  tolua_tonumber(tolua_S,7,0));
+  {
+   quick::QRenderTexture* tolua_ret = (quick::QRenderTexture*)  Mtolua_new((quick::QRenderTexture)(w,h,eFormat,uDepthStencilFormat,x,y));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QRenderTexture");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture_new00_local
+static int tolua_openquick_tolua_quick_QRenderTexture_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,6,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,7,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,8,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  int w = ((int)  tolua_tonumber(tolua_S,2,0));
+  int h = ((int)  tolua_tonumber(tolua_S,3,0));
+  int eFormat = ((int)  tolua_tonumber(tolua_S,4,0));
+  unsigned int uDepthStencilFormat = ((unsigned int)  tolua_tonumber(tolua_S,5,0));
+  int x = ((int)  tolua_tonumber(tolua_S,6,0));
+  int y = ((int)  tolua_tonumber(tolua_S,7,0));
+  {
+   quick::QRenderTexture* tolua_ret = (quick::QRenderTexture*)  Mtolua_new((quick::QRenderTexture)(w,h,eFormat,uDepthStencilFormat,x,y));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QRenderTexture");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture_delete00
+static int tolua_openquick_tolua_quick_QRenderTexture_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture___serialize00
+static int tolua_openquick_tolua_quick_QRenderTexture___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _getSprite of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture__getSprite00
+static int tolua_openquick_tolua_quick_QRenderTexture__getSprite00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getSprite'", NULL);
+#endif
+  {
+   quick::QSprite* tolua_ret = (quick::QSprite*)  self->_getSprite();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QSprite");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getSprite'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: sync of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture_sync00
+static int tolua_openquick_tolua_quick_QRenderTexture_sync00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'sync'", NULL);
+#endif
+  {
+   self->sync();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'sync'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: begin of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture_begin00
+static int tolua_openquick_tolua_quick_QRenderTexture_begin00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"quick::QColor",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+  quick::QColor* clear = ((quick::QColor*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'begin'", NULL);
+#endif
+  {
+   self->begin(clear);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'begin'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: endToLua of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture_endToLua00
+static int tolua_openquick_tolua_quick_QRenderTexture_endToLua00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'endToLua'", NULL);
+#endif
+  {
+   self->endToLua();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'endToLua'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: finish of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture_finish00
+static int tolua_openquick_tolua_quick_QRenderTexture_finish00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'finish'", NULL);
+#endif
+  {
+   self->finish();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'finish'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: saveToFile of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture_saveToFile00
+static int tolua_openquick_tolua_quick_QRenderTexture_saveToFile00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+  const char* name = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'saveToFile'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->saveToFile(name);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'saveToFile'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSprite of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture_setSprite00
+static int tolua_openquick_tolua_quick_QRenderTexture_setSprite00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"quick::QSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+  quick::QSprite* var = ((quick::QSprite*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSprite'", NULL);
+#endif
+  {
+   self->setSprite(var);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSprite'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: clear of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QRenderTexture_clear00
+static int tolua_openquick_tolua_quick_QRenderTexture_clear00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QRenderTexture",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"quick::QColor",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+  quick::QColor* color = ((quick::QColor*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'clear'", NULL);
+#endif
+  {
+   self->clear(color);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'clear'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: autodraw of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QRenderTexture_autodraw
+static int tolua_get_quick__QRenderTexture_autodraw(lua_State* tolua_S)
+{
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'autodraw'",NULL);
+#endif
+  tolua_pushboolean(tolua_S,(bool)self->get_autodraw());
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: autodraw of class  quick::QRenderTexture */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QRenderTexture_autodraw
+static int tolua_set_quick__QRenderTexture_autodraw(lua_State* tolua_S)
+{
+  quick::QRenderTexture* self = (quick::QRenderTexture*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'autodraw'",NULL);
+  if (!tolua_isboolean(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->set_autodraw(((bool)  tolua_toboolean(tolua_S,2,0))
+)
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _getToLuaClassName of class  quick::QScene */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QScene__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QScene__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QScene",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QScene* self = (quick::QScene*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QScene */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QScene___tostring00
+static int tolua_openquick_tolua_quick_QScene___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QScene",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QScene* self = (quick::QScene*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QScene */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QScene___serialize00
+static int tolua_openquick_tolua_quick_QScene___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QScene",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QScene* self = (quick::QScene*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
  return 0;
 #endif
 }
@@ -12458,6 +17068,102 @@ static int tolua_openquick_tolua_quick_QScene__init00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: _getToLuaClassName of class  quick::QSprite */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QSprite__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QSprite__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QSprite* self = (quick::QSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QSprite */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QSprite___tostring00
+static int tolua_openquick_tolua_quick_QSprite___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QSprite* self = (quick::QSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QSprite */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QSprite___serialize00
+static int tolua_openquick_tolua_quick_QSprite___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QSprite* self = (quick::QSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: new of class  quick::QSprite */
 #ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QSprite_new00
 static int tolua_openquick_tolua_quick_QSprite_new00(lua_State* tolua_S)
@@ -12466,14 +17172,16 @@ static int tolua_openquick_tolua_quick_QSprite_new00(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"quick::QSprite",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
+     !tolua_isboolean(tolua_S,2,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
+  bool createCCNode = ((bool)  tolua_toboolean(tolua_S,2,true));
   {
-   quick::QSprite* tolua_ret = (quick::QSprite*)  Mtolua_new((quick::QSprite)());
+   quick::QSprite* tolua_ret = (quick::QSprite*)  Mtolua_new((quick::QSprite)(createCCNode));
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QSprite");
   }
  }
@@ -12494,14 +17202,16 @@ static int tolua_openquick_tolua_quick_QSprite_new00_local(lua_State* tolua_S)
  tolua_Error tolua_err;
  if (
      !tolua_isusertable(tolua_S,1,"quick::QSprite",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
+     !tolua_isboolean(tolua_S,2,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
+  bool createCCNode = ((bool)  tolua_toboolean(tolua_S,2,true));
   {
-   quick::QSprite* tolua_ret = (quick::QSprite*)  Mtolua_new((quick::QSprite)());
+   quick::QSprite* tolua_ret = (quick::QSprite*)  Mtolua_new((quick::QSprite)(createCCNode));
     tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QSprite");
     tolua_register_gc(tolua_S,lua_gettop(tolua_S));
   }
@@ -12512,6 +17222,57 @@ static int tolua_openquick_tolua_quick_QSprite_new00_local(lua_State* tolua_S)
  tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
  return 0;
 #endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  quick::QSprite */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QSprite_new01
+static int tolua_openquick_tolua_quick_QSprite_new01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QSprite",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCSprite* sprite = ((CCSprite*)  tolua_tousertype(tolua_S,2,0));
+  {
+   quick::QSprite* tolua_ret = (quick::QSprite*)  Mtolua_new((quick::QSprite)(sprite));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QSprite");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_openquick_tolua_quick_QSprite_new00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  quick::QSprite */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QSprite_new01_local
+static int tolua_openquick_tolua_quick_QSprite_new01_local(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QSprite",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCSprite",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  CCSprite* sprite = ((CCSprite*)  tolua_tousertype(tolua_S,2,0));
+  {
+   quick::QSprite* tolua_ret = (quick::QSprite*)  Mtolua_new((quick::QSprite)(sprite));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QSprite");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_openquick_tolua_quick_QSprite_new00_local(tolua_S);
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -12767,6 +17528,36 @@ static int tolua_set_quick__QSprite_yFlip(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* get function: uvRect of class  quick::QSprite */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QSprite_uvRect
+static int tolua_get_quick__QSprite_uvRect(lua_State* tolua_S)
+{
+  quick::QSprite* self = (quick::QSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'uvRect'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->uvRect,"quick::QRect");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: uvRect of class  quick::QSprite */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QSprite_uvRect
+static int tolua_set_quick__QSprite_uvRect(lua_State* tolua_S)
+{
+  quick::QSprite* self = (quick::QSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'uvRect'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QRect",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->uvRect = *((quick::QRect*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: blendMode of class  quick::QSprite */
 #ifndef TOLUA_DISABLE_tolua_get_quick__QSprite_blendMode
 static int tolua_get_quick__QSprite_blendMode(lua_State* tolua_S)
@@ -12882,6 +17673,36 @@ static int tolua_set_quick__QSprite_raisesAnimEvents(lua_State* tolua_S)
    tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
 #endif
   self->raisesAnimEvents = ((bool)  tolua_toboolean(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: filter of class  quick::QSprite */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QSprite_filter
+static int tolua_get_quick__QSprite_filter(lua_State* tolua_S)
+{
+  quick::QSprite* self = (quick::QSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'filter'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->filter,"quick::QFilterData");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: filter of class  quick::QSprite */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QSprite_filter
+static int tolua_set_quick__QSprite_filter(lua_State* tolua_S)
+{
+  quick::QSprite* self = (quick::QSprite*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'filter'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QFilterData",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->filter = *((quick::QFilterData*)  tolua_tousertype(tolua_S,2,0))
 ;
  return 0;
 }
@@ -13009,6 +17830,98 @@ static int tolua_set_quick__QSprite_animation_ptr(lua_State* tolua_S)
 )
 ;
  return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: quick::lsqlite3::instantiate_lsqlite3_global */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_lsqlite3_instantiate_lsqlite3_global00
+static int tolua_openquick_tolua_quick_lsqlite3_instantiate_lsqlite3_global00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnoobj(tolua_S,1,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  lua_State* luaState =  tolua_S;
+  {
+   int tolua_ret = (int)  quick::lsqlite3::instantiate_lsqlite3_global(luaState);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'instantiate_lsqlite3_global'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QSystem */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QSystem___tostring00
+static int tolua_openquick_tolua_quick_QSystem___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QSystem* self = (quick::QSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QSystem */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QSystem___serialize00
+static int tolua_openquick_tolua_quick_QSystem___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QSystem",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QSystem* self = (quick::QSystem*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
 }
 #endif //#ifndef TOLUA_DISABLE
 
@@ -13354,6 +18267,39 @@ static int tolua_openquick_tolua_quick_QSystem_getTimersTimeScale00(lua_State* t
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: setFrameRateLimit of class  quick::QSystem */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QSystem_setFrameRateLimit00
+static int tolua_openquick_tolua_quick_QSystem_setFrameRateLimit00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QSystem",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QSystem* self = (quick::QSystem*)  tolua_tousertype(tolua_S,1,0);
+  int fps = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFrameRateLimit'", NULL);
+#endif
+  {
+   self->setFrameRateLimit(fps);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setFrameRateLimit'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* get function: gameTime of class  quick::QSystem */
 #ifndef TOLUA_DISABLE_tolua_get_quick__QSystem_gameTime
 static int tolua_get_quick__QSystem_gameTime(lua_State* tolua_S)
@@ -13476,6 +18422,1213 @@ static int tolua_openquick_tolua_quick_QSystem_yield00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: new of class  quick::QTiledMapObject */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapObject_new00
+static int tolua_openquick_tolua_quick_QTiledMapObject_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QTiledMapObject",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCDictionary",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCDictionary* pCCDict = ((cocos2d::CCDictionary*)  tolua_tousertype(tolua_S,2,0));
+  {
+   quick::QTiledMapObject* tolua_ret = (quick::QTiledMapObject*)  Mtolua_new((quick::QTiledMapObject)(pCCDict));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QTiledMapObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  quick::QTiledMapObject */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapObject_new00_local
+static int tolua_openquick_tolua_quick_QTiledMapObject_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QTiledMapObject",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCDictionary",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCDictionary* pCCDict = ((cocos2d::CCDictionary*)  tolua_tousertype(tolua_S,2,0));
+  {
+   quick::QTiledMapObject* tolua_ret = (quick::QTiledMapObject*)  Mtolua_new((quick::QTiledMapObject)(pCCDict));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QTiledMapObject");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  quick::QTiledMapObject */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapObject_delete00
+static int tolua_openquick_tolua_quick_QTiledMapObject_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapObject",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapObject* self = (quick::QTiledMapObject*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getProperty of class  quick::QTiledMapObject */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapObject_getProperty00
+static int tolua_openquick_tolua_quick_QTiledMapObject_getProperty00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapObject",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapObject* self = (quick::QTiledMapObject*)  tolua_tousertype(tolua_S,1,0);
+  const char* propname = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getProperty'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->getProperty(propname);
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getProperty'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: name of class  quick::QTiledMapObject */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QTiledMapObject_name
+static int tolua_get_quick__QTiledMapObject_name(lua_State* tolua_S)
+{
+  quick::QTiledMapObject* self = (quick::QTiledMapObject*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'name'",NULL);
+#endif
+  tolua_pushcppstring(tolua_S,(const char*)self->name);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: name of class  quick::QTiledMapObject */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QTiledMapObject_name
+static int tolua_set_quick__QTiledMapObject_name(lua_State* tolua_S)
+{
+  quick::QTiledMapObject* self = (quick::QTiledMapObject*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'name'",NULL);
+  if (!tolua_iscppstring(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->name = ((std::string)  tolua_tocppstring(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: m_CCDict of class  quick::QTiledMapObject */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QTiledMapObject_m_CCDict_ptr
+static int tolua_get_quick__QTiledMapObject_m_CCDict_ptr(lua_State* tolua_S)
+{
+  quick::QTiledMapObject* self = (quick::QTiledMapObject*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'm_CCDict'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)self->m_CCDict,"cocos2d::CCDictionary");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: m_CCDict of class  quick::QTiledMapObject */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QTiledMapObject_m_CCDict_ptr
+static int tolua_set_quick__QTiledMapObject_m_CCDict_ptr(lua_State* tolua_S)
+{
+  quick::QTiledMapObject* self = (quick::QTiledMapObject*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'm_CCDict'",NULL);
+  if (!tolua_isusertype(tolua_S,2,"cocos2d::CCDictionary",0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->m_CCDict = ((cocos2d::CCDictionary*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  quick::QTiledMapObjectGroup */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapObjectGroup_new00
+static int tolua_openquick_tolua_quick_QTiledMapObjectGroup_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QTiledMapObjectGroup",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCTMXObjectGroup",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCTMXObjectGroup* pCCObject = ((cocos2d::CCTMXObjectGroup*)  tolua_tousertype(tolua_S,2,0));
+  {
+   quick::QTiledMapObjectGroup* tolua_ret = (quick::QTiledMapObjectGroup*)  Mtolua_new((quick::QTiledMapObjectGroup)(pCCObject));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QTiledMapObjectGroup");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  quick::QTiledMapObjectGroup */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapObjectGroup_new00_local
+static int tolua_openquick_tolua_quick_QTiledMapObjectGroup_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QTiledMapObjectGroup",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCTMXObjectGroup",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCTMXObjectGroup* pCCObject = ((cocos2d::CCTMXObjectGroup*)  tolua_tousertype(tolua_S,2,0));
+  {
+   quick::QTiledMapObjectGroup* tolua_ret = (quick::QTiledMapObjectGroup*)  Mtolua_new((quick::QTiledMapObjectGroup)(pCCObject));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QTiledMapObjectGroup");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  quick::QTiledMapObjectGroup */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapObjectGroup_delete00
+static int tolua_openquick_tolua_quick_QTiledMapObjectGroup_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapObjectGroup",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapObjectGroup* self = (quick::QTiledMapObjectGroup*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getProperty of class  quick::QTiledMapObjectGroup */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapObjectGroup_getProperty00
+static int tolua_openquick_tolua_quick_QTiledMapObjectGroup_getProperty00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapObjectGroup",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapObjectGroup* self = (quick::QTiledMapObjectGroup*)  tolua_tousertype(tolua_S,1,0);
+  const char* propname = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getProperty'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->getProperty(propname);
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getProperty'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getObjectNamed of class  quick::QTiledMapObjectGroup */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapObjectGroup_getObjectNamed00
+static int tolua_openquick_tolua_quick_QTiledMapObjectGroup_getObjectNamed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapObjectGroup",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapObjectGroup* self = (quick::QTiledMapObjectGroup*)  tolua_tousertype(tolua_S,1,0);
+  const char* objname = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getObjectNamed'", NULL);
+#endif
+  {
+   quick::QTiledMapObject* tolua_ret = (quick::QTiledMapObject*)  self->getObjectNamed(objname);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QTiledMapObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getObjectNamed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: name of class  quick::QTiledMapObjectGroup */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QTiledMapObjectGroup_name
+static int tolua_get_quick__QTiledMapObjectGroup_name(lua_State* tolua_S)
+{
+  quick::QTiledMapObjectGroup* self = (quick::QTiledMapObjectGroup*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'name'",NULL);
+#endif
+  tolua_pushcppstring(tolua_S,(const char*)self->name);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: name of class  quick::QTiledMapObjectGroup */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QTiledMapObjectGroup_name
+static int tolua_set_quick__QTiledMapObjectGroup_name(lua_State* tolua_S)
+{
+  quick::QTiledMapObjectGroup* self = (quick::QTiledMapObjectGroup*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'name'",NULL);
+  if (!tolua_iscppstring(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->name = ((std::string)  tolua_tocppstring(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: m_CCObject of class  quick::QTiledMapObjectGroup */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QTiledMapObjectGroup_m_CCObject_ptr
+static int tolua_get_quick__QTiledMapObjectGroup_m_CCObject_ptr(lua_State* tolua_S)
+{
+  quick::QTiledMapObjectGroup* self = (quick::QTiledMapObjectGroup*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'm_CCObject'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)self->m_CCObject,"cocos2d::CCTMXObjectGroup");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: m_CCObject of class  quick::QTiledMapObjectGroup */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QTiledMapObjectGroup_m_CCObject_ptr
+static int tolua_set_quick__QTiledMapObjectGroup_m_CCObject_ptr(lua_State* tolua_S)
+{
+  quick::QTiledMapObjectGroup* self = (quick::QTiledMapObjectGroup*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'm_CCObject'",NULL);
+  if (!tolua_isusertype(tolua_S,2,"cocos2d::CCTMXObjectGroup",0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->m_CCObject = ((cocos2d::CCTMXObjectGroup*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: m_TiledMapObjects of class  quick::QTiledMapObjectGroup */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QTiledMapObjectGroup_m_TiledMapObjects
+static int tolua_get_quick__QTiledMapObjectGroup_m_TiledMapObjects(lua_State* tolua_S)
+{
+  quick::QTiledMapObjectGroup* self = (quick::QTiledMapObjectGroup*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'm_TiledMapObjects'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->m_TiledMapObjects,"std::vector<quick::QTiledMapObject*>");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: m_TiledMapObjects of class  quick::QTiledMapObjectGroup */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QTiledMapObjectGroup_m_TiledMapObjects
+static int tolua_set_quick__QTiledMapObjectGroup_m_TiledMapObjects(lua_State* tolua_S)
+{
+  quick::QTiledMapObjectGroup* self = (quick::QTiledMapObjectGroup*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'm_TiledMapObjects'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"std::vector<quick::QTiledMapObject*>",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->m_TiledMapObjects = *((std::vector<quick::QTiledMapObject*>*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _getToLuaClassName of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QTiledMapLayer__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer___tostring00
+static int tolua_openquick_tolua_quick_QTiledMapLayer___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer___serialize00
+static int tolua_openquick_tolua_quick_QTiledMapLayer___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer_new00
+static int tolua_openquick_tolua_quick_QTiledMapLayer_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCTMXLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCTMXLayer* pLayer = ((cocos2d::CCTMXLayer*)  tolua_tousertype(tolua_S,2,0));
+  {
+   quick::QTiledMapLayer* tolua_ret = (quick::QTiledMapLayer*)  Mtolua_new((quick::QTiledMapLayer)(pLayer));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QTiledMapLayer");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer_new00_local
+static int tolua_openquick_tolua_quick_QTiledMapLayer_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"cocos2d::CCTMXLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  cocos2d::CCTMXLayer* pLayer = ((cocos2d::CCTMXLayer*)  tolua_tousertype(tolua_S,2,0));
+  {
+   quick::QTiledMapLayer* tolua_ret = (quick::QTiledMapLayer*)  Mtolua_new((quick::QTiledMapLayer)(pLayer));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QTiledMapLayer");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: delete of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer_delete00
+static int tolua_openquick_tolua_quick_QTiledMapLayer_delete00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'delete'", NULL);
+#endif
+  Mtolua_delete(self);
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'delete'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: _activeQSprite of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QTiledMapLayer__activeQSprite_ptr
+static int tolua_get_quick__QTiledMapLayer__activeQSprite_ptr(lua_State* tolua_S)
+{
+   tolua_pushusertype(tolua_S,(void*)quick::QTiledMapLayer::_activeQSprite,"quick::QSprite");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: _activeQSprite of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QTiledMapLayer__activeQSprite_ptr
+static int tolua_set_quick__QTiledMapLayer__activeQSprite_ptr(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!tolua_isusertype(tolua_S,2,"quick::QSprite",0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  quick::QTiledMapLayer::_activeQSprite = ((quick::QSprite*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: sync of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer_sync00
+static int tolua_openquick_tolua_quick_QTiledMapLayer_sync00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'sync'", NULL);
+#endif
+  {
+   self->sync();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'sync'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverseSync of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer_reverseSync00
+static int tolua_openquick_tolua_quick_QTiledMapLayer_reverseSync00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverseSync'", NULL);
+#endif
+  {
+   self->reverseSync();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverseSync'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: layerSize of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QTiledMapLayer_layerSize
+static int tolua_get_quick__QTiledMapLayer_layerSize(lua_State* tolua_S)
+{
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'layerSize'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->layerSize,"quick::QVec2");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: layerSize of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QTiledMapLayer_layerSize
+static int tolua_set_quick__QTiledMapLayer_layerSize(lua_State* tolua_S)
+{
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'layerSize'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QVec2",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->layerSize = *((quick::QVec2*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: mapTileSize of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QTiledMapLayer_mapTileSize
+static int tolua_get_quick__QTiledMapLayer_mapTileSize(lua_State* tolua_S)
+{
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'mapTileSize'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->mapTileSize,"quick::QVec2");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: mapTileSize of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QTiledMapLayer_mapTileSize
+static int tolua_set_quick__QTiledMapLayer_mapTileSize(lua_State* tolua_S)
+{
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'mapTileSize'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QVec2",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->mapTileSize = *((quick::QVec2*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: layerOrientation of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QTiledMapLayer_layerOrientation
+static int tolua_get_quick__QTiledMapLayer_layerOrientation(lua_State* tolua_S)
+{
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'layerOrientation'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->layerOrientation);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: layerOrientation of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QTiledMapLayer_layerOrientation
+static int tolua_set_quick__QTiledMapLayer_layerOrientation(lua_State* tolua_S)
+{
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'layerOrientation'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->layerOrientation = ((int)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: releaseMap of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer_releaseMap00
+static int tolua_openquick_tolua_quick_QTiledMapLayer_releaseMap00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'releaseMap'", NULL);
+#endif
+  {
+   self->releaseMap();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'releaseMap'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _checkSpriteAtGridRef of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer__checkSpriteAtGridRef00
+static int tolua_openquick_tolua_quick_QTiledMapLayer__checkSpriteAtGridRef00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+  int x = ((int)  tolua_tonumber(tolua_S,2,0));
+  int y = ((int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_checkSpriteAtGridRef'", NULL);
+#endif
+  {
+   quick::QSprite* tolua_ret = (quick::QSprite*)  self->_checkSpriteAtGridRef(x,y);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QSprite");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_checkSpriteAtGridRef'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _setActiveSpriteCCNode of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer__setActiveSpriteCCNode00
+static int tolua_openquick_tolua_quick_QTiledMapLayer__setActiveSpriteCCNode00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_setActiveSpriteCCNode'", NULL);
+#endif
+  {
+   self->_setActiveSpriteCCNode();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_setActiveSpriteCCNode'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getGIDAtGridRef of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer_getGIDAtGridRef00
+static int tolua_openquick_tolua_quick_QTiledMapLayer_getGIDAtGridRef00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+  int x = ((int)  tolua_tonumber(tolua_S,2,0));
+  int y = ((int)  tolua_tonumber(tolua_S,3,0));
+  unsigned int flags = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getGIDAtGridRef'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = (unsigned int)  self->getGIDAtGridRef(x,y,&flags);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+   tolua_pushnumber(tolua_S,(lua_Number)flags);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getGIDAtGridRef'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setGIDAtGridRef of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer_setGIDAtGridRef00
+static int tolua_openquick_tolua_quick_QTiledMapLayer_setGIDAtGridRef00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,6,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+  int x = ((int)  tolua_tonumber(tolua_S,2,0));
+  int y = ((int)  tolua_tonumber(tolua_S,3,0));
+  unsigned int gid = ((unsigned int)  tolua_tonumber(tolua_S,4,0));
+  unsigned int flags = ((unsigned int)  tolua_tonumber(tolua_S,5,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setGIDAtGridRef'", NULL);
+#endif
+  {
+   self->setGIDAtGridRef(x,y,gid,flags);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setGIDAtGridRef'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _removeTileAtGridRef of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer__removeTileAtGridRef00
+static int tolua_openquick_tolua_quick_QTiledMapLayer__removeTileAtGridRef00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+  int x = ((int)  tolua_tonumber(tolua_S,2,0));
+  int y = ((int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_removeTileAtGridRef'", NULL);
+#endif
+  {
+   self->_removeTileAtGridRef(x,y);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_removeTileAtGridRef'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPosAtGridRef of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer_getPosAtGridRef00
+static int tolua_openquick_tolua_quick_QTiledMapLayer_getPosAtGridRef00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,6,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+  int x = ((int)  tolua_tonumber(tolua_S,2,0));
+  int y = ((int)  tolua_tonumber(tolua_S,3,0));
+  float px = ((float)  tolua_tonumber(tolua_S,4,NULL));
+  float py = ((float)  tolua_tonumber(tolua_S,5,NULL));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPosAtGridRef'", NULL);
+#endif
+  {
+   self->getPosAtGridRef(x,y,&px,&py);
+   tolua_pushnumber(tolua_S,(lua_Number)px);
+   tolua_pushnumber(tolua_S,(lua_Number)py);
+  }
+ }
+ return 2;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPosAtGridRef'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setupTiles of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer_setupTiles00
+static int tolua_openquick_tolua_quick_QTiledMapLayer_setupTiles00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setupTiles'", NULL);
+#endif
+  {
+   self->setupTiles();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setupTiles'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getProperty of class  quick::QTiledMapLayer */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMapLayer_getProperty00
+static int tolua_openquick_tolua_quick_QTiledMapLayer_getProperty00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
+  const char* propname = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getProperty'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->getProperty(propname);
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getProperty'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _getToLuaClassName of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QTiledMap__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMap",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap___tostring00
+static int tolua_openquick_tolua_quick_QTiledMap___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMap",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap___serialize00
+static int tolua_openquick_tolua_quick_QTiledMap___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMap",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: new of class  quick::QTiledMap */
 #ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap_new00
 static int tolua_openquick_tolua_quick_QTiledMap_new00(lua_State* tolua_S)
@@ -13562,6 +19715,224 @@ static int tolua_openquick_tolua_quick_QTiledMap_delete00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: _getCCNodeNumChildren of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap__getCCNodeNumChildren00
+static int tolua_openquick_tolua_quick_QTiledMap__getCCNodeNumChildren00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMap",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getCCNodeNumChildren'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->_getCCNodeNumChildren();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getCCNodeNumChildren'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _createQTiledMapLayer of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap__createQTiledMapLayer00
+static int tolua_openquick_tolua_quick_QTiledMap__createQTiledMapLayer00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMap",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+  int layerID = ((int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_createQTiledMapLayer'", NULL);
+#endif
+  {
+   quick::QTiledMapLayer* tolua_ret = (quick::QTiledMapLayer*)  self->_createQTiledMapLayer(layerID);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QTiledMapLayer");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_createQTiledMapLayer'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: sync of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap_sync00
+static int tolua_openquick_tolua_quick_QTiledMap_sync00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMap",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'sync'", NULL);
+#endif
+  {
+   self->sync();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'sync'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: reverseSync of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap_reverseSync00
+static int tolua_openquick_tolua_quick_QTiledMap_reverseSync00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMap",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'reverseSync'", NULL);
+#endif
+  {
+   self->reverseSync();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'reverseSync'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: mapSize of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QTiledMap_mapSize
+static int tolua_get_quick__QTiledMap_mapSize(lua_State* tolua_S)
+{
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'mapSize'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->mapSize,"quick::QVec2");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: mapSize of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QTiledMap_mapSize
+static int tolua_set_quick__QTiledMap_mapSize(lua_State* tolua_S)
+{
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'mapSize'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QVec2",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->mapSize = *((quick::QVec2*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: tileSize of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QTiledMap_tileSize
+static int tolua_get_quick__QTiledMap_tileSize(lua_State* tolua_S)
+{
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tileSize'",NULL);
+#endif
+   tolua_pushusertype(tolua_S,(void*)&self->tileSize,"quick::QVec2");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: tileSize of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QTiledMap_tileSize
+static int tolua_set_quick__QTiledMap_tileSize(lua_State* tolua_S)
+{
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'tileSize'",NULL);
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QVec2",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->tileSize = *((quick::QVec2*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: mapOrientation of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QTiledMap_mapOrientation
+static int tolua_get_quick__QTiledMap_mapOrientation(lua_State* tolua_S)
+{
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'mapOrientation'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->mapOrientation);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: mapOrientation of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QTiledMap_mapOrientation
+static int tolua_set_quick__QTiledMap_mapOrientation(lua_State* tolua_S)
+{
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'mapOrientation'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->mapOrientation = ((int)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: init of class  quick::QTiledMap */
 #ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap_init00
 static int tolua_openquick_tolua_quick_QTiledMap_init00(lua_State* tolua_S)
@@ -13595,38 +19966,103 @@ static int tolua_openquick_tolua_quick_QTiledMap_init00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: setLayerXY of class  quick::QTiledMap */
-#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap_setLayerXY00
-static int tolua_openquick_tolua_quick_QTiledMap_setLayerXY00(lua_State* tolua_S)
+/* method: getLayerNamed of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap_getLayerNamed00
+static int tolua_openquick_tolua_quick_QTiledMap_getLayerNamed00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
  if (
      !tolua_isusertype(tolua_S,1,"quick::QTiledMap",0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,5,&tolua_err)
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
  )
   goto tolua_lerror;
  else
 #endif
  {
   quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
-  int id = ((int)  tolua_tonumber(tolua_S,2,0));
-  float x = ((float)  tolua_tonumber(tolua_S,3,0));
-  float y = ((float)  tolua_tonumber(tolua_S,4,0));
+  const char* layerName = ((const char*)  tolua_tostring(tolua_S,2,0));
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setLayerXY'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getLayerNamed'", NULL);
 #endif
   {
-   self->setLayerXY(id,x,y);
+   quick::QTiledMapLayer* tolua_ret = (quick::QTiledMapLayer*)  self->getLayerNamed(layerName);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QTiledMapLayer");
   }
  }
- return 0;
+ return 1;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'setLayerXY'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'getLayerNamed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getObjectGroupNamed of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap_getObjectGroupNamed00
+static int tolua_openquick_tolua_quick_QTiledMap_getObjectGroupNamed00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMap",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+  const char* groupName = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getObjectGroupNamed'", NULL);
+#endif
+  {
+   quick::QTiledMapObjectGroup* tolua_ret = (quick::QTiledMapObjectGroup*)  self->getObjectGroupNamed(groupName);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QTiledMapObjectGroup");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getObjectGroupNamed'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getProperty of class  quick::QTiledMap */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QTiledMap_getProperty00
+static int tolua_openquick_tolua_quick_QTiledMap_getProperty00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QTiledMap",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QTiledMap* self = (quick::QTiledMap*)  tolua_tousertype(tolua_S,1,0);
+  const char* propname = ((const char*)  tolua_tostring(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getProperty'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->getProperty(propname);
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getProperty'.",&tolua_err);
  return 0;
 #endif
 }
@@ -13744,6 +20180,68 @@ static int tolua_openquick_tolua_ease_linear00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'linear'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: ease::one */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_ease_one00
+static int tolua_openquick_tolua_ease_one00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnumber(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float time = ((float)  tolua_tonumber(tolua_S,1,0));
+  float value = ((float)  tolua_tonumber(tolua_S,2,1.0f));
+  {
+   float tolua_ret = (float)  ease::one(time,value);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'one'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* function: ease::zero */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_ease_zero00
+static int tolua_openquick_tolua_ease_zero00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isnumber(tolua_S,1,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,1,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  float time = ((float)  tolua_tonumber(tolua_S,1,0));
+  float value = ((float)  tolua_tonumber(tolua_S,2,1.0f));
+  {
+   float tolua_ret = (float)  ease::zero(time,value);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'zero'.",&tolua_err);
  return 0;
 #endif
 }
@@ -14495,6 +20993,541 @@ static int tolua_set_quick__QTween_target_ptr(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: __tostring of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVec2___tostring00
+static int tolua_openquick_tolua_quick_QVec2___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QVec2",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QVec2* self = (quick::QVec2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVec2___serialize00
+static int tolua_openquick_tolua_quick_QVec2___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QVec2",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QVec2* self = (quick::QVec2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVec2_new00
+static int tolua_openquick_tolua_quick_QVec2_new00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QVec2",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   quick::QVec2* tolua_ret = (quick::QVec2*)  Mtolua_new((quick::QVec2)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QVec2");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVec2_new00_local
+static int tolua_openquick_tolua_quick_QVec2_new00_local(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QVec2",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   quick::QVec2* tolua_ret = (quick::QVec2*)  Mtolua_new((quick::QVec2)());
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QVec2");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'new'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVec2_new01
+static int tolua_openquick_tolua_quick_QVec2_new01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QVec2",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  float _x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float _y = ((float)  tolua_tonumber(tolua_S,3,0));
+  {
+   quick::QVec2* tolua_ret = (quick::QVec2*)  Mtolua_new((quick::QVec2)(_x,_y));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QVec2");
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_openquick_tolua_quick_QVec2_new00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: new_local of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVec2_new01_local
+static int tolua_openquick_tolua_quick_QVec2_new01_local(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"quick::QVec2",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  float _x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float _y = ((float)  tolua_tonumber(tolua_S,3,0));
+  {
+   quick::QVec2* tolua_ret = (quick::QVec2*)  Mtolua_new((quick::QVec2)(_x,_y));
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"quick::QVec2");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+  }
+ }
+ return 1;
+tolua_lerror:
+ return tolua_openquick_tolua_quick_QVec2_new00_local(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: Set of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVec2_Set00
+static int tolua_openquick_tolua_quick_QVec2_Set00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QVec2",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QVec2* self = (quick::QVec2*)  tolua_tousertype(tolua_S,1,0);
+  float _x = ((float)  tolua_tonumber(tolua_S,2,0));
+  float _y = ((float)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'Set'", NULL);
+#endif
+  {
+   self->Set(_x,_y);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Set'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: Length of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVec2_Length00
+static int tolua_openquick_tolua_quick_QVec2_Length00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QVec2",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QVec2* self = (quick::QVec2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'Length'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->Length();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Length'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: Normalize of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVec2_Normalize00
+static int tolua_openquick_tolua_quick_QVec2_Normalize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QVec2",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QVec2* self = (quick::QVec2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'Normalize'", NULL);
+#endif
+  {
+   float tolua_ret = (float)  self->Normalize();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'Normalize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isPointInsideTri of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVec2_isPointInsideTri00
+static int tolua_openquick_tolua_quick_QVec2_isPointInsideTri00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QVec2",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QVec2",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,3,&tolua_err) || !tolua_isusertype(tolua_S,3,"quick::QVec2",0,&tolua_err)) ||
+     (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"quick::QVec2",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QVec2* self = (quick::QVec2*)  tolua_tousertype(tolua_S,1,0);
+  quick::QVec2* a = ((quick::QVec2*)  tolua_tousertype(tolua_S,2,0));
+  quick::QVec2* b = ((quick::QVec2*)  tolua_tousertype(tolua_S,3,0));
+  quick::QVec2* c = ((quick::QVec2*)  tolua_tousertype(tolua_S,4,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isPointInsideTri'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isPointInsideTri(*a,*b,*c);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isPointInsideTri'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: GetNormal of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVec2_GetNormal00
+static int tolua_openquick_tolua_quick_QVec2_GetNormal00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QVec2",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QVec2* self = (quick::QVec2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'GetNormal'", NULL);
+#endif
+  {
+   quick::QVec2 tolua_ret = (quick::QVec2)  self->GetNormal();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((quick::QVec2)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"quick::QVec2");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(quick::QVec2));
+     tolua_pushusertype(tolua_S,tolua_obj,"quick::QVec2");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'GetNormal'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: x of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QVec2_x
+static int tolua_get_quick__QVec2_x(lua_State* tolua_S)
+{
+  quick::QVec2* self = (quick::QVec2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->x);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: x of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QVec2_x
+static int tolua_set_quick__QVec2_x(lua_State* tolua_S)
+{
+  quick::QVec2* self = (quick::QVec2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'x'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->x = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: y of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QVec2_y
+static int tolua_get_quick__QVec2_y(lua_State* tolua_S)
+{
+  quick::QVec2* self = (quick::QVec2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
+#endif
+  tolua_pushnumber(tolua_S,(lua_Number)self->y);
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: y of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QVec2_y
+static int tolua_set_quick__QVec2_y(lua_State* tolua_S)
+{
+  quick::QVec2* self = (quick::QVec2*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if (!self) tolua_error(tolua_S,"invalid 'self' in accessing variable 'y'",NULL);
+  if (!tolua_isnumber(tolua_S,2,0,&tolua_err))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  self->y = ((float)  tolua_tonumber(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* get function: g_Zero of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_get_quick__QVec2_g_Zero
+static int tolua_get_quick__QVec2_g_Zero(lua_State* tolua_S)
+{
+   tolua_pushusertype(tolua_S,(void*)&quick::QVec2::g_Zero,"quick::QVec2");
+ return 1;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* set function: g_Zero of class  quick::QVec2 */
+#ifndef TOLUA_DISABLE_tolua_set_quick__QVec2_g_Zero
+static int tolua_set_quick__QVec2_g_Zero(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+  tolua_Error tolua_err;
+  if ((tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"quick::QVec2",0,&tolua_err)))
+   tolua_error(tolua_S,"#vinvalid type in variable assignment.",&tolua_err);
+#endif
+  quick::QVec2::g_Zero = *((quick::QVec2*)  tolua_tousertype(tolua_S,2,0))
+;
+ return 0;
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: _getToLuaClassName of class  quick::QVector */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVector__getToLuaClassName00
+static int tolua_openquick_tolua_quick_QVector__getToLuaClassName00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QVector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QVector* self = (quick::QVector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '_getToLuaClassName'", NULL);
+#endif
+  {
+   const char* tolua_ret = (const char*)  self->_getToLuaClassName();
+   tolua_pushstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '_getToLuaClassName'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __tostring of class  quick::QVector */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVector___tostring00
+static int tolua_openquick_tolua_quick_QVector___tostring00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QVector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QVector* self = (quick::QVector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__tostring'", NULL);
+#endif
+  {
+   std::string tolua_ret = (std::string)  self->__tostring();
+   tolua_pushcppstring(tolua_S,(const char*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__tostring'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __serialize of class  quick::QVector */
+#ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVector___serialize00
+static int tolua_openquick_tolua_quick_QVector___serialize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"quick::QVector",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  quick::QVector* self = (quick::QVector*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__serialize'", NULL);
+#endif
+  {
+   void* tolua_ret = (void*)  self->__serialize();
+   tolua_pushuserdata(tolua_S,(void*)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__serialize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: new of class  quick::QVector */
 #ifndef TOLUA_DISABLE_tolua_openquick_tolua_quick_QVector_new00
 static int tolua_openquick_tolua_quick_QVector_new00(lua_State* tolua_S)
@@ -14747,6 +21780,8 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"QAnimation","quick::QAnimation","",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QAnimation");
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QAnimation___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QAnimation___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QAnimation_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QAnimation_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QAnimation_new00_local);
@@ -14765,6 +21800,8 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"QAtlas","quick::QAtlas","private cocos2d::CCSpriteFrameCache",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QAtlas");
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QAtlas___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QAtlas___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QAtlas_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QAtlas_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QAtlas_new00_local);
@@ -14802,8 +21839,14 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
     tolua_function(tolua_S,"stopSound",tolua_openquick_tolua_quick_QAudio_stopSound00);
     tolua_function(tolua_S,"loadSound",tolua_openquick_tolua_quick_QAudio_loadSound00);
     tolua_function(tolua_S,"unloadSound",tolua_openquick_tolua_quick_QAudio_unloadSound00);
-    tolua_variable(tolua_S,"musicVolume",tolua_get_quick__QAudio_musicVolume,tolua_set_quick__QAudio_musicVolume);
-    tolua_variable(tolua_S,"sfxVolume",tolua_get_quick__QAudio_sfxVolume,tolua_set_quick__QAudio_sfxVolume);
+    tolua_function(tolua_S,"setSoundFrequency",tolua_openquick_tolua_quick_QAudio_setSoundFrequency00);
+    tolua_function(tolua_S,"isSoundPlaying",tolua_openquick_tolua_quick_QAudio_isSoundPlaying00);
+    tolua_function(tolua_S,"get_streamVolume",tolua_openquick_tolua_quick_QAudio_get_streamVolume00);
+    tolua_function(tolua_S,"set_streamVolume",tolua_openquick_tolua_quick_QAudio_set_streamVolume00);
+    tolua_function(tolua_S,"get_soundVolume",tolua_openquick_tolua_quick_QAudio_get_soundVolume00);
+    tolua_function(tolua_S,"set_soundVolume",tolua_openquick_tolua_quick_QAudio_set_soundVolume00);
+    tolua_variable(tolua_S,"streamVolume",tolua_get_quick__QAudio_streamVolume,tolua_set_quick__QAudio_streamVolume);
+    tolua_variable(tolua_S,"soundVolume",tolua_get_quick__QAudio_soundVolume,tolua_set_quick__QAudio_soundVolume);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"quick",0);
@@ -14828,6 +21871,9 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"QCircle","quick::QCircle","quick::QVector",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QCircle");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QCircle__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QCircle___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QCircle___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QCircle_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QCircle_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QCircle_new00_local);
@@ -14845,6 +21891,8 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"QColor","quick::QColor","",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QColor");
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QColor___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QColor___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QColor_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QColor_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QColor_new00_local);
@@ -14872,6 +21920,8 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"QDirector","quick::QDirector","",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QDirector");
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QDirector___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QDirector___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QDirector_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QDirector_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QDirector_new00_local);
@@ -14881,11 +21931,17 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
     tolua_variable(tolua_S,"_transitionScene",tolua_get_quick__QDirector__transitionScene_ptr,tolua_set_quick__QDirector__transitionScene_ptr);
     tolua_variable(tolua_S,"_transitionTime",tolua_get_quick__QDirector__transitionTime,tolua_set_quick__QDirector__transitionTime);
     tolua_variable(tolua_S,"_transitionType",tolua_get_quick__QDirector__transitionType,tolua_set_quick__QDirector__transitionType);
+    tolua_variable(tolua_S,"_overlayScene",tolua_get_quick__QDirector__overlayScene_ptr,tolua_set_quick__QDirector__overlayScene_ptr);
+    tolua_variable(tolua_S,"_overlayTransitionScene",tolua_get_quick__QDirector__overlayTransitionScene_ptr,tolua_set_quick__QDirector__overlayTransitionScene_ptr);
+    tolua_variable(tolua_S,"_overlayTransitionTime",tolua_get_quick__QDirector__overlayTransitionTime,tolua_set_quick__QDirector__overlayTransitionTime);
+    tolua_variable(tolua_S,"_overlayTransitionType",tolua_get_quick__QDirector__overlayTransitionType,tolua_set_quick__QDirector__overlayTransitionType);
+    tolua_variable(tolua_S,"_modalOverlay",tolua_get_quick__QDirector__modalOverlay,tolua_set_quick__QDirector__modalOverlay);
     tolua_variable(tolua_S,"nodesColor",tolua_get_quick__QDirector_nodesColor,tolua_set_quick__QDirector_nodesColor);
     tolua_variable(tolua_S,"addNodesToScene",tolua_get_quick__QDirector_addNodesToScene,tolua_set_quick__QDirector_addNodesToScene);
     tolua_variable(tolua_S,"isAlphaInherited",tolua_get_quick__QDirector_isAlphaInherited,tolua_set_quick__QDirector_isAlphaInherited);
     tolua_function(tolua_S,"drawLine",tolua_openquick_tolua_quick_QDirector_drawLine00);
     tolua_function(tolua_S,"cleanupTextures",tolua_openquick_tolua_quick_QDirector_cleanupTextures00);
+    tolua_function(tolua_S,"startRendering",tolua_openquick_tolua_quick_QDirector_startRendering00);
     tolua_variable(tolua_S,"displayWidth",tolua_get_quick__QDirector_displayWidth,tolua_set_quick__QDirector_displayWidth);
     tolua_variable(tolua_S,"displayHeight",tolua_get_quick__QDirector_displayHeight,tolua_set_quick__QDirector_displayHeight);
     tolua_variable(tolua_S,"displayCenterX",tolua_get_quick__QDirector_displayCenterX,tolua_set_quick__QDirector_displayCenterX);
@@ -14910,7 +21966,26 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
   tolua_beginmodule(tolua_S,"key");
    tolua_constant(tolua_S,"back",key::back);
    tolua_constant(tolua_S,"menu",key::menu);
-   tolua_constant(tolua_S,"openquick_max",key::openquick_max);
+  tolua_endmodule(tolua_S);
+  tolua_module(tolua_S,"quick",0);
+  tolua_beginmodule(tolua_S,"quick");
+   tolua_cclass(tolua_S,"QFilterData","quick::QFilterData","",NULL);
+   tolua_beginmodule(tolua_S,"QFilterData");
+    tolua_variable(tolua_S,"name",tolua_get_quick__QFilterData_name,tolua_set_quick__QFilterData_name);
+    tolua_variable(tolua_S,"x",tolua_get_quick__QFilterData_x,tolua_set_quick__QFilterData_x);
+    tolua_variable(tolua_S,"y",tolua_get_quick__QFilterData_y,tolua_set_quick__QFilterData_y);
+    tolua_variable(tolua_S,"angle",tolua_get_quick__QFilterData_angle,tolua_set_quick__QFilterData_angle);
+    tolua_variable(tolua_S,"intensity",tolua_get_quick__QFilterData_intensity,tolua_set_quick__QFilterData_intensity);
+    tolua_variable(tolua_S,"contrast",tolua_get_quick__QFilterData_contrast,tolua_set_quick__QFilterData_contrast);
+    tolua_variable(tolua_S,"sensitivity",tolua_get_quick__QFilterData_sensitivity,tolua_set_quick__QFilterData_sensitivity);
+    tolua_variable(tolua_S,"smoothing",tolua_get_quick__QFilterData_smoothing,tolua_set_quick__QFilterData_smoothing);
+    tolua_variable(tolua_S,"radius",tolua_get_quick__QFilterData_radius,tolua_set_quick__QFilterData_radius);
+    tolua_variable(tolua_S,"scale",tolua_get_quick__QFilterData_scale,tolua_set_quick__QFilterData_scale);
+    tolua_variable(tolua_S,"spacing",tolua_get_quick__QFilterData_spacing,tolua_set_quick__QFilterData_spacing);
+    tolua_variable(tolua_S,"lineWidth",tolua_get_quick__QFilterData_lineWidth,tolua_set_quick__QFilterData_lineWidth);
+    tolua_variable(tolua_S,"exposure",tolua_get_quick__QFilterData_exposure,tolua_set_quick__QFilterData_exposure);
+    tolua_variable(tolua_S,"color",tolua_get_quick__QFilterData_color,tolua_set_quick__QFilterData_color);
+   tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"quick",0);
   tolua_beginmodule(tolua_S,"quick");
@@ -14920,6 +21995,8 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"QFont","quick::QFont","",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QFont");
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QFont___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QFont___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QFont_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QFont_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QFont_new00_local);
@@ -14937,6 +22014,9 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"QLabel","quick::QLabel","quick::QNode",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QLabel");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QLabel__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QLabel___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QLabel___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QLabel_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QLabel_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QLabel_new00_local);
@@ -14949,6 +22029,12 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
     tolua_variable(tolua_S,"hAlignment",tolua_get_quick__QLabel_hAlignment,tolua_set_quick__QLabel_hAlignment);
     tolua_variable(tolua_S,"vAlignment",tolua_get_quick__QLabel_vAlignment,tolua_set_quick__QLabel_vAlignment);
     tolua_variable(tolua_S,"textTouchableBorder",tolua_get_quick__QLabel_textTouchableBorder,tolua_set_quick__QLabel_textTouchableBorder);
+    tolua_variable(tolua_S,"textBorderTop",tolua_get_quick__QLabel_textBorderTop,tolua_set_quick__QLabel_textBorderTop);
+    tolua_variable(tolua_S,"textBorderBottom",tolua_get_quick__QLabel_textBorderBottom,tolua_set_quick__QLabel_textBorderBottom);
+    tolua_variable(tolua_S,"textBorderLeft",tolua_get_quick__QLabel_textBorderLeft,tolua_set_quick__QLabel_textBorderLeft);
+    tolua_variable(tolua_S,"textBorderRight",tolua_get_quick__QLabel_textBorderRight,tolua_set_quick__QLabel_textBorderRight);
+    tolua_variable(tolua_S,"textXScale",tolua_get_quick__QLabel_textXScale,tolua_set_quick__QLabel_textXScale);
+    tolua_variable(tolua_S,"textYScale",tolua_get_quick__QLabel_textYScale,tolua_set_quick__QLabel_textYScale);
     tolua_variable(tolua_S,"xText",tolua_get_quick__QLabel_xText,tolua_set_quick__QLabel_xText);
     tolua_variable(tolua_S,"yText",tolua_get_quick__QLabel_yText,tolua_set_quick__QLabel_yText);
     tolua_variable(tolua_S,"wText",tolua_get_quick__QLabel_wText,tolua_set_quick__QLabel_wText);
@@ -14963,6 +22049,9 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"QLines","quick::QLines","quick::QVector",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QLines");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QLines__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QLines___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QLines___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QLines_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QLines_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QLines_new00_local);
@@ -14971,16 +22060,21 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
     tolua_function(tolua_S,"_appendFinalise",tolua_openquick_tolua_quick_QLines__appendFinalise00);
     tolua_function(tolua_S,"_appendReallocBuffers",tolua_openquick_tolua_quick_QLines__appendReallocBuffers00);
     tolua_function(tolua_S,"sync",tolua_openquick_tolua_quick_QLines_sync00);
+    tolua_function(tolua_S,"isPointInside",tolua_openquick_tolua_quick_QLines_isPointInside00);
+    tolua_function(tolua_S,"isClosed",tolua_openquick_tolua_quick_QLines_isClosed00);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"quick",0);
   tolua_beginmodule(tolua_S,"quick");
    #ifdef __cplusplus
-   tolua_cclass(tolua_S,"QNode","quick::QNode","",tolua_collect_quick__QNode);
+   tolua_cclass(tolua_S,"QNode","quick::QNode","quick::QBaseObject",tolua_collect_quick__QNode);
    #else
-   tolua_cclass(tolua_S,"QNode","quick::QNode","",NULL);
+   tolua_cclass(tolua_S,"QNode","quick::QNode","quick::QBaseObject",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QNode");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QNode__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QNode___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QNode___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QNode_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QNode_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QNode_new00_local);
@@ -14997,9 +22091,13 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
     tolua_variable(tolua_S,"_timersTimeScale",tolua_get_quick__QNode__timersTimeScale,tolua_set_quick__QNode__timersTimeScale);
     tolua_variable(tolua_S,"_tweensTimeScale",tolua_get_quick__QNode__tweensTimeScale,tolua_set_quick__QNode__tweensTimeScale);
     tolua_function(tolua_S,"sync",tolua_openquick_tolua_quick_QNode_sync00);
-    tolua_function(tolua_S,"isPointInside",tolua_openquick_tolua_quick_QNode_isPointInside00);
+    tolua_function(tolua_S,"reverseSync",tolua_openquick_tolua_quick_QNode_reverseSync00);
+    tolua_function(tolua_S,"visit",tolua_openquick_tolua_quick_QNode_visit00);
     tolua_function(tolua_S,"setColor",tolua_openquick_tolua_quick_QNode_setColor00);
     tolua_function(tolua_S,"setColor",tolua_openquick_tolua_quick_QNode_setColor01);
+    tolua_function(tolua_S,"isPointInside",tolua_openquick_tolua_quick_QNode_isPointInside00);
+    tolua_function(tolua_S,"getPointInWorldSpace",tolua_openquick_tolua_quick_QNode_getPointInWorldSpace00);
+    tolua_function(tolua_S,"getPointInLocalSpace",tolua_openquick_tolua_quick_QNode_getPointInLocalSpace00);
     tolua_function(tolua_S,"pauseTimers",tolua_openquick_tolua_quick_QNode_pauseTimers00);
     tolua_function(tolua_S,"resumeTimers",tolua_openquick_tolua_quick_QNode_resumeTimers00);
     tolua_function(tolua_S,"setTimersTimeScale",tolua_openquick_tolua_quick_QNode_setTimersTimeScale00);
@@ -15008,6 +22106,8 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
     tolua_function(tolua_S,"resumeTweens",tolua_openquick_tolua_quick_QNode_resumeTweens00);
     tolua_function(tolua_S,"setTweensTimeScale",tolua_openquick_tolua_quick_QNode_setTweensTimeScale00);
     tolua_function(tolua_S,"getTweensTimeScale",tolua_openquick_tolua_quick_QNode_getTweensTimeScale00);
+    tolua_function(tolua_S,"setGLProgram",tolua_openquick_tolua_quick_QNode_setGLProgram00);
+    tolua_function(tolua_S,"getGLProgram",tolua_openquick_tolua_quick_QNode_getGLProgram00);
     tolua_variable(tolua_S,"name",tolua_get_quick__QNode_name,tolua_set_quick__QNode_name);
     tolua_variable(tolua_S,"x",tolua_get_quick__QNode_x,tolua_set_quick__QNode_x);
     tolua_variable(tolua_S,"y",tolua_get_quick__QNode_y,tolua_set_quick__QNode_y);
@@ -15036,8 +22136,56 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"quick",0);
   tolua_beginmodule(tolua_S,"quick");
+   #ifdef __cplusplus
+   tolua_cclass(tolua_S,"QNodeGLProgram","quick::QNodeGLProgram","quick::QBaseObject",tolua_collect_quick__QNodeGLProgram);
+   #else
+   tolua_cclass(tolua_S,"QNodeGLProgram","quick::QNodeGLProgram","quick::QBaseObject",NULL);
+   #endif
+   tolua_beginmodule(tolua_S,"QNodeGLProgram");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QNodeGLProgram__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QNodeGLProgram___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QNodeGLProgram___serialize00);
+    tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QNodeGLProgram_new00);
+    tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QNodeGLProgram_new00_local);
+    tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QNodeGLProgram_new00_local);
+    tolua_function(tolua_S,"delete",tolua_openquick_tolua_quick_QNodeGLProgram_delete00);
+    tolua_function(tolua_S,"initWithVertexShaderByteArray",tolua_openquick_tolua_quick_QNodeGLProgram_initWithVertexShaderByteArray00);
+    tolua_function(tolua_S,"initWithVertexShaderFilename",tolua_openquick_tolua_quick_QNodeGLProgram_initWithVertexShaderFilename00);
+    tolua_function(tolua_S,"addAttribute",tolua_openquick_tolua_quick_QNodeGLProgram_addAttribute00);
+    tolua_function(tolua_S,"link",tolua_openquick_tolua_quick_QNodeGLProgram_link00);
+    tolua_function(tolua_S,"use",tolua_openquick_tolua_quick_QNodeGLProgram_use00);
+    tolua_function(tolua_S,"updateUniforms",tolua_openquick_tolua_quick_QNodeGLProgram_updateUniforms00);
+    tolua_function(tolua_S,"setUniformLocationWith1i",tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith1i00);
+    tolua_function(tolua_S,"setUniformLocationWith1f",tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith1f00);
+    tolua_function(tolua_S,"setUniformLocationWith2f",tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith2f00);
+    tolua_function(tolua_S,"setUniformLocationWith3f",tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith3f00);
+    tolua_function(tolua_S,"setUniformLocationWith4f",tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith4f00);
+    tolua_function(tolua_S,"setUniformLocationWith2fv",tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith2fv00);
+    tolua_function(tolua_S,"setUniformLocationWith3fv",tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith3fv00);
+    tolua_function(tolua_S,"setUniformLocationWith4fv",tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWith4fv00);
+    tolua_function(tolua_S,"setUniformLocationWithMatrix4fv",tolua_openquick_tolua_quick_QNodeGLProgram_setUniformLocationWithMatrix4fv00);
+    tolua_function(tolua_S,"setUniformsForBuiltins",tolua_openquick_tolua_quick_QNodeGLProgram_setUniformsForBuiltins00);
+    tolua_function(tolua_S,"setUniformForModelViewProjectionMatrix",tolua_openquick_tolua_quick_QNodeGLProgram_setUniformForModelViewProjectionMatrix00);
+    tolua_function(tolua_S,"getUniformLocation",tolua_openquick_tolua_quick_QNodeGLProgram_getUniformLocation00);
+    tolua_function(tolua_S,"mapTextureToUniform",tolua_openquick_tolua_quick_QNodeGLProgram_mapTextureToUniform00);
+    tolua_function(tolua_S,"vertexShaderLog",tolua_openquick_tolua_quick_QNodeGLProgram_vertexShaderLog00);
+    tolua_function(tolua_S,"fragmentShaderLog",tolua_openquick_tolua_quick_QNodeGLProgram_fragmentShaderLog00);
+    tolua_function(tolua_S,"programLog",tolua_openquick_tolua_quick_QNodeGLProgram_programLog00);
+    tolua_function(tolua_S,"reset",tolua_openquick_tolua_quick_QNodeGLProgram_reset00);
+    tolua_function(tolua_S,"getProgram",tolua_openquick_tolua_quick_QNodeGLProgram_getProgram00);
+    tolua_function(tolua_S,"_createCCGLProgram",tolua_openquick_tolua_quick_QNodeGLProgram__createCCGLProgram00);
+    tolua_variable(tolua_S,"m_CCProgram",tolua_get_quick__QNodeGLProgram_m_CCProgram_ptr,tolua_set_quick__QNodeGLProgram_m_CCProgram_ptr);
+   tolua_endmodule(tolua_S);
+  tolua_endmodule(tolua_S);
+  tolua_module(tolua_S,"quick",0);
+  tolua_beginmodule(tolua_S,"quick");
+   tolua_function(tolua_S,"MainLuaPrecompileFile",tolua_openquick_tolua_quick_MainLuaPrecompileFile00);
    tolua_function(tolua_S,"MainLuaLoadFile",tolua_openquick_tolua_quick_MainLuaLoadFile00);
    tolua_function(tolua_S,"MainLuaDoFile",tolua_openquick_tolua_quick_MainLuaDoFile00);
+   tolua_function(tolua_S,"MainGetVersionString",tolua_openquick_tolua_quick_MainGetVersionString00);
+   tolua_function(tolua_S,"startFileConcat",tolua_openquick_tolua_quick_startFileConcat00);
+   tolua_function(tolua_S,"endFileConcat",tolua_openquick_tolua_quick_endFileConcat00);
+   tolua_function(tolua_S,"isFileConcatInProgress",tolua_openquick_tolua_quick_isFileConcatInProgress00);
    tolua_function(tolua_S,"MainOutputFlush",tolua_openquick_tolua_quick_MainOutputFlush00);
    tolua_function(tolua_S,"MainPrint",tolua_openquick_tolua_quick_MainPrint00);
   tolua_endmodule(tolua_S);
@@ -15049,51 +22197,51 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"QParticles","quick::QParticles","quick::QNode",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QParticles");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QParticles__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QParticles___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QParticles___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QParticles_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QParticles_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QParticles_new00_local);
     tolua_function(tolua_S,"delete",tolua_openquick_tolua_quick_QParticles_delete00);
-    tolua_cclass(tolua_S,"xyStruct","quick::QParticles::xyStruct","",NULL);
-    tolua_beginmodule(tolua_S,"xyStruct");
-     tolua_variable(tolua_S,"x",tolua_get_quick__QParticles__xyStruct_x,tolua_set_quick__QParticles__xyStruct_x);
-     tolua_variable(tolua_S,"y",tolua_get_quick__QParticles__xyStruct_y,tolua_set_quick__QParticles__xyStruct_y);
+    tolua_cclass(tolua_S,"modeGravityStruct","quick::QParticles::modeGravityStruct","",NULL);
+    tolua_beginmodule(tolua_S,"modeGravityStruct");
+     tolua_variable(tolua_S,"gravity",tolua_get_quick__QParticles__modeGravityStruct_gravity,tolua_set_quick__QParticles__modeGravityStruct_gravity);
+     tolua_variable(tolua_S,"speed",tolua_get_quick__QParticles__modeGravityStruct_speed,tolua_set_quick__QParticles__modeGravityStruct_speed);
+     tolua_variable(tolua_S,"speedVar",tolua_get_quick__QParticles__modeGravityStruct_speedVar,tolua_set_quick__QParticles__modeGravityStruct_speedVar);
+     tolua_variable(tolua_S,"tangentialAccel",tolua_get_quick__QParticles__modeGravityStruct_tangentialAccel,tolua_set_quick__QParticles__modeGravityStruct_tangentialAccel);
+     tolua_variable(tolua_S,"tangentialAccelVar",tolua_get_quick__QParticles__modeGravityStruct_tangentialAccelVar,tolua_set_quick__QParticles__modeGravityStruct_tangentialAccelVar);
+     tolua_variable(tolua_S,"radialAccel",tolua_get_quick__QParticles__modeGravityStruct_radialAccel,tolua_set_quick__QParticles__modeGravityStruct_radialAccel);
+     tolua_variable(tolua_S,"radialAccelVar",tolua_get_quick__QParticles__modeGravityStruct_radialAccelVar,tolua_set_quick__QParticles__modeGravityStruct_radialAccelVar);
     tolua_endmodule(tolua_S);
-    tolua_cclass(tolua_S,"modeAStruct","quick::QParticles::modeAStruct","",NULL);
-    tolua_beginmodule(tolua_S,"modeAStruct");
-     tolua_variable(tolua_S,"gravity",tolua_get_quick__QParticles__modeAStruct_gravity,tolua_set_quick__QParticles__modeAStruct_gravity);
-     tolua_variable(tolua_S,"speed",tolua_get_quick__QParticles__modeAStruct_speed,tolua_set_quick__QParticles__modeAStruct_speed);
-     tolua_variable(tolua_S,"speedVar",tolua_get_quick__QParticles__modeAStruct_speedVar,tolua_set_quick__QParticles__modeAStruct_speedVar);
-     tolua_variable(tolua_S,"tangentialAccel",tolua_get_quick__QParticles__modeAStruct_tangentialAccel,tolua_set_quick__QParticles__modeAStruct_tangentialAccel);
-     tolua_variable(tolua_S,"tangentialAccelVar",tolua_get_quick__QParticles__modeAStruct_tangentialAccelVar,tolua_set_quick__QParticles__modeAStruct_tangentialAccelVar);
-     tolua_variable(tolua_S,"radialAccel",tolua_get_quick__QParticles__modeAStruct_radialAccel,tolua_set_quick__QParticles__modeAStruct_radialAccel);
-     tolua_variable(tolua_S,"radialAccelVar",tolua_get_quick__QParticles__modeAStruct_radialAccelVar,tolua_set_quick__QParticles__modeAStruct_radialAccelVar);
+    tolua_cclass(tolua_S,"modeRadialStruct","quick::QParticles::modeRadialStruct","",NULL);
+    tolua_beginmodule(tolua_S,"modeRadialStruct");
+     tolua_variable(tolua_S,"startRadius",tolua_get_quick__QParticles__modeRadialStruct_startRadius,tolua_set_quick__QParticles__modeRadialStruct_startRadius);
+     tolua_variable(tolua_S,"startRadiusVar",tolua_get_quick__QParticles__modeRadialStruct_startRadiusVar,tolua_set_quick__QParticles__modeRadialStruct_startRadiusVar);
+     tolua_variable(tolua_S,"endRadius",tolua_get_quick__QParticles__modeRadialStruct_endRadius,tolua_set_quick__QParticles__modeRadialStruct_endRadius);
+     tolua_variable(tolua_S,"endRadiusVar",tolua_get_quick__QParticles__modeRadialStruct_endRadiusVar,tolua_set_quick__QParticles__modeRadialStruct_endRadiusVar);
+     tolua_variable(tolua_S,"rotatePerSecond",tolua_get_quick__QParticles__modeRadialStruct_rotatePerSecond,tolua_set_quick__QParticles__modeRadialStruct_rotatePerSecond);
+     tolua_variable(tolua_S,"rotatePerSecondVar",tolua_get_quick__QParticles__modeRadialStruct_rotatePerSecondVar,tolua_set_quick__QParticles__modeRadialStruct_rotatePerSecondVar);
     tolua_endmodule(tolua_S);
-    tolua_cclass(tolua_S,"modeBStruct","quick::QParticles::modeBStruct","",NULL);
-    tolua_beginmodule(tolua_S,"modeBStruct");
-     tolua_variable(tolua_S,"startRadius",tolua_get_quick__QParticles__modeBStruct_startRadius,tolua_set_quick__QParticles__modeBStruct_startRadius);
-     tolua_variable(tolua_S,"startRadiusVar",tolua_get_quick__QParticles__modeBStruct_startRadiusVar,tolua_set_quick__QParticles__modeBStruct_startRadiusVar);
-     tolua_variable(tolua_S,"endRadius",tolua_get_quick__QParticles__modeBStruct_endRadius,tolua_set_quick__QParticles__modeBStruct_endRadius);
-     tolua_variable(tolua_S,"endRadiusVar",tolua_get_quick__QParticles__modeBStruct_endRadiusVar,tolua_set_quick__QParticles__modeBStruct_endRadiusVar);
-     tolua_variable(tolua_S,"rotatePerSecond",tolua_get_quick__QParticles__modeBStruct_rotatePerSecond,tolua_set_quick__QParticles__modeBStruct_rotatePerSecond);
-     tolua_variable(tolua_S,"rotatePerSecondVar",tolua_get_quick__QParticles__modeBStruct_rotatePerSecondVar,tolua_set_quick__QParticles__modeBStruct_rotatePerSecondVar);
-    tolua_endmodule(tolua_S);
-    tolua_function(tolua_S,"init",tolua_openquick_tolua_quick_QParticles_init00);
     tolua_function(tolua_S,"setAtlas",tolua_openquick_tolua_quick_QParticles_setAtlas00);
     tolua_function(tolua_S,"addParticle",tolua_openquick_tolua_quick_QParticles_addParticle00);
     tolua_function(tolua_S,"stop",tolua_openquick_tolua_quick_QParticles_stop00);
     tolua_function(tolua_S,"reset",tolua_openquick_tolua_quick_QParticles_reset00);
     tolua_function(tolua_S,"isFull",tolua_openquick_tolua_quick_QParticles_isFull00);
+    tolua_function(tolua_S,"isActive",tolua_openquick_tolua_quick_QParticles_isActive00);
+    tolua_function(tolua_S,"getNumParticles",tolua_openquick_tolua_quick_QParticles_getNumParticles00);
     tolua_function(tolua_S,"update",tolua_openquick_tolua_quick_QParticles_update00);
     tolua_function(tolua_S,"sync",tolua_openquick_tolua_quick_QParticles_sync00);
     tolua_function(tolua_S,"syncReverse",tolua_openquick_tolua_quick_QParticles_syncReverse00);
-    tolua_variable(tolua_S,"modeA",tolua_get_quick__QParticles_modeA,tolua_set_quick__QParticles_modeA);
-    tolua_variable(tolua_S,"modeB",tolua_get_quick__QParticles_modeB,tolua_set_quick__QParticles_modeB);
+    tolua_variable(tolua_S,"modeGravity",tolua_get_quick__QParticles_modeGravity,tolua_set_quick__QParticles_modeGravity);
+    tolua_variable(tolua_S,"modeRadial",tolua_get_quick__QParticles_modeRadial,tolua_set_quick__QParticles_modeRadial);
+    tolua_variable(tolua_S,"totalParticles",tolua_get_quick__QParticles_totalParticles,tolua_set_quick__QParticles_totalParticles);
     tolua_variable(tolua_S,"particleCount",tolua_get_quick__QParticles_particleCount,tolua_set_quick__QParticles_particleCount);
+    tolua_variable(tolua_S,"emitterMode",tolua_get_quick__QParticles_emitterMode,tolua_set_quick__QParticles_emitterMode);
+    tolua_variable(tolua_S,"emitterRate",tolua_get_quick__QParticles_emitterRate,tolua_set_quick__QParticles_emitterRate);
     tolua_variable(tolua_S,"duration",tolua_get_quick__QParticles_duration,tolua_set_quick__QParticles_duration);
-    tolua_variable(tolua_S,"sourcePosX",tolua_get_quick__QParticles_sourcePosX,tolua_set_quick__QParticles_sourcePosX);
-    tolua_variable(tolua_S,"sourcePosY",tolua_get_quick__QParticles_sourcePosY,tolua_set_quick__QParticles_sourcePosY);
-    tolua_variable(tolua_S,"sourcePosVarX",tolua_get_quick__QParticles_sourcePosVarX,tolua_set_quick__QParticles_sourcePosVarX);
-    tolua_variable(tolua_S,"sourcePosVarY",tolua_get_quick__QParticles_sourcePosVarY,tolua_set_quick__QParticles_sourcePosVarY);
+    tolua_variable(tolua_S,"sourcePos",tolua_get_quick__QParticles_sourcePos,tolua_set_quick__QParticles_sourcePos);
+    tolua_variable(tolua_S,"sourcePosVar",tolua_get_quick__QParticles_sourcePosVar,tolua_set_quick__QParticles_sourcePosVar);
     tolua_variable(tolua_S,"life",tolua_get_quick__QParticles_life,tolua_set_quick__QParticles_life);
     tolua_variable(tolua_S,"lifeVar",tolua_get_quick__QParticles_lifeVar,tolua_set_quick__QParticles_lifeVar);
     tolua_variable(tolua_S,"angle",tolua_get_quick__QParticles_angle,tolua_set_quick__QParticles_angle);
@@ -15110,9 +22258,9 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
     tolua_variable(tolua_S,"startSpinVar",tolua_get_quick__QParticles_startSpinVar,tolua_set_quick__QParticles_startSpinVar);
     tolua_variable(tolua_S,"endSpin",tolua_get_quick__QParticles_endSpin,tolua_set_quick__QParticles_endSpin);
     tolua_variable(tolua_S,"endSpinVar",tolua_get_quick__QParticles_endSpinVar,tolua_set_quick__QParticles_endSpinVar);
-    tolua_variable(tolua_S,"emissionRate",tolua_get_quick__QParticles_emissionRate,tolua_set_quick__QParticles_emissionRate);
-    tolua_variable(tolua_S,"totalParticles",tolua_get_quick__QParticles_totalParticles,tolua_set_quick__QParticles_totalParticles);
     tolua_variable(tolua_S,"alphaModifiesColor",tolua_get_quick__QParticles_alphaModifiesColor,tolua_set_quick__QParticles_alphaModifiesColor);
+    tolua_function(tolua_S,"_initWithPlist",tolua_openquick_tolua_quick_QParticles__initWithPlist00);
+    tolua_function(tolua_S,"_initWithNumber",tolua_openquick_tolua_quick_QParticles__initWithNumber00);
     tolua_variable(tolua_S,"_atlas",tolua_get_quick__QParticles__atlas_ptr,tolua_set_quick__QParticles__atlas_ptr);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
@@ -15126,6 +22274,8 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
     tolua_cclass(tolua_S,"QSim","quick::physics::QSim","",NULL);
     #endif
     tolua_beginmodule(tolua_S,"QSim");
+     tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_physics_QSim___tostring00);
+     tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_physics_QSim___serialize00);
      tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_physics_QSim_new00);
      tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_physics_QSim_new00_local);
      tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_physics_QSim_new00_local);
@@ -15447,14 +22597,18 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
      tolua_function(tolua_S,"_init",tolua_openquick_tolua_quick_physics_QNodeProps__init00);
      tolua_function(tolua_S,"_sync",tolua_openquick_tolua_quick_physics_QNodeProps__sync00);
      tolua_function(tolua_S,"applyForce",tolua_openquick_tolua_quick_physics_QNodeProps_applyForce00);
+     tolua_function(tolua_S,"applyForceToCenter",tolua_openquick_tolua_quick_physics_QNodeProps_applyForceToCenter00);
      tolua_function(tolua_S,"applyAngularImpulse",tolua_openquick_tolua_quick_physics_QNodeProps_applyAngularImpulse00);
      tolua_function(tolua_S,"setAngularVelocity",tolua_openquick_tolua_quick_physics_QNodeProps_setAngularVelocity00);
      tolua_function(tolua_S,"getAngularVelocity",tolua_openquick_tolua_quick_physics_QNodeProps_getAngularVelocity00);
      tolua_function(tolua_S,"applyTorque",tolua_openquick_tolua_quick_physics_QNodeProps_applyTorque00);
      tolua_function(tolua_S,"applyLinearImpulse",tolua_openquick_tolua_quick_physics_QNodeProps_applyLinearImpulse00);
+     tolua_function(tolua_S,"applyLinearImpulseToCenter",tolua_openquick_tolua_quick_physics_QNodeProps_applyLinearImpulseToCenter00);
      tolua_function(tolua_S,"getMass",tolua_openquick_tolua_quick_physics_QNodeProps_getMass00);
      tolua_function(tolua_S,"getInertia",tolua_openquick_tolua_quick_physics_QNodeProps_getInertia00);
      tolua_function(tolua_S,"getWorldPoint",tolua_openquick_tolua_quick_physics_QNodeProps_getWorldPoint00);
+     tolua_function(tolua_S,"getWorldCenter",tolua_openquick_tolua_quick_physics_QNodeProps_getWorldCenter00);
+     tolua_function(tolua_S,"getLocalCenter",tolua_openquick_tolua_quick_physics_QNodeProps_getLocalCenter00);
      tolua_function(tolua_S,"getWorldVector",tolua_openquick_tolua_quick_physics_QNodeProps_getWorldVector00);
      tolua_function(tolua_S,"getLocalPoint",tolua_openquick_tolua_quick_physics_QNodeProps_getLocalPoint00);
      tolua_function(tolua_S,"getLocalVector",tolua_openquick_tolua_quick_physics_QNodeProps_getLocalVector00);
@@ -15466,6 +22620,9 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
      tolua_function(tolua_S,"setAngularDamping",tolua_openquick_tolua_quick_physics_QNodeProps_setAngularDamping00);
      tolua_function(tolua_S,"getGravityScale",tolua_openquick_tolua_quick_physics_QNodeProps_getGravityScale00);
      tolua_function(tolua_S,"setGravityScale",tolua_openquick_tolua_quick_physics_QNodeProps_setGravityScale00);
+     tolua_function(tolua_S,"setLinearVelocity",tolua_openquick_tolua_quick_physics_QNodeProps_setLinearVelocity00);
+     tolua_function(tolua_S,"getLinearVelocity",tolua_openquick_tolua_quick_physics_QNodeProps_getLinearVelocity00);
+     tolua_function(tolua_S,"setTransform",tolua_openquick_tolua_quick_physics_QNodeProps_setTransform00);
      tolua_variable(tolua_S,"friction",tolua_get_quick__physics__QNodeProps_friction,tolua_set_quick__physics__QNodeProps_friction);
      tolua_variable(tolua_S,"density",tolua_get_quick__physics__QNodeProps_density,tolua_set_quick__physics__QNodeProps_density);
      tolua_variable(tolua_S,"restitution",tolua_get_quick__physics__QNodeProps_restitution,tolua_set_quick__physics__QNodeProps_restitution);
@@ -15481,16 +22638,84 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
   tolua_module(tolua_S,"quick",0);
   tolua_beginmodule(tolua_S,"quick");
    #ifdef __cplusplus
+   tolua_cclass(tolua_S,"QRect","quick::QRect","quick::QBaseObject",tolua_collect_quick__QRect);
+   #else
+   tolua_cclass(tolua_S,"QRect","quick::QRect","quick::QBaseObject",NULL);
+   #endif
+   tolua_beginmodule(tolua_S,"QRect");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QRect__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QRect___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QRect___serialize00);
+    tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QRect_new00);
+    tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QRect_new00_local);
+    tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QRect_new00_local);
+    tolua_function(tolua_S,"delete",tolua_openquick_tolua_quick_QRect_delete00);
+    tolua_variable(tolua_S,"x",tolua_get_quick__QRect_x,tolua_set_quick__QRect_x);
+    tolua_variable(tolua_S,"y",tolua_get_quick__QRect_y,tolua_set_quick__QRect_y);
+    tolua_variable(tolua_S,"w",tolua_get_quick__QRect_w,tolua_set_quick__QRect_w);
+    tolua_variable(tolua_S,"h",tolua_get_quick__QRect_h,tolua_set_quick__QRect_h);
+   tolua_endmodule(tolua_S);
+  tolua_endmodule(tolua_S);
+  tolua_module(tolua_S,"quick",0);
+  tolua_beginmodule(tolua_S,"quick");
+   #ifdef __cplusplus
    tolua_cclass(tolua_S,"QRectangle","quick::QRectangle","quick::QLines",tolua_collect_quick__QRectangle);
    #else
    tolua_cclass(tolua_S,"QRectangle","quick::QRectangle","quick::QLines",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QRectangle");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QRectangle__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QRectangle___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QRectangle___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QRectangle_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QRectangle_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QRectangle_new00_local);
     tolua_function(tolua_S,"delete",tolua_openquick_tolua_quick_QRectangle_delete00);
     tolua_function(tolua_S,"sync",tolua_openquick_tolua_quick_QRectangle_sync00);
+   tolua_endmodule(tolua_S);
+  tolua_endmodule(tolua_S);
+  tolua_module(tolua_S,"pixel_format",0);
+  tolua_beginmodule(tolua_S,"pixel_format");
+   tolua_constant(tolua_S,"RGBA8888",pixel_format::RGBA8888);
+   tolua_constant(tolua_S,"RGB888",pixel_format::RGB888);
+   tolua_constant(tolua_S,"RGB565",pixel_format::RGB565);
+   tolua_constant(tolua_S,"A8",pixel_format::A8);
+   tolua_constant(tolua_S,"I8",pixel_format::I8);
+   tolua_constant(tolua_S,"AI88",pixel_format::AI88);
+   tolua_constant(tolua_S,"RGBA4444",pixel_format::RGBA4444);
+   tolua_constant(tolua_S,"RGB5A1",pixel_format::RGB5A1);
+   tolua_constant(tolua_S,"PVRTC4",pixel_format::PVRTC4);
+   tolua_constant(tolua_S,"PVRTC2",pixel_format::PVRTC2);
+   tolua_constant(tolua_S,"AUTO",pixel_format::AUTO);
+  tolua_endmodule(tolua_S);
+  tolua_module(tolua_S,"file_format",0);
+  tolua_beginmodule(tolua_S,"file_format");
+   tolua_constant(tolua_S,"JPEG",file_format::JPEG);
+   tolua_constant(tolua_S,"PNG",file_format::PNG);
+  tolua_endmodule(tolua_S);
+  tolua_module(tolua_S,"quick",0);
+  tolua_beginmodule(tolua_S,"quick");
+   #ifdef __cplusplus
+   tolua_cclass(tolua_S,"QRenderTexture","quick::QRenderTexture","quick::QNode",tolua_collect_quick__QRenderTexture);
+   #else
+   tolua_cclass(tolua_S,"QRenderTexture","quick::QRenderTexture","quick::QNode",NULL);
+   #endif
+   tolua_beginmodule(tolua_S,"QRenderTexture");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QRenderTexture__getToLuaClassName00);
+    tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QRenderTexture_new00);
+    tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QRenderTexture_new00_local);
+    tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QRenderTexture_new00_local);
+    tolua_function(tolua_S,"delete",tolua_openquick_tolua_quick_QRenderTexture_delete00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QRenderTexture___serialize00);
+    tolua_function(tolua_S,"_getSprite",tolua_openquick_tolua_quick_QRenderTexture__getSprite00);
+    tolua_function(tolua_S,"sync",tolua_openquick_tolua_quick_QRenderTexture_sync00);
+    tolua_function(tolua_S,"begin",tolua_openquick_tolua_quick_QRenderTexture_begin00);
+    tolua_function(tolua_S,"endToLua",tolua_openquick_tolua_quick_QRenderTexture_endToLua00);
+    tolua_function(tolua_S,"finish",tolua_openquick_tolua_quick_QRenderTexture_finish00);
+    tolua_function(tolua_S,"saveToFile",tolua_openquick_tolua_quick_QRenderTexture_saveToFile00);
+    tolua_function(tolua_S,"setSprite",tolua_openquick_tolua_quick_QRenderTexture_setSprite00);
+    tolua_function(tolua_S,"clear",tolua_openquick_tolua_quick_QRenderTexture_clear00);
+    tolua_variable(tolua_S,"autodraw",tolua_get_quick__QRenderTexture_autodraw,tolua_set_quick__QRenderTexture_autodraw);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"quick",0);
@@ -15501,6 +22726,9 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"QScene","quick::QScene","quick::QNode",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QScene");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QScene__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QScene___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QScene___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QScene_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QScene_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QScene_new00_local);
@@ -15516,9 +22744,15 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"QSprite","quick::QSprite","quick::QNode",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QSprite");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QSprite__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QSprite___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QSprite___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QSprite_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QSprite_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QSprite_new00_local);
+    tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QSprite_new01);
+    tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QSprite_new01_local);
+    tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QSprite_new01_local);
     tolua_function(tolua_S,"delete",tolua_openquick_tolua_quick_QSprite_delete00);
     tolua_function(tolua_S,"_play",tolua_openquick_tolua_quick_QSprite__play00);
     tolua_function(tolua_S,"sync",tolua_openquick_tolua_quick_QSprite_sync00);
@@ -15527,17 +22761,25 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
     tolua_function(tolua_S,"setAnimation",tolua_openquick_tolua_quick_QSprite_setAnimation00);
     tolua_variable(tolua_S,"xFlip",tolua_get_quick__QSprite_xFlip,tolua_set_quick__QSprite_xFlip);
     tolua_variable(tolua_S,"yFlip",tolua_get_quick__QSprite_yFlip,tolua_set_quick__QSprite_yFlip);
+    tolua_variable(tolua_S,"uvRect",tolua_get_quick__QSprite_uvRect,tolua_set_quick__QSprite_uvRect);
     tolua_variable(tolua_S,"blendMode",tolua_get_quick__QSprite_blendMode,tolua_set_quick__QSprite_blendMode);
     tolua_variable(tolua_S,"timeScale",tolua_get_quick__QSprite_timeScale,tolua_set_quick__QSprite_timeScale);
     tolua_variable(tolua_S,"debugDrawTextureRegion",tolua_get_quick__QSprite_debugDrawTextureRegion,tolua_set_quick__QSprite_debugDrawTextureRegion);
     tolua_variable(tolua_S,"raisesAnimEvents",tolua_get_quick__QSprite_raisesAnimEvents,tolua_set_quick__QSprite_raisesAnimEvents);
+    tolua_variable(tolua_S,"filter",tolua_get_quick__QSprite_filter,tolua_set_quick__QSprite_filter);
     tolua_function(tolua_S,"getAtlas",tolua_openquick_tolua_quick_QSprite_getAtlas00);
     tolua_variable(tolua_S,"isPlaying",tolua_get_quick__QSprite_isPlaying,tolua_set_quick__QSprite_isPlaying);
     tolua_variable(tolua_S,"frame",tolua_get_quick__QSprite_frame,tolua_set_quick__QSprite_frame);
     tolua_variable(tolua_S,"animation",tolua_get_quick__QSprite_animation_ptr,tolua_set_quick__QSprite_animation_ptr);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
-
+  tolua_module(tolua_S,"quick",0);
+  tolua_beginmodule(tolua_S,"quick");
+   tolua_module(tolua_S,"lsqlite3",0);
+   tolua_beginmodule(tolua_S,"lsqlite3");
+    tolua_function(tolua_S,"instantiate_lsqlite3_global",tolua_openquick_tolua_quick_lsqlite3_instantiate_lsqlite3_global00);
+   tolua_endmodule(tolua_S);
+  tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"quick",0);
   tolua_beginmodule(tolua_S,"quick");
    #ifdef __cplusplus
@@ -15546,6 +22788,8 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_cclass(tolua_S,"QSystem","quick::QSystem","",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QSystem");
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QSystem___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QSystem___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QSystem_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QSystem_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QSystem_new00_local);
@@ -15558,6 +22802,7 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
     tolua_function(tolua_S,"resumeTimers",tolua_openquick_tolua_quick_QSystem_resumeTimers00);
     tolua_function(tolua_S,"setTimersTimeScale",tolua_openquick_tolua_quick_QSystem_setTimersTimeScale00);
     tolua_function(tolua_S,"getTimersTimeScale",tolua_openquick_tolua_quick_QSystem_getTimersTimeScale00);
+    tolua_function(tolua_S,"setFrameRateLimit",tolua_openquick_tolua_quick_QSystem_setFrameRateLimit00);
     tolua_variable(tolua_S,"gameTime",tolua_get_quick__QSystem_gameTime,tolua_set_quick__QSystem_gameTime);
     tolua_variable(tolua_S,"deltaTime",tolua_get_quick__QSystem_deltaTime,tolua_set_quick__QSystem_deltaTime);
     tolua_function(tolua_S,"quit",tolua_openquick_tolua_quick_QSystem_quit00);
@@ -15567,17 +22812,88 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
   tolua_module(tolua_S,"quick",0);
   tolua_beginmodule(tolua_S,"quick");
    #ifdef __cplusplus
+   tolua_cclass(tolua_S,"QTiledMapObject","quick::QTiledMapObject","",tolua_collect_quick__QTiledMapObject);
+   #else
+   tolua_cclass(tolua_S,"QTiledMapObject","quick::QTiledMapObject","",NULL);
+   #endif
+   tolua_beginmodule(tolua_S,"QTiledMapObject");
+    tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QTiledMapObject_new00);
+    tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QTiledMapObject_new00_local);
+    tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QTiledMapObject_new00_local);
+    tolua_function(tolua_S,"delete",tolua_openquick_tolua_quick_QTiledMapObject_delete00);
+    tolua_function(tolua_S,"getProperty",tolua_openquick_tolua_quick_QTiledMapObject_getProperty00);
+    tolua_variable(tolua_S,"name",tolua_get_quick__QTiledMapObject_name,tolua_set_quick__QTiledMapObject_name);
+    tolua_variable(tolua_S,"m_CCDict",tolua_get_quick__QTiledMapObject_m_CCDict_ptr,tolua_set_quick__QTiledMapObject_m_CCDict_ptr);
+   tolua_endmodule(tolua_S);
+   #ifdef __cplusplus
+   tolua_cclass(tolua_S,"QTiledMapObjectGroup","quick::QTiledMapObjectGroup","",tolua_collect_quick__QTiledMapObjectGroup);
+   #else
+   tolua_cclass(tolua_S,"QTiledMapObjectGroup","quick::QTiledMapObjectGroup","",NULL);
+   #endif
+   tolua_beginmodule(tolua_S,"QTiledMapObjectGroup");
+    tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QTiledMapObjectGroup_new00);
+    tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QTiledMapObjectGroup_new00_local);
+    tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QTiledMapObjectGroup_new00_local);
+    tolua_function(tolua_S,"delete",tolua_openquick_tolua_quick_QTiledMapObjectGroup_delete00);
+    tolua_function(tolua_S,"getProperty",tolua_openquick_tolua_quick_QTiledMapObjectGroup_getProperty00);
+    tolua_function(tolua_S,"getObjectNamed",tolua_openquick_tolua_quick_QTiledMapObjectGroup_getObjectNamed00);
+    tolua_variable(tolua_S,"name",tolua_get_quick__QTiledMapObjectGroup_name,tolua_set_quick__QTiledMapObjectGroup_name);
+    tolua_variable(tolua_S,"m_CCObject",tolua_get_quick__QTiledMapObjectGroup_m_CCObject_ptr,tolua_set_quick__QTiledMapObjectGroup_m_CCObject_ptr);
+    tolua_variable(tolua_S,"m_TiledMapObjects",tolua_get_quick__QTiledMapObjectGroup_m_TiledMapObjects,tolua_set_quick__QTiledMapObjectGroup_m_TiledMapObjects);
+   tolua_endmodule(tolua_S);
+   #ifdef __cplusplus
+   tolua_cclass(tolua_S,"QTiledMapLayer","quick::QTiledMapLayer","quick::QNode",tolua_collect_quick__QTiledMapLayer);
+   #else
+   tolua_cclass(tolua_S,"QTiledMapLayer","quick::QTiledMapLayer","quick::QNode",NULL);
+   #endif
+   tolua_beginmodule(tolua_S,"QTiledMapLayer");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QTiledMapLayer__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QTiledMapLayer___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QTiledMapLayer___serialize00);
+    tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QTiledMapLayer_new00);
+    tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QTiledMapLayer_new00_local);
+    tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QTiledMapLayer_new00_local);
+    tolua_function(tolua_S,"delete",tolua_openquick_tolua_quick_QTiledMapLayer_delete00);
+    tolua_variable(tolua_S,"_activeQSprite",tolua_get_quick__QTiledMapLayer__activeQSprite_ptr,tolua_set_quick__QTiledMapLayer__activeQSprite_ptr);
+    tolua_function(tolua_S,"sync",tolua_openquick_tolua_quick_QTiledMapLayer_sync00);
+    tolua_function(tolua_S,"reverseSync",tolua_openquick_tolua_quick_QTiledMapLayer_reverseSync00);
+    tolua_variable(tolua_S,"layerSize",tolua_get_quick__QTiledMapLayer_layerSize,tolua_set_quick__QTiledMapLayer_layerSize);
+    tolua_variable(tolua_S,"mapTileSize",tolua_get_quick__QTiledMapLayer_mapTileSize,tolua_set_quick__QTiledMapLayer_mapTileSize);
+    tolua_variable(tolua_S,"layerOrientation",tolua_get_quick__QTiledMapLayer_layerOrientation,tolua_set_quick__QTiledMapLayer_layerOrientation);
+    tolua_function(tolua_S,"releaseMap",tolua_openquick_tolua_quick_QTiledMapLayer_releaseMap00);
+    tolua_function(tolua_S,"_checkSpriteAtGridRef",tolua_openquick_tolua_quick_QTiledMapLayer__checkSpriteAtGridRef00);
+    tolua_function(tolua_S,"_setActiveSpriteCCNode",tolua_openquick_tolua_quick_QTiledMapLayer__setActiveSpriteCCNode00);
+    tolua_function(tolua_S,"getGIDAtGridRef",tolua_openquick_tolua_quick_QTiledMapLayer_getGIDAtGridRef00);
+    tolua_function(tolua_S,"setGIDAtGridRef",tolua_openquick_tolua_quick_QTiledMapLayer_setGIDAtGridRef00);
+    tolua_function(tolua_S,"_removeTileAtGridRef",tolua_openquick_tolua_quick_QTiledMapLayer__removeTileAtGridRef00);
+    tolua_function(tolua_S,"getPosAtGridRef",tolua_openquick_tolua_quick_QTiledMapLayer_getPosAtGridRef00);
+    tolua_function(tolua_S,"setupTiles",tolua_openquick_tolua_quick_QTiledMapLayer_setupTiles00);
+    tolua_function(tolua_S,"getProperty",tolua_openquick_tolua_quick_QTiledMapLayer_getProperty00);
+   tolua_endmodule(tolua_S);
+   #ifdef __cplusplus
    tolua_cclass(tolua_S,"QTiledMap","quick::QTiledMap","quick::QNode",tolua_collect_quick__QTiledMap);
    #else
    tolua_cclass(tolua_S,"QTiledMap","quick::QTiledMap","quick::QNode",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QTiledMap");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QTiledMap__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QTiledMap___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QTiledMap___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QTiledMap_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QTiledMap_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QTiledMap_new00_local);
     tolua_function(tolua_S,"delete",tolua_openquick_tolua_quick_QTiledMap_delete00);
+    tolua_function(tolua_S,"_getCCNodeNumChildren",tolua_openquick_tolua_quick_QTiledMap__getCCNodeNumChildren00);
+    tolua_function(tolua_S,"_createQTiledMapLayer",tolua_openquick_tolua_quick_QTiledMap__createQTiledMapLayer00);
+    tolua_function(tolua_S,"sync",tolua_openquick_tolua_quick_QTiledMap_sync00);
+    tolua_function(tolua_S,"reverseSync",tolua_openquick_tolua_quick_QTiledMap_reverseSync00);
+    tolua_variable(tolua_S,"mapSize",tolua_get_quick__QTiledMap_mapSize,tolua_set_quick__QTiledMap_mapSize);
+    tolua_variable(tolua_S,"tileSize",tolua_get_quick__QTiledMap_tileSize,tolua_set_quick__QTiledMap_tileSize);
+    tolua_variable(tolua_S,"mapOrientation",tolua_get_quick__QTiledMap_mapOrientation,tolua_set_quick__QTiledMap_mapOrientation);
     tolua_function(tolua_S,"init",tolua_openquick_tolua_quick_QTiledMap_init00);
-    tolua_function(tolua_S,"setLayerXY",tolua_openquick_tolua_quick_QTiledMap_setLayerXY00);
+    tolua_function(tolua_S,"getLayerNamed",tolua_openquick_tolua_quick_QTiledMap_getLayerNamed00);
+    tolua_function(tolua_S,"getObjectGroupNamed",tolua_openquick_tolua_quick_QTiledMap_getObjectGroupNamed00);
+    tolua_function(tolua_S,"getProperty",tolua_openquick_tolua_quick_QTiledMap_getProperty00);
    tolua_endmodule(tolua_S);
   tolua_endmodule(tolua_S);
   tolua_module(tolua_S,"quick",0);
@@ -15597,6 +22913,8 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
   tolua_module(tolua_S,"ease",0);
   tolua_beginmodule(tolua_S,"ease");
    tolua_function(tolua_S,"linear",tolua_openquick_tolua_ease_linear00);
+   tolua_function(tolua_S,"one",tolua_openquick_tolua_ease_one00);
+   tolua_function(tolua_S,"zero",tolua_openquick_tolua_ease_zero00);
    tolua_function(tolua_S,"powIn",tolua_openquick_tolua_ease_powIn00);
    tolua_function(tolua_S,"powOut",tolua_openquick_tolua_ease_powOut00);
    tolua_function(tolua_S,"powInOut",tolua_openquick_tolua_ease_powInOut00);
@@ -15637,11 +22955,40 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
   tolua_module(tolua_S,"quick",0);
   tolua_beginmodule(tolua_S,"quick");
    #ifdef __cplusplus
+   tolua_cclass(tolua_S,"QVec2","quick::QVec2","",tolua_collect_quick__QVec2);
+   #else
+   tolua_cclass(tolua_S,"QVec2","quick::QVec2","",NULL);
+   #endif
+   tolua_beginmodule(tolua_S,"QVec2");
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QVec2___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QVec2___serialize00);
+    tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QVec2_new00);
+    tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QVec2_new00_local);
+    tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QVec2_new00_local);
+    tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QVec2_new01);
+    tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QVec2_new01_local);
+    tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QVec2_new01_local);
+    tolua_function(tolua_S,"Set",tolua_openquick_tolua_quick_QVec2_Set00);
+    tolua_function(tolua_S,"Length",tolua_openquick_tolua_quick_QVec2_Length00);
+    tolua_function(tolua_S,"Normalize",tolua_openquick_tolua_quick_QVec2_Normalize00);
+    tolua_function(tolua_S,"isPointInsideTri",tolua_openquick_tolua_quick_QVec2_isPointInsideTri00);
+    tolua_function(tolua_S,"GetNormal",tolua_openquick_tolua_quick_QVec2_GetNormal00);
+    tolua_variable(tolua_S,"x",tolua_get_quick__QVec2_x,tolua_set_quick__QVec2_x);
+    tolua_variable(tolua_S,"y",tolua_get_quick__QVec2_y,tolua_set_quick__QVec2_y);
+    tolua_variable(tolua_S,"g_Zero",tolua_get_quick__QVec2_g_Zero,tolua_set_quick__QVec2_g_Zero);
+   tolua_endmodule(tolua_S);
+  tolua_endmodule(tolua_S);
+  tolua_module(tolua_S,"quick",0);
+  tolua_beginmodule(tolua_S,"quick");
+   #ifdef __cplusplus
    tolua_cclass(tolua_S,"QVector","quick::QVector","quick::QNode",tolua_collect_quick__QVector);
    #else
    tolua_cclass(tolua_S,"QVector","quick::QVector","quick::QNode",NULL);
    #endif
    tolua_beginmodule(tolua_S,"QVector");
+    tolua_function(tolua_S,"_getToLuaClassName",tolua_openquick_tolua_quick_QVector__getToLuaClassName00);
+    tolua_function(tolua_S,"__tostring",tolua_openquick_tolua_quick_QVector___tostring00);
+    tolua_function(tolua_S,"__serialize",tolua_openquick_tolua_quick_QVector___serialize00);
     tolua_function(tolua_S,"new",tolua_openquick_tolua_quick_QVector_new00);
     tolua_function(tolua_S,"new_local",tolua_openquick_tolua_quick_QVector_new00_local);
     tolua_function(tolua_S,".call",tolua_openquick_tolua_quick_QVector_new00_local);
@@ -15733,6 +23080,9 @@ TOLUA_API int tolua_openquick_tolua_open (lua_State* tolua_S)
    tolua_module(tolua_S,"physics",0);
    tolua_beginmodule(tolua_S,"physics");
    tolua_endmodule(tolua_S);
+  tolua_endmodule(tolua_S);
+  tolua_module(tolua_S,"quick",0);
+  tolua_beginmodule(tolua_S,"quick");
   tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;

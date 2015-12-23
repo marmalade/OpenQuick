@@ -41,6 +41,20 @@ namespace quick {
 // tolua_end
 
 //------------------------------------------------------------------------------
+// CCLabelNode
+//------------------------------------------------------------------------------
+/**
+The CCLabelNode object is used to render debug information about font strings
+*/
+class QLabel;
+class CCLabelNode : public cocos2d::CCNode {
+public:
+    CCLabelNode(QLabel*label) { m_Label = label; }
+	virtual void draw();
+    QLabel* m_Label;
+};
+
+//------------------------------------------------------------------------------
 // QLabel
 //------------------------------------------------------------------------------
 /**
@@ -49,10 +63,13 @@ source and displays a single or multiple lines of text with adjustable alignment
 It inherits from the Node object.
 */
 class QLabel : public QNode { // tolua_export
+    friend class CCLabelNode;
 public:
     // BOUND, PRIVATE
     // tolua_begin
     virtual const char* _getToLuaClassName() { return "quick::QLabel"; }
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
     QLabel();
     ~QLabel();
 
@@ -96,6 +113,24 @@ public:
     */
     float textTouchableBorder;
 
+    //! The top border of the rendering box.  Scales inward but can be negative.  The default is 0
+    float textBorderTop;
+
+    //! The bottom border of the rendering box.  Scales inward but can be negative.  The default is 0
+    float textBorderBottom;
+
+    //! The left border of the rendering box.  Scales inward but can be negative.  The default is 0
+    float textBorderLeft;
+
+    //! The right border of the rendering box.  Scales inward but can be negative.  The default is 0
+    float textBorderRight;
+
+    //! Horizontal font scale.  This doesn't affect the text box.  The default is 1.0
+    float textXScale;
+
+    //! Vertical font scale.  This doesn't affect the text box.  The default is 1.0
+    float textYScale;
+
     // tolua_end
 
     // BOUND EXPLICITLY IN TOLUA PKG
@@ -129,12 +164,32 @@ public:
     std::string m_CachedHAlignment;
 	std::string m_CachedVAlignment;
 
+    float m_CachedTextBorderTop;
+    float m_CachedTextBorderBottom;
+    float m_CachedTextBorderLeft;
+    float m_CachedTextBorderRight;
+    float m_CachedTextXScale;
+    float m_CachedTextYScale;
+
 	void GetCurrentAlignment(cocos2d::CCTextAlignment *h_alignment, cocos2d::CCVerticalTextAlignment *v_alignment) const;
     void SetAlignmentAnchors( cocos2d::CCTextAlignment h_alignment, cocos2d::CCVerticalTextAlignment v_alignment);
 
     void CalculateSize( void);
-//    cocos2d::CCPoint m_TextPosition;
-//    cocos2d::CCSize m_TextSize;
+
+private:
+    float GetCalculatedWidth( void)
+    {
+// PJC remove border clip        float width = w == 0.0f ? ((m_Parent ? m_Parent->w : 0.0f) - x) : w;
+//        return width < 0.0f ? 0.0f : width;
+        return w == 0.0f ? (m_Parent ? m_Parent->w : 0.0f) : w;
+    }
+    float GetCalculatedHeight( void)
+    {
+// PJC remove border clip        float height = h == 0.0f ? ((m_Parent ? m_Parent->h : 0.0f) - y) : h;
+//        return height < 0.0f ? 0.0f : height;
+        return h == 0.0f ? (m_Parent ? m_Parent->h : 0.0f) : h;
+    }
+
 }; // tolua_export
 
 // tolua_begin

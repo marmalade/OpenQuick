@@ -53,11 +53,12 @@ QRectangle::QRectangle()
     m_Norms.push_back(QVec2( -0.707f, -0.707f));
 
     // Set up actual normal lengths
-    m_NormLens.push_back(1.0f);
-    m_NormLens.push_back(1.0f);
-    m_NormLens.push_back(1.0f);
-    m_NormLens.push_back(1.0f);
-    m_NormLens.push_back(1.0f);
+    float r2 = float(sqrt(2.0f));
+    m_NormLens.push_back(r2);
+    m_NormLens.push_back(r2);
+    m_NormLens.push_back(r2);
+    m_NormLens.push_back(r2);
+    m_NormLens.push_back(r2);
 
     // Set up GL buffers, etc.
 	m_NumPoints = m_Points.size();
@@ -80,12 +81,6 @@ void QRectangle::sync()
     QLines::sync();
 
     // Set points based on w, h
-/*    m_Points[0].Set(-w/2, -h/2);
-    m_Points[1].Set( w/2, -h/2);
-    m_Points[2].Set( w/2,  h/2);
-    m_Points[3].Set(-w/2,  h/2);
-    m_Points[4].Set(-w/2, -h/2);
-*/
     m_Points[0].Set(0, 0);
     m_Points[1].Set(w, 0);
     m_Points[2].Set(w, h);

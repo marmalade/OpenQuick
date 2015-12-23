@@ -34,14 +34,15 @@ PHYSICS_NAMESPACE_BEGIN;
 //------------------------------------------------------------------------------
 QJointTouch::QJointTouch()
 {
-    dampingRatio = 0.7f;
-    frequency = 5.0f;
-    maxForce = 0.0f;
 }
 //------------------------------------------------------------------------------
 void QJointTouch::_init(QNode* nodeA, float dampingRatio, float frequency, float maxForce)
 {
     b2MouseJointDef jointDef;
+
+    this->dampingRatio = dampingRatio;
+    this->frequency = frequency;
+    this->maxForce = maxForce;
 
     jointDef.bodyA = g_Sim->GetGroundBody();    // dummy "ground body" singleton
     jointDef.bodyB = nodeA->physics->m_Body;    // note our "nodeA" goes into Box2D "bodyB" !

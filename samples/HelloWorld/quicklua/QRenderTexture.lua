@@ -21,16 +21,20 @@
  */--]]
 
 --------------------------------------------------------------------------------
--- Lines
+-- Render Texture
 -- NOTE: This file must have no dependencies on the ones loaded after it by
 -- openquick_init.lua. For example, it must have no dependencies on QDirector.lua
 --------------------------------------------------------------------------------
-if config.debug.mock_tolua == true then
-	QLines = quick.QLines
-else
-	QLines = {}
-    table.setValuesFromTable(QLines, QVector) -- previous class in hierarchy
-	QLines.__index = QLines
+
+QRenderTexture = {}
+table.setValuesFromTable(QRenderTexture, QNode) -- previous class in hierarchy
+QRenderTexture.__index = QRenderTexture
+
+
+QRenderTexture.serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+    table.setValuesFromTable(obj, serializeTLMT(getmetatable(quick.QRenderTexture), o))
+	return obj
 end
 
 --------------------------------------------------------------------------------
@@ -38,21 +42,19 @@ end
 --------------------------------------------------------------------------------
 --[[
 /*
-Initialise the peer table for the C++ class QLines.
-This must be called immediately after the QLines() constructor.
+Initialise the peer table for the C++ class QRenderTexture.
+This must be called immediately after the QRenderTexture() constructor.
 */
 --]]
-function QLines:initLines(n)
-	local np
-	if not config.debug.mock_tolua == true then
-	    local np = {}
-        local ep = tolua.getpeer(n)
-        table.setValuesFromTable(np, ep)
-	    setmetatable(np, QLines)
-	    tolua.setpeer(n, np)
-	else
-		np = n
-	end
+function QRenderTexture:initRenderTexture(n)
+    local np = {}
+    local ep = tolua.getpeer(n)
+    table.setValuesFromTable(np, ep)
+    setmetatable(np, QRenderTexture)
+    tolua.setpeer(n, np)
+
+    local mt = getmetatable(n) 
+    mt.__serialize = QRenderTexture.serialize
 end
 
 --------------------------------------------------------------------------------
@@ -60,56 +62,46 @@ end
 --------------------------------------------------------------------------------
 --[[
 /**
-Create a lines node, specifying arbitrary input values.
-@param values Lua table specifying name/value pairs.
-@return The created lines object.
+Create a render texture node, with the specified size.
+@param w The width of the texture.
+@param h The height of the texture.
+@param eFormat The pixel format of the texture.
+@param uDepthStencilFormat The depthStencil format of the texture.
+@return The created render texture object.
 */
 --]]
-function director:createLines(values)
-end
---[[
-/**
-Create a lines node, with the specified coordinates.
-@param coords The table of coordinates to initialise with. These are x,y pairs, so the size of the table must be even.
-@return The created lines object.
-*/
---]]
-function director:createLines(x, y, coords)
-    local n = quick.QLines()
-    -- Must call init.. on all subclasses in hierarchy order
-    QNode:initNode(n)
-    QVector:initVector(n)
-    QLines:initLines(n)
-
-    if (type(x) == "table") then
-        table.setValuesFromTable(n, x)
-        if x.coords then
-            n:append(x.coords)
-        end
+function director:createRenderTexture(w, h, eFormat, uDepthStencilFormat, x, y)
+    local args = {}
+    if (type(w) == "table") then
+        table.setValuesFromTable(args, w)
     else
-        dbg.assertFuncVarTypes({"number", "number", "table"}, x, y, coords)
-        n.x = x
-        n.y = y
-        if coords then
-            n:append(coords)
-        end
+        dbg.assertFuncVarTypes({"number", "number", "number", "number", "number", "number"}, w, h, eFormat, uDepthStencilFormat, x, y)
+        args.w = w
+        args.h = h
+        args.eFormat = eFormat
+        args.uDepthStencilFormat = uDepthStencilFormat
+        args.x = x
+        args.y = y
     end
 
+    local n = quick.QRenderTexture(args.w, args.h, args.eFormat, args.uDepthStencilFormat, args.x, args.y)
+
+    -- Must call init.. on all subclasses in hierarchy order
+    QNode:initNode(n)
+    QRenderTexture:initRenderTexture(n)
+
     self:addNodeToLists(n)
+
     return n
 end
 
---[[
-/*
-Append an array of points to the lines object.
-The array is assumed to be x,y pairs, so must have an even number of entries.
-*/
---]]
-function QLines:append(coords)
-    dbg.assertFuncVarType("table", coords)
+QRenderTexture.getSprite = function(o)
+    local n = o:_getSprite()
 
-    for i = 1,#coords,2 do
-        self:_appendPoint(coords[i+0], coords[i+1])
-    end
-    self:_appendFinalise()
+    QNode:initNode(n)
+    QSprite:initSprite(n)
+
+    director:addNodeToLists(n)
+
+    return n
 end

@@ -40,20 +40,27 @@ end
 --------------------------------------------------------------------------------
 -- Private API
 --------------------------------------------------------------------------------
+QFont.serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+	return obj
+end
+
 --[[
 /*
 Initialise the peer table for the C++ class QNode.
 This must be called immediately after the QNode() constructor.
 */
 --]]
-function QFont:initFont(l)
-    if config.debug.traceGC == true then
-        getmetatable(l).__gc = QFont.newGC
-    end
+function QFont:initFont(n)
     local lp = {}
     setmetatable(lp, QFont)
-    tolua.setpeer(l, lp)
-    -- Add Lua variables below...
+    tolua.setpeer(n, lp)
+
+    local mt = getmetatable(n) 
+    mt.__serialize = QFont.serialize
+    if config.debug.traceGC == true then
+        mt.__gc = QFont.newGC
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -86,8 +93,13 @@ function director:createFont(filepath)
 		error("director:createFont(values) is currently unsupported")
     else
         dbg.assertFuncVarType("string", filepath)
-        retval = n:initFromFntFile(filepath)
+        local retval = n:initFromFntFile(filepath)
 		dbg.assert(retval, "Failed to load .fnt file")
     end
+
+    -- Store this Font in the current QScene object's font list
+--    dbg.print( "Adding font to scene "..tostring(self.currentScene))
+    self.currentScene._fontList[n] = n
+
     return n
 end

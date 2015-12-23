@@ -41,6 +41,9 @@ QSim::QSim()
     g_Sim = this;
 
 	// Set default simulation bounds from screen resolution
+	float sw = g_QDirector->displayWidth;
+	float sh = g_QDirector->displayHeight;
+
     m_Scale = 50.0f; // default scaling... so (0.1 - 10) in physics coords corresponds to (5 - 500) in display coords
 
     m_Gravity = b2Vec2(0.0f, -10.f);
@@ -166,7 +169,6 @@ void QSim::_destroyBody(b2Body* body)
 void QSim::_destroyOnlyJoint(QJoint* joint)
 {
     RemoveJoint(joint);
-    delete joint;
 }
 //------------------------------------------------------------------------------
 void QSim::_destroyJoint(QJoint* joint)

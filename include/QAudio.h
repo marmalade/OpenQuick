@@ -73,14 +73,14 @@ public:
     void stopSound(unsigned int sampleID);
     void loadSound(std::string fileName);
     void unloadSound(std::string fileName);
+    void setSoundFrequency(int frequency);
+    bool isSoundPlaying(int channel);
+    float get_streamVolume(void);
+    void set_streamVolume(float volume);
+    float get_soundVolume(void);
+    void set_soundVolume(float volume);
 
 	// tolua_end
-
-	// UNBOUND
-    float get_musicVolume(void);
-    void set_musicVolume(float volume);
-    float get_sfxVolume(void);
-    void set_sfxVolume(float volume);
 
 }; // tolua_export
 

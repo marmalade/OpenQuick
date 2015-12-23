@@ -57,6 +57,8 @@ class QDirector { // tolua_export
 public:
     // BOUND, PRIVATE
     // tolua_begin
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
     QDirector();
     ~QDirector();
     void _updateDisplayInfo(float dw, float dh);
@@ -67,6 +69,13 @@ public:
     float _transitionTime;          // duration of any imminent transition
     std::string _transitionType;    // type of transition to make
 
+    QScene* _overlayScene;          // the overlay scene as pointed to by the LUA code
+
+    QScene* _overlayTransitionScene;       // if non-NULL, we are about to transition to/from overlay
+    float _overlayTransitionTime;          // duration of any imminent overlay transition
+    std::string _overlayTransitionType;    // type of overlay transition to make
+    
+    bool _modalOverlay;                   // is the overlay modal
     // BOUND, PUBLIC
 	/**
 	The color to be set on all newly-created display objects (nodes).
@@ -95,6 +104,8 @@ public:
     */
     static void cleanupTextures(void);
 
+    /** Start initial scene rendering when Quick scene is ready to draw */
+    void startRendering();
 
     // tolua_end;
 
@@ -135,7 +146,8 @@ public:
 
     void RunScene();
     void CallLUASideTransitionComplete();
-
+    void CallLUASideOverlayComplete();
+    
     // Fixed vertex data for circle
     int m_CircleNumVerts;
     float* m_CircleVerts;
@@ -143,6 +155,7 @@ public:
     // TODO - OPTIMISE BY RE-USING TRANSITION OBJECTS.
     // FOR NOW, WE CREATE THEM EACH TIME in QDirector::RunScene()
     cocos2d::CCTransitionScene* m_TransitionScene;
+    cocos2d::CCTransitionScene* m_OverlayTransitionScene;
 
     // When drawing, we store a pointer to the current scene being drawn
     ::CCScene2* m_DrawingScene;

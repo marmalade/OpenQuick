@@ -59,6 +59,8 @@ public:
     // BOUND, PRIVATE
     // tolua_begin
     virtual const char* _getToLuaClassName() { return "quick::QCircle"; }
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
 	QCircle();
 	~QCircle();
 

@@ -29,6 +29,12 @@ QLabel.__index = QNode
 --------------------------------------------------------------------------------
 -- Private API
 --------------------------------------------------------------------------------
+QLabel.serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+    table.setValuesFromTable(obj, serializeTLMT(getmetatable(quick.QLabel), o))
+	return obj
+end
+
 --[[
 /*
 Initialise the peer table for the C++ class QNode.
@@ -39,6 +45,9 @@ function QLabel:initLabel(l)
     local lp = {}
     setmetatable(lp, QLabel)
     tolua.setpeer(l, lp)
+
+    local mt = getmetatable(n) 
+    mt.__serialize = QLabel.serialize
 end
 
 --------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
---[[/*
+/*
  * (C) 2012-2013 Marmalade.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -18,15 +18,45 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- */--]]
+ */
 
-config =
-{
-	debug =
-	{
-        general = true, -- Turn on general debugging
-		assertDialogs = false, -- Display dialog boxes when asserting
-		typeChecking = true, -- Turn on type checking by default
-        traceGC = true, -- Trace info on object garbage collection
-	}
+//------------------------------------------------------------------------------
+/*!
+	\file QRect.h
+	\brief Simple rectangle class.
+*/
+//------------------------------------------------------------------------------
+
+#ifndef __Q_RECT_H
+#define __Q_RECT_H
+
+#include "QBase.h"
+
+// tolua_begin
+namespace quick {
+// tolua_end
+
+//------------------------------------------------------------------------------
+// QRect
+//------------------------------------------------------------------------------
+class QRect : public QBaseObject { // tolua_export
+public:
+    // BOUND, PRIVATE
+    // tolua_begin
+    virtual const char* _getToLuaClassName() { return "quick::QRect"; }
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
+
+    // BOUND, PUBLIC
+    QRect() {};
+    ~QRect() {};
+
+    float x, y, w, h;
+
+}; // tolua_export
+
+// tolua_begin
 }
+// tolua_end
+
+#endif // __Q_RECT_H

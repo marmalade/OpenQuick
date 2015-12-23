@@ -20,7 +20,6 @@
  * THE SOFTWARE.
  */
 
-//#include "AppDelegate.h"
 #include "QTween.h"
 #include "QDirector.h"
 #include "QLuaHelpers.h"
@@ -38,6 +37,14 @@ namespace ease {
 float linear(float time, float value)
 {
     return time;
+}
+float one(float time, float value)
+{
+    return 1.0f;
+}
+float zero(float time, float value)
+{
+    return 0.0f;
 }
 float powIn(float time, float power)
 {
@@ -72,26 +79,11 @@ float expOut(float time, float value)
 }
 float expInOut(float time, float value)
 {
-    // THIS FUNCTION LOOKS DODGY TO ME, AND THE GRAPHED OUTPUT CONFIRMS THAT.
-    // BUT THE CODE IS FROM COCOS2DX... I SUSPECT A BUG.
-    // TODO... CHECK OUT COCOS2DX 2.0 TO SEE IF FIXED? OR LOOK MORE QOSELY AT HOW THIS CODE IS INTENDED TO MERGE expIn AND expOut
 	time *= 2.0f;
 	if (time < 1)
 		return 0.5f * powf(2, 10 * (time - 1));
     else
 		return 0.5f * (-powf(2, -10 * (time - 1)) + 2);
-
-/*
-    time /= 0.5f;
-    if (time < 1)
-    {
-        time = 0.5f * powf(2, 10 * (time - 1));
-    }
-    else
-    {
-        time = 0.5f * (-powf(2, -10 * (time - 1)) + 2);
-    }
-*/
 }
 float sineIn(float time, float power)
 {

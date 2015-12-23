@@ -41,41 +41,39 @@ void QContactListener::BeginContact(b2Contact* pContact)
     QNode* pNodeA = (QNode*)pContact->GetFixtureA()->GetBody()->GetUserData();
     QNode* pNodeB = (QNode*)pContact->GetFixtureB()->GetBody()->GetUserData();
 
-    lua_gettop(g_L);
-
     LUA_EVENT_PREPARE("collision"); // On stack: event
     LUA_EVENT_SET_STRING("phase", "began");
     LUA_EVENT_SET_TOLUA_PTR("nodeA", (void*)pNodeA, pNodeA->_getToLuaClassName());
     LUA_EVENT_SET_TOLUA_PTR("nodeB", (void*)pNodeB, pNodeB->_getToLuaClassName());
     LUA_EVENT_SET_TOLUA_PTR("target", (void*)pNodeA, pNodeA->_getToLuaClassName());
 
-    // World point of collision... is this correct?
-    b2WorldManifold wm;
-    pContact->GetWorldManifold(&wm);
-    float dx = g_Sim->scaleP2D(wm.points[0].x);
-    float dy = g_Sim->scaleP2D(wm.points[0].y);
-    LUA_EVENT_SET_NUMBER("x", dx);
-    LUA_EVENT_SET_NUMBER("y", dy);
+    if  (
+        (pNodeA->physics->m_IsSensor == false) &&
+        (pNodeB->physics->m_IsSensor == false)
+        )
+    {
+        // World point of collision... is this correct?
+        b2WorldManifold wm;
+        pContact->GetWorldManifold(&wm);
+        float dx = g_Sim->scaleP2D(wm.points[0].x);
+        float dy = g_Sim->scaleP2D(wm.points[0].y);
+        LUA_EVENT_SET_NUMBER("x", dx);
+        LUA_EVENT_SET_NUMBER("y", dy);
+    }
 
     lua_getfield(g_L, LUA_GLOBALSINDEX, "handleNodeEvent");
 	lua_pushvalue(g_L, -2); // On stack: handleNodeEvent(event)
     tolua_pushusertype(g_L, (void*)pNodeA, pNodeA->_getToLuaClassName()); // On stack: handleNodeEvent(event, node)
 
-    lua_gettop(g_L);
     int s = lua_pcall(g_L, 2, 1, 0);
-    lua_gettop(g_L);
     LUA_REPORT_ERRORS(g_L, s);
-    lua_gettop(g_L);
     lua_pop(g_L, 3);
-    lua_gettop(g_L);
 }
 //------------------------------------------------------------------------------
 void QContactListener::EndContact(b2Contact* pContact)
 {
     QNode* pNodeA = (QNode*)pContact->GetFixtureA()->GetBody()->GetUserData();
     QNode* pNodeB = (QNode*)pContact->GetFixtureB()->GetBody()->GetUserData();
-
-    lua_gettop(g_L);
 
     LUA_EVENT_PREPARE("collision"); // On stack: event
     LUA_EVENT_SET_STRING("phase", "ended");
@@ -87,13 +85,9 @@ void QContactListener::EndContact(b2Contact* pContact)
 	lua_pushvalue(g_L, -2); // On stack: handleNodeEvent(event)
     tolua_pushusertype(g_L, (void*)pNodeA, pNodeA->_getToLuaClassName()); // On stack: handleNodeEvent(event, node)
 
-    lua_gettop(g_L);
     int s = lua_pcall(g_L, 2, 1, 0);
-    lua_gettop(g_L);
     LUA_REPORT_ERRORS(g_L, s);
-    lua_gettop(g_L);
     lua_pop(g_L, 3);
-    lua_gettop(g_L);
 }
 //------------------------------------------------------------------------------
 void QContactListener::PreSolve(b2Contact* pContact, const b2Manifold* oldManifold)
@@ -101,20 +95,13 @@ void QContactListener::PreSolve(b2Contact* pContact, const b2Manifold* oldManifo
     QNode* pNodeA = (QNode*)pContact->GetFixtureA()->GetBody()->GetUserData();
     QNode* pNodeB = (QNode*)pContact->GetFixtureB()->GetBody()->GetUserData();
 
-    lua_gettop(g_L);
-
     LUA_EVENT_PREPARE("collisionPreSolve"); // On stack: event
     LUA_EVENT_SET_STRING("phase", "began");
     LUA_EVENT_SET_TOLUA_PTR("nodeA", (void*)pNodeA, pNodeA->_getToLuaClassName());
     LUA_EVENT_SET_TOLUA_PTR("nodeB", (void*)pNodeB, pNodeB->_getToLuaClassName());
     LUA_EVENT_SET_TOLUA_PTR("target", (void*)pNodeA, pNodeA->_getToLuaClassName());
-    lua_gettop(g_L);
-
     QContact con(pContact);
-    lua_gettop(g_L);
-    LUA_EVENT_SET_TOLUA_PTR("contact", (void*)&con, "quick::QPhysics::Contact");
-
-    lua_gettop(g_L);
+    LUA_EVENT_SET_TOLUA_PTR("contact", (void*)&con, "quick::physics::QContact");
 
     // World point of collision... is this correct?
     b2WorldManifold wm;
@@ -124,19 +111,14 @@ void QContactListener::PreSolve(b2Contact* pContact, const b2Manifold* oldManifo
     LUA_EVENT_SET_NUMBER("x", dx);
     LUA_EVENT_SET_NUMBER("y", dy);
 
-    lua_gettop(g_L);
-
     lua_getfield(g_L, LUA_GLOBALSINDEX, "handleNodeEvent");
 	lua_pushvalue(g_L, -2); // On stack: handleNodeEvent(event)
     tolua_pushusertype(g_L, (void*)pNodeA, pNodeA->_getToLuaClassName()); // On stack: handleNodeEvent(event, node)
 
-    lua_gettop(g_L);
     int s = lua_pcall(g_L, 2, 1, 0);
-    lua_gettop(g_L);
     LUA_REPORT_ERRORS(g_L, s);
     
-    lua_pop(g_L, 2);
-    lua_gettop(g_L);
+    lua_pop(g_L, 3);
 }
 //------------------------------------------------------------------------------
 void QContactListener::PostSolve(b2Contact* pContact, const b2ContactImpulse* pImpulse)
@@ -150,7 +132,7 @@ void QContactListener::PostSolve(b2Contact* pContact, const b2ContactImpulse* pI
     LUA_EVENT_SET_TOLUA_PTR("nodeB", (void*)pNodeB, pNodeB->_getToLuaClassName());
     LUA_EVENT_SET_TOLUA_PTR("target", (void*)pNodeA, pNodeA->_getToLuaClassName());
     QContact con(pContact);
-    LUA_EVENT_SET_TOLUA_PTR("contact", (void*)&con, "quick::QPhysics::Contact");
+    LUA_EVENT_SET_TOLUA_PTR("contact", (void*)&con, "quick::physics::QContact");
 
     // Force (impulse)
     float f = g_Sim->scaleP2D(pImpulse->normalImpulses[0]);
@@ -162,9 +144,7 @@ void QContactListener::PostSolve(b2Contact* pContact, const b2ContactImpulse* pI
 
     int s = lua_pcall(g_L, 2, 1, 0);
     LUA_REPORT_ERRORS(g_L, s);
-    lua_pop(g_L, 2);
-
-    lua_gettop(g_L);
+    lua_pop(g_L, 3);
 }
 
 PHYSICS_NAMESPACE_END;

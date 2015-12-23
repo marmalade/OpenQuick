@@ -1,16 +1,16 @@
 /*
  * (C) 2012-2013 Marmalade.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,8 +30,16 @@
 #include "QPhysics.h"
 #include "QSystem.h"
 
-//#include "AppDelegate.h"
 #include "cocos2d.h"
+
+// Define this to run test code for Cocos2d-x
+//#define COCOS2DX_TEST
+
+#ifdef COCOS2DX_TEST
+#include "cocos2d.h"
+#include "QDirector.h"
+USING_NS_CC;
+#endif
 
 #ifdef COCOS2DX_TEST
 // Add includes for direct testing of COCOS2DX features
@@ -57,106 +65,326 @@ void MarmQuickPrint(const char* pBuffer);
 // Perform preprocessing of loaded Lua files
 #define LUA_PREPROCESS
 
+// Convert in-place "dbg." into "--g.".
+static void LuaPreprocess_CommentDebug(char* buff)
+{
+#ifdef LUA_PREPROCESS
+    char* pChar = buff;
+    while((pChar = strstr(pChar, "dbg.")) != NULL)
+    {
+        pChar[0] = '-';
+        pChar[1] = '-';
+    }
+#endif
+}
+
 USING_NS_CC;
 QUICK_NAMESPACE_BEGIN;
 
 luadbg g_Config = // map some stuff from Lua dbg table
 {
+    false,  // makePrecompiledLua
+    false,  // usePrecompiledLua
     false,  // isDbgLoaded
     true,   // debugEnabled
     false,  // assertDialogsEnabled
 };
 
 MainCallback g_MainCallback = NULL;
+static std::string g_CurrentConcatFileFilename;
+static char* g_CurrentConcatFileData = NULL;
+static int g_CurrentConcatFileDataLen = 0;
+static std::string g_LuacRawFSPrefix;
 
-//------------------------------------------------------------------------------
-// MainInit... and MainTerminate... functions
-//------------------------------------------------------------------------------
-std::string MainLuaLoadFile(const char* filename)
+static int MainBytecodeWriter(lua_State* L, const void* p, size_t size, void* u)
 {
-    // Read file into buffer
-    FILE* pFile = fopen(filename, "rb");
-    fseek(pFile, 0, SEEK_END);
-    int fileSize = ftell(pFile);
-    fclose(pFile);
-    pFile = fopen(filename, "r");
-
-    // We want to ensure the string starts with a commented filename; so that runtime errors in this chunk
-    // can subsequently be traced back
-	// UPDATE: THIS IS NO LONGER REQUIRED, AS THE LUA CODE CAN USE loadstring(string, filename)
-    int namelength = 0; //= strlen(filename) + strlen("f(''); ");
-    
-    char* buff = (char*)malloc(fileSize + namelength + 1);
-    memset(buff, 0, fileSize + namelength + 1);
-
-//    sprintf(buff, "f('%s'); ", filename);
-    int rtn = fread(buff + namelength, fileSize, 1, pFile);
-    fclose(pFile);
-    if (rtn != 1)
+    return (s3eFileWrite(p,size,1,(s3eFile*)u)!=1) && (size!=0);
+}
+//Function opens file, gets file handler and file size and returns them to user.
+//It's more optimal than calling of the s3eFileGetFileInt(filename, S3E_FILE_SIZE)
+static bool GetFileWithSize(const char* filename, s3eFile* &pFile, int& fileSize)
+{
+    pFile = s3eFileOpen(filename, "rb");
+    if(!pFile)
+        return false;
+    s3eFileSeek(pFile, 0, S3E_FILESEEK_END);
+    fileSize = s3eFileTell(pFile);
+    s3eFileSeek(pFile, 0, S3E_FILESEEK_SET);
+    if (fileSize <= 0)
     {
-        QAssert(false, "error reading file");
-        return "";
+        s3eFileClose(pFile);
+        return false;
     }
+    return true;
+}
 
-#ifdef LUA_PREPROCESS
-    // Assume this function is only ever called after dbg.lua has been loaded, and therefore dbg.DEBUG has been set from config
+void startFileConcat(const char* filename)
+{
+    // Set filename and reset buffer
+    g_CurrentConcatFileFilename = filename;
+    g_CurrentConcatFileDataLen = 0;
+    if (g_CurrentConcatFileData != NULL)
+    {
+        free(g_CurrentConcatFileData);
+        g_CurrentConcatFileData = NULL;
+    }
+}
+
+// Return current luacPrefix
+const std::string& GetLuacFSRawPath()
+{
+    return g_LuacRawFSPrefix;
+}
+
+// Checks is directory exists
+static bool CheckDirectoryExists(const std::string& path)
+{
+    if (!path.size())
+    {
+        return true;
+    }
+    s3eFileList* l = s3eFileListDirectory(path.c_str());
+    if (!l)
+    {
+        return false;
+    }
+    s3eFileListClose(l);
+    return true;
+}
+
+// Check directory path to current luac directory. Will create missing directories
+void CheckLuacDirPath(const std::string& guaranted_path, const std::string& out_filename)
+{
+    if (!guaranted_path.size()) return;
+    std::string out = guaranted_path + out_filename;
+    std::string tmp_path;
+    int f = guaranted_path.size();
+    do
+    {
+        f = out.find('/',f) + 1;
+        if(!f) break;
+        tmp_path = out.substr(0,f);
+        if (!CheckDirectoryExists(tmp_path.c_str()))
+            s3eFileMakeDirectory(tmp_path.c_str());
+    }
+    while(true);
+}
+
+bool endFileConcat()
+{
+    // Remove debug info
+    // Assume this function is only ever called after dbg.lua has been loaded, and therefore dbg.debugEnabled has been set from config
     if (!g_Config.debugEnabled)
     {
-        // GREP "dbg." to "--g."
-        char* pChar = buff;
-        while(pChar < buff + fileSize + namelength - 4)
-        {
-            if  (
-                (pChar[0] == 'd') &&
-                (pChar[1] == 'b') &&
-                (pChar[2] == 'g') &&
-                (pChar[3] == '.')
-                )
-            {
-                pChar[0] = pChar[1] = '-';
-                pChar += 4;
-            }
-            else
-                pChar++;
-        }
+        LuaPreprocess_CommentDebug(g_CurrentConcatFileData);
     }
+#ifdef LUA_CREATE_CONCATENTATED_LUA_FILE
+    // Save concatenated none precompiled lua file (TEST)
+    std::string out_filename2 = g_CurrentConcatFileFilename;
+    s3eFile* out2 = s3eFileOpen(out_filename2.c_str(), "wb");
+    s3eFileWrite(g_CurrentConcatFileData, g_CurrentConcatFileDataLen, 1, out2);
+    s3eFileClose(out2);
 #endif
-    std::string result(buff);
-    free(buff);
-    return result;
+
+    // Load to stack
+    int s = luaL_loadbuffer(g_L, g_CurrentConcatFileData, g_CurrentConcatFileDataLen, g_CurrentConcatFileFilename.c_str());
+    if (s)
+    {
+        QWarning("Failed to create concatenated lua file %s", g_CurrentConcatFileFilename.c_str());
+        LUA_REPORT_ERRORS(g_L, s);
+        return false;
+    }
+
+    // Precompile and save buffer
+    std::string out_filename = LUAC_PREFIX + g_CurrentConcatFileFilename + "c";
+    s3eFile* out = s3eFileOpen(out_filename.c_str(), "wb");
+    if (out == NULL)
+    {
+        QWarning("Failed to write concatenated precompiled lua file %s", out_filename.c_str());
+        return false;
+    }
+    int ret = lua_dump(g_L, MainBytecodeWriter, out);
+    s3eFileClose(out);
+    lua_pop(g_L, 1);
+
+    // Reset
+    g_CurrentConcatFileFilename = "";
+    g_CurrentConcatFileDataLen = 0;
+    if (g_CurrentConcatFileData != NULL)
+    {
+        free(g_CurrentConcatFileData);
+        g_CurrentConcatFileData = NULL;
+    }
+
+    return true;
 }
+
+bool isFileConcatInProgress()
+{
+    return (!g_CurrentConcatFileFilename.empty());
+}
+
+bool concatenateLuaFile(const char* filename)
+{
+    int file_size = 0;
+    s3eFile* pFile = NULL;
+    if(!GetFileWithSize(filename, pFile, file_size))
+        return false;
+    int new_buff_size = g_CurrentConcatFileDataLen + file_size + 1; // +1 for newline
+    char* buff = (char*)realloc(g_CurrentConcatFileData, new_buff_size + 1); // +1 for terminating null
+    if (buff == NULL)
+    {
+        s3eFileClose(pFile);
+        return false;
+    }
+    file_size = s3eFileRead(buff + g_CurrentConcatFileDataLen, 1, file_size, pFile);
+    s3eFileClose(pFile);
+    if (file_size <= 0)
+    {
+        return false;
+    }
+
+    g_CurrentConcatFileDataLen = g_CurrentConcatFileDataLen + file_size + 1;
+    g_CurrentConcatFileData = buff;
+    buff[g_CurrentConcatFileDataLen - 1] = '\n'; // We append a newline in case file ends with comment and not newline
+    buff[g_CurrentConcatFileDataLen]     = '\0'; // Make sure concatenated line has terminating null
+
+    return true;
+}
+
+bool MainLuaPrecompileFile(const char* filename)
+{
+#if defined(_MSC_VER) || (defined(__APPLE__) && defined(__MACH__))
+
+    // Check to see if we are concatenating all files before we precompile
+    if (isFileConcatInProgress())
+        return concatenateLuaFile(filename);
+
+    // Read file into buffer
+    int fileSize = 0;
+    s3eFile* pFile = NULL;
+    if(!GetFileWithSize(filename, pFile, fileSize))
+        return false;
+    char* buff = (char*)malloc(fileSize + 1);
+    if (!buff)
+    {
+        s3eFileClose(pFile);
+        return false;
+    }
+    fileSize = s3eFileRead(buff, 1, fileSize, pFile);
+    s3eFileClose(pFile);
+    if (fileSize <= 0)
+    {
+        free(buff);
+        return false;
+    }
+    buff[fileSize] = '\0';
+
+    // Assume this function is only ever called after dbg.lua has been loaded, and therefore dbg.debugEnabled has been set from config
+//    if (!g_Config.debugEnabled)
+    {
+        LuaPreprocess_CommentDebug(buff);
+    }
+
+    // Load to stack
+    int s = luaL_loadbuffer(g_L, buff, fileSize, filename);
+    if (s)
+    {
+        QWarning("Failed to load lua file %s", filename);
+        return false;
+    }
+
+    std::string out_filename = std::string(LUAC_PREFIX) + filename + "c";
+
+    s3eFile* out = s3eFileOpen(out_filename.c_str(), "wb");
+    if (out == NULL)
+    {
+        QWarning("Failed to write precompiled lua file %s", out_filename.c_str());
+        return false;
+    }
+
+    // Dump file to bytecode
+    int ret = lua_dump(g_L, MainBytecodeWriter, out);
+    s3eFileClose(out);
+
+    lua_pop(g_L, 1);
+    free(buff);
+
+    if (ret != 0)
+        return false;
+#endif
+
+    return true;
+}
+
+typedef struct MainLuaLoadData
+{
+    string filename;
+    char* buff;
+} MainLuaLoadData;
+
+static const char *MainLuaGetF(lua_State *L, void *ud, size_t *size)
+{
+    MainLuaLoadData* lf = (MainLuaLoadData*)ud;
+    if (lf->buff) return NULL;
+    (void)L;
+    int fileSize = 0;
+    s3eFile* pFile = NULL;
+    if(!GetFileWithSize(lf->filename.c_str(), pFile, fileSize))
+        return NULL;
+    lf->buff = (char*)malloc(fileSize);
+    if (!lf->buff)
+    {
+        s3eFileClose(pFile);
+        return NULL;
+    }
+    *size = s3eFileRead(&lf->buff[0], 1, fileSize, pFile);
+    s3eFileClose(pFile);
+    return (*size > 0) ? lf->buff : NULL;
+}
+
+//------------------------------------------------------------------------------
+// Load specified file to lua stack as lua function.
+// Suitable for text and binary files.
+//------------------------------------------------------------------------------
+static int LuaLoadFile(const char *filename)
+{
+    if (filename == NULL || !strlen(filename))
+        return false;
+    MainLuaLoadData lf;
+    int status;
+    lf.buff = NULL;
+    lf.filename.assign(filename);
+    status = lua_load(g_L, MainLuaGetF, &lf, lua_tostring(g_L, -1));
+    if (lf.buff)
+        free(lf.buff);
+    return status;
+}
+
+//------------------------------------------------------------------------------
+// Load file and place it as Lua function to global variable.
+// To get access from Lua use _G['CURRENT_LOADED_FILE'] as Lua function.
+// Note: this is workaround for tolua++ problem with Lua function type binding
+//------------------------------------------------------------------------------
+void MainLuaLoadFile(const char* filename)
+{
+    if (LuaLoadFile(filename))
+        lua_pushnil(g_L);
+    lua_setglobal(g_L, LUA_LOADED_FILE_ACCESS);
+}
+
 //------------------------------------------------------------------------------
 void MainLuaDoFile(const char* filename)
 {
     // This is only called when loading Lua files from within the C++ code, NOT from Lua dofile()
 //    std::string buff = MainLuaLoadFile(filename);
 
-	// Assume dbg.lua already loaded, so we've overridden dofile()
-	lua_getglobal(g_L, "dofile");
-	lua_pushstring(g_L, filename);
- 	int s = lua_pcall(g_L, 1, 0, 0);
+    // Assume dbg.lua already loaded, so we've overridden dofile()
+    lua_getglobal(g_L, "dofile");
+    lua_pushstring(g_L, filename);
+    int s = lua_pcall(g_L, 1, 0, 0);
     LUA_REPORT_ERRORS(g_L, s);
-
-    // Execute
-/*    int s = luaL_loadstring(g_L, buff.c_str());
-    if (s)
-    {
-        // Load error
-        QTrace("Failed to load file '%s'", filename); // don't use QWarning, as we don't want to get the callstack
-        if (s == LUA_ERRSYNTAX)
-        {
-            const char* error = lua_tostring(g_L, lua_gettop(g_L));
-            const char* processed = MainGetProcessedLuaError(error);
-            QTrace("Lua error: %s", processed);
-        }
-    }
-    else
-    {
-        // No load error
-        s = lua_pcall(g_L, 0, 0, 0);
-        LUA_REPORT_ERRORS(g_L, s);
-    }*/
-} 
+}
 //------------------------------------------------------------------------------
 //s3eFile* outputFile = NULL;
 void MainOutputFlush()
@@ -166,19 +394,40 @@ void MainOutputFlush()
 //------------------------------------------------------------------------------
 const char* MainGetProcessedLuaCallStack()
 {
-    // Call Lua's debug.traceback(), and tidy up the results
-    if (g_L && (g_Config.isDbgLoaded == true))
+    // Formated Lua's callstack
+    if (g_L)
     {
-        lua_gettop(g_L);
-        lua_getfield(g_L, LUA_GLOBALSINDEX, "dbg");
-        lua_gettop(g_L);
-	    lua_getfield(g_L, -1, "getProcessedCallstack");
-	    lua_pcall(g_L, 0, 1, 0);
-        const char* luastack = lua_tostring(g_L, -1);
-        lua_pop(g_L, 2);
+        string callback_result = "Lua callstack:\n";
+        lua_Debug entry;
+        int depth = 0;
+        char buff[LUABUFFSIZE];
+        string substr_tmp;
+        while (lua_getstack(g_L, depth, &entry))
+        {
+            int status = lua_getinfo(g_L, "Sln", &entry);
+            sprintf(buff, "%s(%d): %s\n", entry.short_src, entry.currentline, entry.name ? entry.name : "?");
+            depth++;
 
-        lua_gettop(g_L);
-        return luastack;
+            substr_tmp.assign(buff);
+            if(substr_tmp.find("dbg.lua") != string::npos ||
+                substr_tmp.find("tail call") != string::npos ||
+                substr_tmp.find("[C]") != string::npos)
+            {
+                substr_tmp.clear();
+            }
+            else if(substr_tmp.find(".lua(") != string::npos)
+            {
+                int st = substr_tmp.find(".lua(");
+                int fn = substr_tmp.find(")", st);
+                substr_tmp = "(\'" + substr_tmp.substr(1, st + 3) + "\'), line " + substr_tmp.substr(st + 5, fn - (st + 5)) + ": in function " + substr_tmp.substr(fn + 1, substr_tmp.size() - (fn + 1));
+            }
+            if(substr_tmp.size() > 0)
+            {
+                callback_result.append("\t" + substr_tmp);
+            }
+        }
+        strlcpy(bufferedLuaMessage, callback_result.c_str(), (callback_result.size() < LUABUFFSIZE) ? callback_result.size() : LUABUFFSIZE);
+        return bufferedLuaMessage;
     }
     else
         return "";
@@ -186,19 +435,16 @@ const char* MainGetProcessedLuaCallStack()
 //------------------------------------------------------------------------------
 const char* MainGetProcessedLuaError(const char* error)
 {
-    if (g_L && (g_Config.isDbgLoaded == true))
+    if (g_L)
     {
-        // Call our dbg function to process the Lua error string
-        //int s1 = lua_gettop(g_L);
-        lua_getfield(g_L, LUA_GLOBALSINDEX, "dbg");
-        lua_getfield(g_L, -1, "getProcessedError");
-        lua_pushstring(g_L, error);
-        lua_pcall(g_L, 1, 1, 0);
-        //int s2 = lua_gettop(g_L);
-        const char* processed = lua_tostring(g_L, -1);
-        //int s3 = lua_gettop(g_L);
-        lua_pop(g_L, 2);
-        return processed;
+        string error_str = error;
+        if(error_str.find(".lua:") != string::npos)
+        {
+            int st = error_str.find(".lua:");
+            error_str = "(\'" + error_str.substr(1, st + 3) + "\'), line " + error_str.substr(st + 5, error_str.size() - (st + 5));
+        }
+        strlcpy(bufferedLuaMessage, error_str.c_str(), (error_str.size() < LUABUFFSIZE) ? error_str.size() : LUABUFFSIZE);
+        return bufferedLuaMessage;
     }
     else
         return "";
@@ -244,12 +490,16 @@ void MainPrint(char* pBuffer)
     MarmQuickPrint(pBuffer);
 #else
     // Print to stdout
-	printf("%s", pBuffer);
+    QTrace(pBuffer);
 #endif
 }
 //------------------------------------------------------------------------------
 void MainInitLuaSystem()
 {
+    int tmp = 0;
+    s3eConfigGetInt("QUICK","DeferRenderingOnStart", &tmp);
+    if(!tmp)
+        CCDirector::sharedDirector()->startRendering();
     // Initialise Lua itself
     QLuaInit();
 }
@@ -262,13 +512,50 @@ void MainTerminateLuaSystem()
 //------------------------------------------------------------------------------
 const char* MainGetVersionString()
 {
-    return "1.0";
+    // This is updated manually for each formal Quick release
+    return "1.1";
 }
+//------------------------------------------------------------------------------
+void setupPrecompiledPath()
+{
+    int32 deviceID = s3eDeviceGetInt(S3E_DEVICE_OS);
+    if (!(deviceID == S3E_OS_ID_WINDOWS || deviceID == S3E_OS_ID_OSX))
+    {
+        return;
+    }
+
+    char ramPath[S3E_FILE_MAX_PATH];
+    strcpy(ramPath, "");
+    s3eFileGetFileString("rom://", S3E_FILE_REAL_PATH, ramPath, S3E_FILE_MAX_PATH);
+    std::string rawFSPath = ramPath;
+    if (!rawFSPath.size())
+    {
+        return;
+    }
+    std::replace(rawFSPath.begin(), rawFSPath.end(), '\\', '/');
+    int f = rawFSPath.find_last_of('/');
+    rawFSPath = rawFSPath.substr(0, f);
+    g_LuacRawFSPrefix = "raw://" + rawFSPath;
+    if (g_Config.useConcatenatedLua)
+    {
+        g_LuacRawFSPrefix += "/resources-concatenated/";
+    }
+    else if (g_Config.makePrecompiledLua || g_Config.usePrecompiledLua)
+    {
+        g_LuacRawFSPrefix += "/resources-precompiled/";
+    }
+
+    if (!CheckDirectoryExists(g_LuacRawFSPrefix.c_str()))
+    {
+        s3eFileMakeDirectory(g_LuacRawFSPrefix.c_str());
+    }
+}
+//------------------------------------------------------------------------------
 void MainInitLuaMiddleware(const char* configFilename)
 {
     // Initialise tolua packages
     // This will register all bound symbols with Lua
-    tolua_openquick_tolua_open(g_L);
+    int r = tolua_openquick_tolua_open(g_L);
 
     // Load Lua files
     int s;
@@ -284,41 +571,23 @@ void MainInitLuaMiddleware(const char* configFilename)
     QTrace("Loading app configuration...");
 
     // Our app config
-    const char* qconfig = "quicklua/QConfig.lua";
-    s = luaL_loadfile(g_L, qconfig);
-    if (s)
-    {
-        QWarning("Failed to load '%s' file", qconfig);
-        LUA_REPORT_ERRORS(g_L, s);
-    }
-    else
-    {
-        s = lua_pcall(g_L, 0, 0, 0);
-    }
+    if (LuaLoadFile("quicklua/QConfig.lua"))
+        QWarning("Failed to load QConfig.lua file");
+    s = lua_pcall(g_L, 0, 0, 0);
     LUA_REPORT_ERRORS(g_L, s);
 
     // Allow non-existence of config.lua
-    FILE* pFile = fopen(configFilename, "rt");
-    if (!pFile)
-    {
+    if (!s3eFileCheckExists(configFilename))
         QWarning("Failed to load config lua file");
-    }
     else
     {
-        fclose(pFile);
-        s = luaL_loadfile(g_L, configFilename);
-        if (s)
-        {
+        if (LuaLoadFile(configFilename))
             QWarning("Failed to load config lua file");
-        }
-        else
-        {
-            s = lua_pcall(g_L, 0, 0, 0);
-        }
+        s = lua_pcall(g_L, 0, 0, 0);
         LUA_REPORT_ERRORS(g_L, s);
     }
 
-    QTrace("Calling ininConfig...");
+    QTrace("Calling initConfig...");
 
     // Initialise configuration
     lua_getglobal(g_L, "initConfig");
@@ -329,8 +598,7 @@ void MainInitLuaMiddleware(const char* configFilename)
     QTrace("Loading Quick engine...");
 
     // dbg.lua
-    s = luaL_loadfile(g_L, "quicklua/dbg.lua");
-    if (s)
+    if (LuaLoadFile("quicklua/dbg.lua"))
         QWarning("Failed to load dbg.lua file");
     else
         g_Config.isDbgLoaded = true;
@@ -348,71 +616,84 @@ void MainInitLuaMiddleware(const char* configFilename)
     g_Config.assertDialogsEnabled = lua_toboolean(g_L, -1);
     lua_settop(g_L, 0);
 
+    lua_getglobal(g_L, "dbg");
+    lua_getfield(g_L, -1, "MAKEPRECOMPILEDLUA");
+    g_Config.makePrecompiledLua = lua_toboolean(g_L, -1);
+    lua_settop(g_L, 0);
+
+    lua_getglobal(g_L, "dbg");
+    lua_getfield(g_L, -1, "USEPRECOMPILEDLUA");
+    g_Config.usePrecompiledLua = lua_toboolean(g_L, -1);
+    lua_settop(g_L, 0);
+
+    lua_getglobal(g_L, "dbg");
+    lua_getfield(g_L, -1, "USECONCATENATEDLUA");
+    g_Config.useConcatenatedLua = lua_toboolean(g_L, -1);
+    lua_settop(g_L, 0);
+// Here we set perfix for write and read from folders resources-concatenated and resources-precompiled
+    setupPrecompiledPath();
+
 #ifdef LUA_PREPROCESS
-    if (g_Config.debugEnabled == false)
+    if (!g_Config.debugEnabled)
         printf("config.debug.general = false. All 'dbg.' lines will become comments...");
 #endif
-    
+
+#ifdef USER_INIT_PRE_OPENQUICK
+    extern void QuickUserInitPreOpenQuick();
+    QuickUserInitPreOpenQuick();
+#endif
+
     // Our OpenQuick init
-    s = luaL_loadfile(g_L, "quicklua/openquick.lua");
-    if (s)
+    if (LuaLoadFile("quicklua/openquick.lua"))
         QWarning("Failed to load openquick lua file");
-  	s = lua_pcall(g_L, 0, 0, 0);
-	LUA_REPORT_ERRORS(g_L, s);
- 
-    // Create the Director's global scene
-	lua_getglobal(g_L, "director");
-    lua_getfield(g_L, -1, "createDefaultScene");    // On stack: director.createDefaultScene()
-	lua_getglobal(g_L, "director");
- 	s = lua_pcall(g_L, 1, 0, 0);
+    s = lua_pcall(g_L, 0, 0, 0);
     LUA_REPORT_ERRORS(g_L, s);
- 	lua_pop(g_L, 2);
+
+    // Create the Director's global scene
+    lua_getglobal(g_L, "director");
+    lua_getfield(g_L, -1, "_createDefaultScene");    // On stack: director.createDefaultScene()
+    lua_getglobal(g_L, "director");
+    s = lua_pcall(g_L, 1, 0, 0);
+    LUA_REPORT_ERRORS(g_L, s);
+    lua_pop(g_L, 2);
 
     // Create some of the cocos singletons up front
     CCTextureCache::sharedTextureCache();
     CCConfiguration::sharedConfiguration();
 
 #ifdef COCOS2DX_TEST
-	CCScene* pScene = new CCScene();
-	pScene->init();
-    CCDirector::sharedDirector()->runWithScene((CCScene*)pScene);
+//  CCScene* pScene = new CCScene();
+//  pScene->init();
+//    CCDirector::sharedDirector()->runWithScene((CCScene*)pScene);
 
-	CCSize ds = CCDirector::sharedDirector()->getVisibleSize();
+//  CCSize ds = CCDirector::sharedDirector()->getVisibleSize();
+//  CCTexture2D* pTex = CCTextureCache::sharedTextureCache()->addImage("textures/beachball.png");
 
-	CCTexture2D* pTex = CCTextureCache::sharedTextureCache()->addImage("textures/beachball.png");
-	
-	CCSprite* pSprite1 = new CCSprite();
-	pSprite1->initWithFile("textures/beachball.png");
-    pSprite1->setPosition(ccp(ds.width*1/3, ds.height/2));
-
-    CCSprite* pSprite2 = new CCSprite();
-	pSprite2->initWithFile("textures/beachball.png");
-    pSprite2->setPosition(ccp(ds.width*2/3, ds.height/2));
-
-//	pScene->addChild(pSprite1);
-//	pScene->addChild(pSprite2);
-    CCSpriteBatchNode* pSBNode = CCSpriteBatchNode::batchNodeWithTexture(pTex);
-    pScene->addChild(pSBNode);
-	pSBNode->addChild(pSprite1);
-	pSBNode->addChild(pSprite2);
+//    #include "CCParticleSystemQuad.h"
+//    CCParticleSystemQuad* pPS = new CCParticleSystemQuad();
+//    pPS->initWithFile("particles/BoilingFoam.plist");
 #endif
 }
 //------------------------------------------------------------------------------
 void MainResetLuaMiddleware()
 {
+    int s;
+
     // Purge Quick director
-	lua_getglobal(g_L, "director");
+    lua_getglobal(g_L, "director");
     lua_getfield(g_L, -1, "_purge");    // On stack: director._purge()
- 	lua_remove(g_L, -2);
- 	int s = lua_pcall(g_L, 0, 0, 0);
+    lua_getglobal(g_L, "director");     // On stack: director._purge(self)
+    s = lua_pcall(g_L, 1, 0, 0);
     LUA_REPORT_ERRORS(g_L, s);
-    
+    lua_pop(g_L, 1);
+
     // Purge Quick system
-	lua_getglobal(g_L, "system");
+    lua_getglobal(g_L, "system");
     lua_getfield(g_L, -1, "_purge");    // On stack: system._purge()
- 	lua_remove(g_L, -2);
- 	s = lua_pcall(g_L, 0, 0, 0);
+    lua_getglobal(g_L, "system");       // On stack: system._purge(self)
+    s = lua_pcall(g_L, 1, 0, 0);
     LUA_REPORT_ERRORS(g_L, s);
+    lua_pop(g_L, 1);
 
     // Force GC
     lua_gc(g_L, LUA_GCCOLLECT, 0);
@@ -420,10 +701,10 @@ void MainResetLuaMiddleware()
 //------------------------------------------------------------------------------
 void MainTerminateLuaMiddleware()
 {
-    CCDirector::sharedDirector()->end();
-	CCDirector::sharedDirector()->mainLoop(); // purges Cocos2d-x director data
-
     MainResetLuaMiddleware();
+
+    CCDirector::sharedDirector()->end();
+    CCDirector::sharedDirector()->mainLoop(); // purges Cocos2d-x director data
 }
 //------------------------------------------------------------------------------
 void MainInitLuaApp(const char* mainFilename)
@@ -437,16 +718,16 @@ void MainInitLuaApp(const char* mainFilename)
 
     // For scripts that create objects on first parse, we should sync all nodes
     // to ensure transforms are reasonable before Cocos2d-x draws the first frame
-	if (g_L)
-	{
+    if (g_L)
+    {
 #ifndef NO_UPDATE_EVENT
-		lua_getglobal(g_L, "director");
+        lua_getglobal(g_L, "director");
         lua_getfield(g_L, -1, "update");    // On stack: director, director.update
- 		lua_remove(g_L, -2);
- 		int s = lua_pcall(g_L, 0, 0, 0);
+        lua_remove(g_L, -2);
+        int s = lua_pcall(g_L, 0, 0, 0);
         LUA_REPORT_ERRORS(g_L, s);
 #endif
-	}
+    }
     //BUG FIXING
     //this removes the iPhone flickering issue
     //please leave this here
@@ -456,9 +737,9 @@ void MainInitLuaApp(const char* mainFilename)
 void MainTerminateLuaApp()
 {
     // SEND LUA EVENT
-	LUA_EVENT_PREPARE("exit");
+    LUA_EVENT_PREPARE("exit");
     LUA_EVENT_SET_NUMBER("system", 1);  // system event
-	LUA_EVENT_SEND();
+    LUA_EVENT_SEND();
 }
 
 //------------------------------------------------------------------------------
@@ -467,13 +748,13 @@ void MainTerminateLuaApp()
 void MainUpdate(float dt)
 {
 #ifdef COCOS2DX_TEST
-	return;
+    return;
 #endif
     // Check Lua stack consistent
 #ifdef _DEBUG
     static bool firstTop = true;
     static int firstVal = 0;
-	if (g_L)
+    if (g_L)
     {
         if (firstTop == true)
         {
@@ -506,26 +787,25 @@ void MainUpdate(float dt)
         g_QDirector->RunScene();
 
     // Lua update
-	if (g_L)
-	{
+    if (g_L)
+    {
 #ifndef NO_UPDATE_EVENT
-		lua_getglobal(g_L, "director");
+        lua_getglobal(g_L, "director");
         lua_getfield(g_L, -1, "update");    // Stack: director.update
-		lua_getglobal(g_L, "director");     // Stack: director.update(self)
+        lua_getglobal(g_L, "director");     // Stack: director.update(self)
         LUA_REPORT_ERRORS(g_L, lua_pcall(g_L, 1, 0, 0));
         lua_pop(g_L, 1);
 
         // Throw update event
-	    LUA_EVENT_REUSE("update");
+        LUA_EVENT_REUSE("update");
         LUA_EVENT_SEND();
 
         // IF USING EXPERIMENTAL EVENT QUEUE...
-/*		lua_getglobal(g_L, "flushEvents");
+/*      lua_getglobal(g_L, "flushEvents");
         LUA_REPORT_ERRORS(g_L, lua_pcall(g_L, 0, 0, 0));*/
 //        lua_pop(g_L, 1);
 #endif
-	}
+    }
 }
 
 QUICK_NAMESPACE_END;
-

@@ -65,8 +65,10 @@ public:
     // tolua_begin
 	// BOUND, PRIVATE
     virtual const char* _getToLuaClassName() { return "quick::QVector"; }
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
 	QVector();
-    virtual ~QVector();
+	~QVector();
 
     float   _strokeAlphaInternal; // used to calculate alpha value for Cocos2d, may or may not inherit from parent
 

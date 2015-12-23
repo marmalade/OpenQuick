@@ -58,7 +58,7 @@ void CCSpriteVector::draw()
     ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
     m_Shader->use();
-    m_Shader->setUniformsForBuiltins();
+    m_Shader->setUniformForModelViewProjectionMatrix();
 
     // Draw stroke
     float color[4];
@@ -71,13 +71,17 @@ void CCSpriteVector::draw()
         m_Shader->setUniformLocationWith4fv(m_ColorLocation, (GLfloat*)color, 1);
 
         if (color[3] < 1.0f)
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        else
+            ccGLBlendFunc(GL_ONE, GL_ZERO); // turn off blending, respect Cocos2d-x GL cache
 
         glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, m_GLVerts + 2);
 	    glDrawArrays(GL_TRIANGLE_STRIP, 0, nump*2);
         CC_INCREMENT_GL_DRAWS(1);
         if (color[3] < 1.0f)
-			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+			ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+        else
+            ccGLBlendFunc(GL_ONE, GL_ZERO); // turn off blending, respect Cocos2d-x GL cache
     }
 
     // Draw fill
@@ -92,13 +96,17 @@ void CCSpriteVector::draw()
         m_Shader->setUniformLocationWith4fv(m_ColorLocation, (GLfloat*)color, 1);
 
         if (color[3] < 1.0f)
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        else
+            ccGLBlendFunc(GL_ONE, GL_ZERO); // turn off blending, respect Cocos2d-x GL cache
 
         glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, m_GLVerts);
         glDrawElements(GL_TRIANGLE_FAN, nump+1, GL_UNSIGNED_SHORT, m_GLInds);
         CC_INCREMENT_GL_DRAWS(1);
         if (color[3] < 1.0f)
-			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+			ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+        else
+            ccGLBlendFunc(GL_ONE, GL_ZERO); // turn off blending, respect Cocos2d-x GL cache
     }
 
     // Physics draw

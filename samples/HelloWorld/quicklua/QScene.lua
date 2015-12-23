@@ -25,17 +25,19 @@
 -- NOTE: This file must have no dependencies on the ones loaded after it by
 -- openquick_init.lua. For example, it must have no dependencies on QDirector.lua
 --------------------------------------------------------------------------------
-if config.debug.mock_tolua == true then
-	QScene = quick.QScene
-else
-	QScene = {}
-    table.setValuesFromTable(QScene, QNode) -- previous class in hierarchy
-	QScene.__index = QScene
-end
+QScene = {}
+table.setValuesFromTable(QScene, QNode) -- previous class in hierarchy
+QScene.__index = QScene
 
 --------------------------------------------------------------------------------
 -- Private API
 --------------------------------------------------------------------------------
+QScene.serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+    table.setValuesFromTable(obj, serializeTLMT(getmetatable(quick.QScene), o))
+	return obj
+end
+
 --[[
 /*
 Initialise the peer table for the C++ class QScene.
@@ -43,16 +45,14 @@ This must be called immediately after the QScene() constructor.
 */
 --]]
 function QScene:initScene(n)
-	local np
-	if not config.debug.mock_tolua == true then
-	    local np = {}
-        local ep = tolua.getpeer(n)
-        table.setValuesFromTable(np, ep)
-	    setmetatable(np, QScene)
-	    tolua.setpeer(n, np)
-	else
-		np = n
-	end
+	local np = {}
+    local ep = tolua.getpeer(n)
+    table.setValuesFromTable(np, ep)
+	setmetatable(np, QScene)
+	tolua.setpeer(n, np)
+
+    local mt = getmetatable(n) 
+    mt.__serialize = QScene.serialize
 
     -- Set the scene width and height to match the screen dimensions
     n.w = director.displayWidth
@@ -74,12 +74,34 @@ function director:createScene(v)
     local n = quick.QScene()
     QNode:initNode(n)
     QScene:initScene(n)
-    n:_init(false)
+
+    if type(v) == "table" and v.default==true then
+        n:_init(true)
+        n.name = "globalScene"
+        if not self.globalScene then
+            self.globalScene = n
+        end
+    else
+        n:_init(false)
+    end
+
     table.setValuesFromTable(n, v)
     self:setCurrentScene(n)
 
     -- Mark that setUp has NOT been called yet
     n.isSetUp = false
+    n._atlasList = {}
+    n._animationList = {}
+    n._fontList = {}
+
+    return n
+end
+
+-- PRIVATE:
+-- Create default scene. Use of global variable ensures Lua doesn't GC it.
+-- Doesn't use createScene because of extra parameters
+function director:_createDefaultScene()
+    local n = self:createScene( { default=true } )
     return n
 end
 
@@ -106,3 +128,61 @@ function QScene:play(n)
     self:_play( startFrame, loopCount)
 end
 
+--[[
+/*! Clear the stored resources
+*/
+--]]
+
+function QScene:releaseResources()
+
+--    dbg.print( "Releasing resources from scene "..tostring(self))
+    self._atlasList = {}
+    self._animationList = {}
+    self._fontList = {}
+
+end
+
+--[[
+/*! Clear the stored QAtlas
+*/
+--]]
+function QScene:releaseAtlas(atlas)
+
+    if self._atlasList[atlas] == nil then
+        return false
+    end
+
+    self._atlasList[atlas] = nil
+
+    return true
+end
+
+--[[
+/*! Clear the stored QAnimation
+*/
+--]]
+function QScene:releaseAnimation(anim)
+
+    if self._animationList[anim] == nil then
+        return false
+    end
+
+    self._animationList[anim] = nil
+
+    return true
+end
+
+--[[
+/*! Clear the stored QFont
+*/
+--]]
+function QScene:releaseFont(font)
+
+    if self._fontList[font] == nil then
+        return false
+    end
+
+    self._fontList[font] = nil
+
+    return true
+end

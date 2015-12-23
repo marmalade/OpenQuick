@@ -21,6 +21,7 @@
  */
 
 //#include "AppDelegate.h"
+#include "QDirector.h"
 #include "QLabel.h"
 #include "QLuaHelpers.h"
 
@@ -29,6 +30,41 @@
 USING_NS_CC;
 
 QUICK_NAMESPACE_BEGIN;
+
+void CCLabelNode::draw()
+{
+    CCNode::draw();
+
+    if ( m_Label->debugDraw)
+    {
+        // Render the text box
+        float width = m_Label->GetCalculatedWidth();
+        float height = m_Label->GetCalculatedHeight();
+
+        QVec2 vertices[4]={
+            QVec2(0,0),
+            QVec2(0,height),
+            QVec2(width,height),
+            QVec2(width,0),
+        };
+        QDirector::DrawColor4F(1, 1, 1, 1);
+        QDirector::DrawPolyVert2F((const ccVertex2F*)vertices, 4, true);
+
+        // Render the border box
+        vertices[0].x += m_Label->textBorderLeft;
+        vertices[1].x += m_Label->textBorderLeft;
+        vertices[2].x -= m_Label->textBorderRight;
+        vertices[3].x -= m_Label->textBorderRight;
+
+        vertices[0].y += m_Label->textBorderBottom;
+        vertices[1].y -= m_Label->textBorderTop;
+        vertices[2].y -= m_Label->textBorderTop;
+        vertices[3].y += m_Label->textBorderBottom;
+
+        QDirector::DrawColor4F(1, 1, 0, 1);
+        QDirector::DrawPolyVert2F((const ccVertex2F*)vertices, 4, true);
+    }
+}
 
 //------------------------------------------------------------------------------
 // QLabel
@@ -41,12 +77,29 @@ QLabel::QLabel()
     font = NULL;
     textTouchableBorder = 4;
 
+    textBorderTop = 0;
+    textBorderBottom = 0;
+    textBorderLeft = 0;
+    textBorderRight = 0;
+
+    textXScale = 1.0f;
+    textYScale = 1.0f;
+
 	m_CachedHAlignment = hAlignment;
 	m_CachedVAlignment = vAlignment;
+
+    m_CachedTextBorderTop = textBorderTop;
+    m_CachedTextBorderBottom = textBorderBottom;
+    m_CachedTextBorderLeft = textBorderLeft;
+    m_CachedTextBorderRight = textBorderRight;
+
+    m_CachedTextXScale = textXScale;
+    m_CachedTextYScale = textYScale;
 }
 //------------------------------------------------------------------------------
 QLabel::~QLabel()
 {
+    m_CCNode->release();
 //    QTrace("QLabel destroyed");
 }
 //------------------------------------------------------------------------------
@@ -58,13 +111,14 @@ void QLabel::init()
 	QAssert(font != NULL, "label font is null");
 
     // Create and retain the node
-    m_CCNode = CCNode::create();
+    CCLabelNode *node = new CCLabelNode(this);
+    m_CCNode = node;
     m_CCNode->retain();
 
     // Set the width to the box width if one is specified
-    float width = (w == 0.0f ? (m_Parent ? m_Parent->w : 0.0f) : w) - x;
-    width = width < 0.0f ? 0.0f : width;
-    float height = h == 0.0f ? (m_Parent ? m_Parent->h : 0.0f) : h;
+    float width = GetCalculatedWidth();
+    float text_width = width - textBorderLeft - textBorderRight;
+    float height = GetCalculatedHeight();
 
     // Get the alignment information
     cocos2d::CCTextAlignment halign_val;
@@ -74,7 +128,7 @@ void QLabel::init()
     // Create the label and add it to the node (node holds the reference)
     m_CCFontNode = CCLabelBMFont::create( text.c_str(),
                                           font->get_fileName().c_str(),
-                                          width,
+                                          text_width,
                                           halign_val);
     m_CCNode->addChild(m_CCFontNode);
 
@@ -91,6 +145,14 @@ void QLabel::init()
     m_CachedHeight = height;
     m_CachedHAlignment = hAlignment;
 	m_CachedVAlignment = vAlignment;
+
+    m_CachedTextBorderTop = textBorderTop;
+    m_CachedTextBorderBottom = textBorderBottom;
+    m_CachedTextBorderLeft = textBorderLeft;
+    m_CachedTextBorderRight = textBorderRight;
+
+    m_CachedTextXScale = textXScale;
+    m_CachedTextYScale = textYScale;
 }
 //------------------------------------------------------------------------------
 void QLabel::sync()
@@ -99,6 +161,16 @@ void QLabel::sync()
     if (!isSynced)
     {
         return;
+    }
+
+    float old_w = w;
+    float old_h = h;
+
+    // Make sure w and h are correct values for the purposes of update
+	if (m_CCNode)
+	{
+        w = GetCalculatedWidth();
+        h = GetCalculatedHeight();
     }
 
     // Superclass
@@ -113,21 +185,39 @@ void QLabel::sync()
             CalculateSize();
 		}
 
-        float width = (w == 0.0f ? (m_Parent ? m_Parent->w : 0.0f) : w) - x;
-        width = width < 0.0f ? 0.0f : width;
-        float height = h == 0.0f ? (m_Parent ? m_Parent->h : 0.0f) : h;
         bool force_realignment = false;
 
-        if ( m_CachedWidth != width ||
-             m_CachedHeight != height)
+        if ( m_CachedTextBorderTop != textBorderTop ||
+             m_CachedTextBorderBottom != textBorderBottom ||
+             m_CachedTextBorderLeft != textBorderLeft ||
+             m_CachedTextBorderRight != textBorderRight ||
+             m_CachedTextXScale != textXScale ||
+             m_CachedTextYScale != textYScale)
         {
-            m_CachedWidth = width;
-            m_CachedHeight = height;
-			m_CCFontNode->setWidth( width);
+            force_realignment = true;
+
+            m_CachedTextBorderTop = textBorderTop;
+            m_CachedTextBorderBottom = textBorderBottom;
+            m_CachedTextBorderLeft = textBorderLeft;
+            m_CachedTextBorderRight = textBorderRight;
+
+            m_CachedTextXScale = textXScale;
+            m_CachedTextYScale = textYScale;
+        }
+
+        if ( m_CachedWidth != w ||
+             m_CachedHeight != h ||
+             force_realignment)
+        {
+            m_CachedWidth = w;
+            m_CachedHeight = h;
+
+            float text_width = w - textBorderLeft - textBorderRight;
+			m_CCFontNode->setWidth( text_width);
             force_realignment = true;
 		}
 
-		if ( m_CachedHAlignment.compare( hAlignment) != 0 ||
+        if ( m_CachedHAlignment.compare( hAlignment) != 0 ||
              m_CachedVAlignment.compare( vAlignment) ||
              force_realignment)
 		{
@@ -153,17 +243,22 @@ void QLabel::sync()
         }
         m_CCFontNode->setColor(*(ccColor3B*)&color); // cast ccColor4B* to ccColor3B* should be OK
 	}
+
+    // Reset the w and h values correctly
+    w = old_w;
+    h = old_h;
+
 }
 //------------------------------------------------------------------------------
 void QLabel::GetCurrentAlignment(cocos2d::CCTextAlignment *h_alignment, cocos2d::CCVerticalTextAlignment *v_alignmnet) const
 {
     // Get the horizontal alignment
-    if ( strcasecmp( hAlignment.c_str(), "centre") == 0 ||
-		 strcasecmp( hAlignment.c_str(), "center") == 0)
+    if ( stricmp( hAlignment.c_str(), "centre") == 0 ||
+		 stricmp( hAlignment.c_str(), "center") == 0)
 	{
 		*h_alignment = cocos2d::kCCTextAlignmentCenter;
 	}
-    else if ( strcasecmp( hAlignment.c_str(), "right") == 0)
+    else if ( stricmp( hAlignment.c_str(), "right") == 0)
 	{
 		*h_alignment = cocos2d::kCCTextAlignmentRight;
 	}
@@ -173,11 +268,11 @@ void QLabel::GetCurrentAlignment(cocos2d::CCTextAlignment *h_alignment, cocos2d:
     }
 
     // Get the vertical alignment
-	if ( strcasecmp( vAlignment.c_str(), "middle") == 0)
+	if ( stricmp( vAlignment.c_str(), "middle") == 0)
 	{
 		*v_alignmnet = cocos2d::kCCVerticalTextAlignmentCenter;
 	}
-    else if ( strcasecmp( vAlignment.c_str(), "top") == 0)
+    else if ( stricmp( vAlignment.c_str(), "top") == 0)
 	{
 		*v_alignmnet = cocos2d::kCCVerticalTextAlignmentTop;
 	}
@@ -195,11 +290,15 @@ void QLabel::SetAlignmentAnchors( cocos2d::CCTextAlignment h_alignment, cocos2d:
     float x_anchor = x_anchor_value[h_alignment];
     float y_anchor = y_anchor_value[v_alignment];
 
-    float width = ((w == 0.0f ? (m_Parent ? m_Parent->w : 0.0f) : w) - x) / xScale;
-    width = width < 0.0f ? 0.0f : width;
-    float height = (h == 0.0f ? (m_Parent ? m_Parent->h : 0.0f) : h) / yScale;
+    float width = GetCalculatedWidth() - textBorderLeft - textBorderRight;
+    float height = GetCalculatedHeight() - textBorderTop - textBorderBottom;
 
-    m_CCFontNode->setPosition( width * x_anchor, height * y_anchor);
+    float pos_x = width * x_anchor + textBorderLeft;
+    float pos_y = height * y_anchor + textBorderBottom;
+
+    m_CCFontNode->setPosition( pos_x, pos_y);
+    m_CCFontNode->setScaleX(textXScale);
+    m_CCFontNode->setScaleY(textYScale);
     m_CCFontNode->setAnchorPoint(ccp(x_anchor, y_anchor));
 
     m_CCFontNode->setAlignment( h_alignment);
@@ -207,73 +306,19 @@ void QLabel::SetAlignmentAnchors( cocos2d::CCTextAlignment h_alignment, cocos2d:
 //------------------------------------------------------------------------------
 void QLabel::CalculateSize( void)
 {
-/*    CCArray *desc = m_CCFontNode->getDescendants();
+    CCPoint bottom_left( 0.0f, 0.0f);
+    CCSize content_size = m_CCFontNode->getContentSize();
+    CCPoint top_right( content_size.width, content_size.height);
 
-    if ( desc->count() > 0)
-    {
-        CCSprite *sprite = (CCSprite*)desc->objectAtIndex(0);
-        CCPoint bottom_left( sprite->getPosition());
-        CCPoint top_right( bottom_left);
-        top_right.x += sprite->getContentSize().width;
-        top_right.y += sprite->getContentSize().height;
+    CCAffineTransform to_parent = CCAffineTransformConcat(m_CCFontNode->nodeToParentTransform(), m_CCNode->nodeToParentTransform());
 
-        for ( unsigned int i = 1; i < desc->count(); i++)
-        {
-            sprite = (CCSprite*)desc->objectAtIndex(i);
-
-            CCPoint this_bottom_left( sprite->getPosition());
-            CCPoint this_top_right( this_bottom_left);
-            this_top_right.x += sprite->getContentSize().width;
-            this_top_right.y += sprite->getContentSize().height;
-
-            if ( this_bottom_left.x < bottom_left.x)
-            {
-                bottom_left.x = this_bottom_left.x;
-            }
-            if ( this_bottom_left.y < bottom_left.y)
-            {
-                bottom_left.y = this_bottom_left.y;
-            }
-            if ( this_top_right.x > top_right.x)
-            {
-                top_right.x = this_top_right.x;
-            }
-            if ( this_top_right.y > top_right.y)
-            {
-                top_right.y = this_top_right.y;
-            }
-        }
-
-        xText = bottom_left.x + m_CCFontNode->getPositionX();
-        yText = bottom_left.y + m_CCFontNode->getPositionY();
-        wText = top_right.x - bottom_left.x;
-        hText = top_right.y - bottom_left.y;
-    }
-
-    CCRect aabb = m_CCFontNode->boundingBox();
-
-    xText = aabb.origin.x;
-    yText = aabb.origin.y;
-    wText = aabb.size.width;
-    hText = aabb.size.height;
-*/
-    CCPoint position = m_CCFontNode->getPosition();
-    position.x *= xScale;
-    position.y *= yScale;
-    CCPoint anchor = m_CCFontNode->getAnchorPoint();
-    CCSize content = m_CCFontNode->getContentSize();
-    content.width *= xScale;
-    content.height *= yScale;
-
-    position.x -= content.width * anchor.x;
-    position.y -= content.height * anchor.y;
-    position.x += x;
-    position.y += y;
-
-    xText = position.x;
-    yText = position.y;
-    wText = content.width;
-    hText = content.height;
+    bottom_left = CCPointApplyAffineTransform( bottom_left, to_parent);
+    top_right = CCPointApplyAffineTransform( top_right, to_parent);
+    
+    xText = bottom_left.x;
+    yText = bottom_left.y;
+    wText = top_right.x - bottom_left.x;
+    hText = top_right.y - bottom_left.y;
 }
 //------------------------------------------------------------------------------
 bool QLabel::isPointInside(float px, float py)

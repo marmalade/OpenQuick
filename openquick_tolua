@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Rebuilding openquick tolua interface"
+
+cd "`dirname "$0"`"
+exec "../../../quick/tools/tolua++" -o "openquick_tolua.cpp" "openquick_tolua.pkg"

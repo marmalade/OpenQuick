@@ -1,16 +1,16 @@
 /*
  * (C) 2012-2013 Marmalade.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,31 +22,41 @@
 
 //------------------------------------------------------------------------------
 /*!
-	\file QMain.h
-	\brief Main init, update and terminate functions.
+    \file QMain.h
+    \brief Main init, update and terminate functions.
 */
 //------------------------------------------------------------------------------
 
 #ifndef __Q_MAIN_H
 #define __Q_MAIN_H
 
-// Define this to run test code for Cocos2d-x
-//#define COCOS2DX_TEST
-
-#ifdef COCOS2DX_TEST
-#include "cocos2d.h"
-#include "QDirector.h"
-USING_NS_CC;
-#endif
+// Defined string prefix for luac file system
+#define LUAC_PREFIX "luac://"
+#define LUABUFFSIZE 512
+#define LUA_LOADED_FILE_ACCESS "CURRENT_LOADED_FILE"
 
 // tolua_begin
 namespace quick {
 // tolua_end
 
+// Return current luac:// FS path
+const std::string& GetLuacFSRawPath();
+// Check directory path to current luac directory. Will create missing directories
+void CheckLuacDirPath(const std::string& guaranted_path, const std::string& out_filename);
+
 // tolua_begin
 // Our own version of dofile(), which can perform pre-processing
-std::string MainLuaLoadFile(const char* filename);
+bool MainLuaPrecompileFile(const char* filename);
+void MainLuaLoadFile(const char* filename);
 void MainLuaDoFile(const char* filename);
+
+// Get Quick version string
+const char* MainGetVersionString();
+
+// Used to mark concatenation of luac files
+void startFileConcat(const char* filename);
+bool endFileConcat();
+bool isFileConcatInProgress();
 
 // Flush the output.txt file
 void MainOutputFlush();
@@ -58,6 +68,10 @@ void MainPrint(char* pBuffer);
 
 // Globals for communicating to/from Lua
 struct luadbg {
+    bool makePrecompiledLua;
+    bool makeConcatenatedLua;
+    bool usePrecompiledLua;
+    bool useConcatenatedLua;
     bool isDbgLoaded;
     bool debugEnabled;
     bool assertDialogsEnabled;
@@ -87,6 +101,8 @@ void MainUpdate(float dt);
 // An update callback that can be registered by an external module, e.g. Quick
 typedef void (*MainCallback)(void);
 extern MainCallback g_MainCallback;
+
+static char bufferedLuaMessage[LUABUFFSIZE];
 
 // tolua_begin
 }

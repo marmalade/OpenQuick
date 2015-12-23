@@ -25,6 +25,11 @@
 --------------------------------------------------------------------------------
 system = quick.QSystem:new()
 
+getmetatable(system).__serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+	return obj
+end
+
 system.debugTime = nil -- if set, this overrides the value returned by getTime()
 system.gameTime = 0
 system.eventListeners = {}
@@ -50,42 +55,29 @@ function system:_forceGC()
 --    collectgarbage("step", oldStep)
 end    
 
-function _checkHitNodeOrChildren(x, y, node, list)
-    if node:isPointInside(x, y) then
-        -- TODO OPTIMISE. Not too bad, as this list should only ever be as large as
-        -- the number of objects that intersect a single touch
-        
-        -- Add the node at the correct position in the list, depending on zOrder
-        local p = 0
-        for i,v in ipairs(list) do
---            dbg.print("Our Node: " .. node.name .. ", zOrder: " .. node.zOrder .. " and List Node: " .. v.name .. ", zOrder: " .. v.zOrder)
-            if node.zOrder > v.zOrder then
-                p = i
-                break
-            end
-        end
-        if p == 0 then
-            p = #list + 1
-        end
-        table.insert(list, p, node)
+-- Get all children from a node recursively
+function _getChildrenRecursively(node, list)
+  
+  if node.eventListeners.touch then
+    table.insert(list, node)
+  end
+  
+  for i = 1,#node.children do
+    local child = node.children[i]
+    if child.isTouchable then
+        _getChildrenRecursively(child, list)
     end
-    for i = 1,#node.children do
-        local child = node.children[i]
-        if child.isTouchable then
-            _checkHitNodeOrChildren(x, y, child, list)
-        end
-    end
+  end
+  
 end
 
 function handleEvent(event)
-    -- System event? If so, don't handle first at scene object level
+    
     local result = false
+    
+    -- System event? If so, don't handle first at scene object level
     if not event.system then
---        dbg.print("handleEvent(event) but not system")
-
-	    -- Handle at the node level: work down the hierarchy from the current scene
-        local sc = director:getCurrentScene()
-        dbg.assert(sc, "No current scene")
+        -- dbg.print("handleEvent(event) but not system")
 
         -- Special processing for touch events:
         if event.name == "touch" then
@@ -94,60 +86,74 @@ function handleEvent(event)
             if focus then
                 event.target = focus
                 if handleEventWithListeners(event, focus.eventListeners, focus) == true then
-                    -- Event listener returned true, so don't propogate to other nodes OR the system object
+                    -- Event listener returned true, so don't propagate to other nodes OR the system object
                     event.target = nil
                     return true
                 end
             end
-
-            -- Get list of ALL nodes that intersect, and order these by zOrder
-            local hitNodes = {}
-            if sc.isTouchable then
-                _checkHitNodeOrChildren(event.x, event.y, sc, hitNodes)
-            end
-
-            -- Check all nodes in order
-            for i,target in ipairs(hitNodes) do
-                if target ~= focus then
-                    event.target = target
-                    if handleEventWithListeners(event, target.eventListeners, target) == true then
-                        -- Event listener returned true, so don't propogate to other nodes OR the system object
-                        event.target = nil
-                        return true
-                    end
-                end
-            end
-
-            event.target = nil
-        else
-            -- Not a touch event
-	        result = sc:handleEvent(event)
-	        if result == true then
-		        return true
-	        end
         end
+        -- Queue to handle all events at once
+        queueEvent(event)
     else
---        dbg.print("handleEvent(event) AND system")
+        -- dbg.print("handleEvent(event) AND system")
     end
-
     -- Handle at the system level
 	result = handleEventWithListeners(event, system.eventListeners)
 
 	return result
 end
 
--- EXPERIMENTAL EVENT QUEUE
--- THIS IS NOT USED IN QUICK 1.0
+-- Add an event to the queue to handle them once per loop.
+-- Getting and sorting all scene nodes take significant
+-- amount of time and not good to do it for each event.
 local eventQueue = {}
-function queueEvent(e)
-    dbg.print("Adding event to queue")
-    table.insert(eventQueue, e)
-end
-function flushEvents(e)
-    for k,v in ipairs(eventQueue) do
-        handleEvent(v)
+function queueEvent(e) 
+    -- Create copy of the event
+    local copy = {}
+    for k,v in pairs(e) do
+        copy[k] = v
     end
-    eventQueue = {}
+
+    table.insert(eventQueue, copy)
+end
+
+-- Handle queued events
+function handleEventQueue(scene, keepQueue)
+    local focus = system.focus
+    local nodes = {}
+
+    for e, event in ipairs(eventQueue) do
+        -- Special processing for touch events:
+        if event.name == "touch" then
+
+            -- Get list of ALL nodes once for the scene
+            if #nodes == 0 and scene.isTouchable then
+                _getChildrenRecursively(scene, nodes)
+                -- Sort them by zOrder
+                table.sort(nodes, function(a,b) return a.zOrder < b.zOrder end)
+            end
+            -- Check all nodes in order
+            for i,target in ipairs(nodes) do                
+                -- Hit test each node
+                if target ~= focus and target:isPointInside(event.x, event.y) then
+                    event.target = target
+                    if handleEventWithListeners(event, target.eventListeners, target) == true then
+                        event.target = nil
+                        break -- Event handled, proceed for the next
+                    end
+                end
+            end
+            event.target = nil
+        else
+            -- Not a touch event
+            scene:handleEvent(event)
+        end
+    end
+
+    -- Keep the queue for the next scene or overlay
+    if keepQueue == false then
+        eventQueue = {}
+    end
 end
 
 function handleNodeEvent(event, n)
@@ -190,6 +196,9 @@ function _removeEventListener(object, nameTable, funcortable)
             local name = nameTable[i]
             if object.eventListeners[name] ~= nil then
                 object.eventListeners[name][funcortable] = nil
+                if next(object.eventListeners) == nil then
+                    object.eventListeners[name] = nil -- for easy testing in _getChildrenRecursively 
+                end
             end
         end
     end
@@ -197,7 +206,7 @@ end
 
 --------------------------------------------------------------------------------
 -- Code for re-usable object pools
--- THIS IS NOT USED IN QUICK 1.0
+-- THIS IS NOT USED IN QUICK CURRENTLY
 --------------------------------------------------------------------------------
 
 -- objectPool class
@@ -241,7 +250,7 @@ end
 function objectPool:allocObject()
     dbg.assert(self.freeID > 0, "No free objects left in objectPool")
     dbg.print("Allocating object at ID " .. self.freeID)
-    freeObj = self.freestack[self.freeID]
+    local freeObj = self.freestack[self.freeID]
     self.freeID = self.freeID - 1
     return freeObj
 end
@@ -398,11 +407,22 @@ function system:getFilePath(type, relPath)
 end
 
 --[[
+Get the current Quick version as a string.
+This is updated manually with each formal Quick release.
+--]]
+function system:getVersionString()
+    return quick.MainGetVersionString()
+end
+
+--------------------------------------------------------------------------------
+-- Code for internal debugging
+-- THIS IS NOT USED IN QUICK CURRENTLY
+--------------------------------------------------------------------------------
+--[[
 /**
 A debug helper that displays the amount of remaining memory
 */
 --]]
-
 --[[function count_all(f)
 	local seen = {}
 	local count_table

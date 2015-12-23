@@ -75,17 +75,22 @@ void QAudio::rewindStream(void)
     SimpleAudioEngine::sharedEngine()->rewindBackgroundMusic();
 }
 //------------------------------------------------------------------------------
+void QAudio::setSoundFrequency(int frequency) 
+{ 
+    s3eSoundSetInt(S3E_SOUND_DEFAULT_FREQ, int(frequency)); 
+}
+//------------------------------------------------------------------------------
 bool QAudio::isStreamPlaying(void)
 {
     return SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying();
 }
 //------------------------------------------------------------------------------
-float QAudio::get_musicVolume(void)
+float QAudio::get_streamVolume(void)
 {
     return SimpleAudioEngine::sharedEngine()->getBackgroundMusicVolume();
 }
 //------------------------------------------------------------------------------
-void QAudio::set_musicVolume(float volume)
+void QAudio::set_streamVolume(float volume)
 {
     SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(volume);
 }
@@ -110,14 +115,19 @@ void QAudio::unloadSound(std::string fileName)
     SimpleAudioEngine::sharedEngine()->unloadEffect(fileName.c_str());
 }
 //------------------------------------------------------------------------------
-float QAudio::get_sfxVolume(void)
+float QAudio::get_soundVolume(void)
 {
     return SimpleAudioEngine::sharedEngine()->getEffectsVolume();
 }
 //------------------------------------------------------------------------------
-void QAudio::set_sfxVolume(float volume)
+void QAudio::set_soundVolume(float volume)
 {
     SimpleAudioEngine::sharedEngine()->setEffectsVolume(volume);
+}
+//------------------------------------------------------------------------------
+bool QAudio::isSoundPlaying(int channel) 
+{ 
+    return s3eSoundChannelGetInt(channel, S3E_CHANNEL_STATUS) == 1; 
 }
 
 QUICK_NAMESPACE_END;

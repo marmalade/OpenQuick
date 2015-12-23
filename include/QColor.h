@@ -45,6 +45,8 @@ namespace quick {
 class QColor
 {
 public:
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
     QColor() {};
     QColor(int _r, int _g, int _b) { r=_r, g=_g, b=_b, a=0xff; }
     QColor(int _r, int _g, int _b, int _a) { r=_r, g=_g, b=_b, a=_a; }

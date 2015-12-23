@@ -20,10 +20,8 @@
  * THE SOFTWARE.
  */
 
-//#include "AppDelegate.h"
 #include "QLines.h"
 #include "QLuaHelpers.h"
-
 #include "cocos2d.h"
 
 USING_NS_CC;
@@ -39,6 +37,7 @@ void CCSpriteLines::draw()
 
     // Write vertex buffer
 	int nump = m_Vector->m_NumPoints;
+	int numl = nump-1;
 	float w2 = m_Vector->strokeWidth / 2;
 
     float* pCoord = m_GLVerts + 2;
@@ -78,6 +77,9 @@ QLines::QLines()
 	m_CCNode = new CCSpriteLines((QVector*)this);
 	((CCSpriteLines*)m_CCNode)->init();
     m_CCNode->setAnchorPoint(ccp(0, 0));
+
+    m_Centre = QVec2(0, 0);
+    m_Closed = false;
 }
 //------------------------------------------------------------------------------
 QLines::~QLines()
@@ -103,7 +105,7 @@ void QLines::sync()
 void QLines::_appendPoint(float x, float y)
 {
 	m_Points.push_back(QVec2(x, y));
-	m_Norms.push_back(QVec2::g_Zero);  // will be rewritten later
+	m_Norms.push_back(QVec2::g_Zero);   // will be rewritten later
 	m_NormLens.push_back(0.0f);         // will be rewritten later
 	m_NumPoints = m_Points.size();
 }
@@ -111,6 +113,7 @@ void QLines::_appendPoint(float x, float y)
 void QLines::_appendFinalise()
 {
 	m_NumPoints = m_Points.size();
+    m_Centre = QVec2(0, 0);
 	QVec2 n, n0, n1;
 	for (int p = 0; p < m_NumPoints-1; p++)
 	{
@@ -131,28 +134,48 @@ void QLines::_appendFinalise()
 			m_Norms[p] = n0+n1;
 			m_Norms[p].Normalize();
 
-            // This calculation isn't quite right... acute angles between adjacent lines result in point normals that are too short
-            float sintheta = (float)n0.x*n1.y - (float)n0.y*n1.x;
-            m_NormLens[p] = 1.0f / abs(sintheta);
+			// costheta = cos(theta)
+			// costheta2 = cos(theta/2)
+			// cos2 means cos^2, "cos squared", sqr(cos)
+            float costheta = (float)n0.x*n1.x + (float)n0.y*n1.y;
+
+			// cos(2theta) = 2 cos2(theta) - 1
+			// cos(theta) = 2 cos2(theta2) - 1
+			// sqrt((cos(theta)+1)/2) = cos(theta2)
+            float costheta2 = sqrt(((costheta)+1)/2);
+            float ac = abs(costheta2);
+            QAssert(ac > 0.0f, ("Line segments must not double-back on themselves"));
+            m_NormLens[p] = 1.0f / abs(costheta2);
 		}
+        m_Centre += v0;
 	}
 
     // Last point
 	if (m_Points[m_NumPoints-1] == m_Points[0])
 	{
 		// Closed shape
+        m_Closed = true;
+        m_Centre.x /= (m_NumPoints - 1);
+        m_Centre.y /= (m_NumPoints - 1);
+
 		n1 = n;
 		n0 = m_Norms[0];
 		m_Norms[m_NumPoints-1] = n0+n1;
 		m_Norms[m_NumPoints-1].Normalize();
-        float sintheta = (float)n0.x*n1.y - (float)n0.y*n1.x;
-        m_NormLens[m_NumPoints-1] = 1.0f / abs(sintheta);
+        float costheta = (float)n0.x*n1.x + (float)n0.y*n1.y;
+        float costheta2 = sqrt(((costheta)+1)/2);
+        m_NormLens[m_NumPoints-1] = 1.0f / abs(costheta2);
 		m_Norms[0] = m_Norms[m_NumPoints-1];
 		m_NormLens[0] = m_NormLens[m_NumPoints-1];
 	}
 	else
 	{
 		// Open shape
+        m_Closed = false;
+    	m_Centre += m_Points[m_NumPoints - 1];
+        m_Centre.x /= m_NumPoints;
+        m_Centre.y /= m_NumPoints;
+
 		m_Norms[m_NumPoints-1] = n;
         m_NormLens[m_NumPoints-1] = 1.0f;
 	}
@@ -172,6 +195,34 @@ void QLines::_appendReallocBuffers()
     *pInds++ = 0;
     for (int i = 1; i <= m_NumPoints; i++)
         *pInds++ = i*2;
+}
+//------------------------------------------------------------------------------
+bool QLines::isPointInside(float x, float y)
+{
+    CCPoint pws(x, y);
+    CCPoint pns = m_CCNode->convertToNodeSpace(pws);
+    QVec2 pp(pns.x, pns.y);
+
+    // Check each triangle portion (formed from each line segment endpoint, and the centre)
+    // This is slower than doing a side-of-line check against each segment, but allows for
+    // convex shapes such as stars
+    int numP = m_Points.size();
+    bool result = false;
+    for (int p = 0; p < numP - 1; p++)
+    {
+		QVec2 v0 = m_Points[p+0];
+		QVec2 v1 = m_Points[p+1];
+
+        result = pp.isPointInsideTri(v0, v1, m_Centre);
+        if (result == true)
+            break;
+    }
+    return result;
+}
+
+bool QLines::isClosed()
+{
+    return m_Closed;
 }
 
 QUICK_NAMESPACE_END;

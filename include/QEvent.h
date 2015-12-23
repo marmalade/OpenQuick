@@ -61,8 +61,7 @@ namespace key {
     enum
     {
         back = 126, // The "back" key
-        menu = 128, // The "menu" key
-        openquick_max
+        menu = 127, // The "menu" key
     };
 }    
 // tolua_end

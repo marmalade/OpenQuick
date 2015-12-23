@@ -53,18 +53,60 @@ USE CCObject:m_uID
 -- NOTE: This file must have no dependencies on the ones loaded after it by
 -- openquick_init.lua. For example, it must have no dependencies on QDirector.lua
 --------------------------------------------------------------------------------
-if config.debug.mock_tolua == true then
-	QSprite = quick.QSprite
-else
-	QSprite = {}
-    table.setValuesFromTable(QSprite, QNode) -- previous class in hierarchy
-	QSprite.__index = QSprite
+QSprite = {}
+table.setValuesFromTable(QSprite, QNode) -- previous class in hierarchy
+QSprite.__index = QSprite
+
+--------------------------------------------------------------------------------
+-- For overriding specific keys to do more complex function calls
+-- Currently just used for width and height assignment to scale sprites
+-- Falls back to QNode version then to userdata/default behaviour
+-- These are applied in initSprite()
+
+function QSprite_set(t, name, value)
+    if name == "xScale" then
+        t._xScale = value --store user value to avoid rounding errors
+        QNode_set(t, "xScale", t._relativeScaleX*value)
+    elseif name == "yScale" then
+        t._yScale = value
+        QNode_set(t, "yScale", t._relativeScaleY*value)
+    elseif name == "w" then
+        local oldScale = t.xScale
+        t._relativeScaleX = value/t._fileW
+        QNode_set(t, "xScale",  oldScale * t._relativeScaleX)
+        QNode_set(t, name, value)
+    elseif name == "h" then
+        local oldScale = t.yScale
+        t._relativeScaleY = value/t._fileH
+        QNode_set(t, "yScale",  oldScale * t._relativeScaleY)
+        QNode_set(t, name, value)
+    else
+        QNode_set(t, name, value)
+    end
 end
 
+--Using same style as QNode already does for similar overrides
+local oldNodeMTI = getmetatable(quick.QNode).__index
+
+function QSprite_get(t, name)
+    if name == "xScale" then
+        return t._xScale --could return oldNodeMTI(t, name) / t._relativeScaleX, but may get rounding errors
+    elseif name == "yScale" then
+        return t._yScale
+    else
+        return oldNodeMTI(t, name)
+    end
+end
 
 --------------------------------------------------------------------------------
 -- Private API
 --------------------------------------------------------------------------------
+QSprite.serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+    table.setValuesFromTable(obj, serializeTLMT(getmetatable(quick.QSprite), o))
+	return obj
+end
+
 --[[
 /*
 Initialise the peer table for the C++ class QSprite.
@@ -72,23 +114,17 @@ This must be called immediately after the QSprite() constructor.
 */
 --]]
 function QSprite:initSprite(n)
-	local np
-	if not config.debug.mock_tolua == true then
-	    local np = {}
-        local ep = tolua.getpeer(n)
-        table.setValuesFromTable(np, ep)
-	    setmetatable(np, QSprite)
-	    tolua.setpeer(n, np)
+    --override metamethods for node (see above)
+    getmetatable(n).__newindex = QSprite_set
+    getmetatable(n).__index = QSprite_get
+	local np = {}
+    local ep = tolua.getpeer(n)
+    table.setValuesFromTable(np, ep)
+	setmetatable(np, QSprite)
+	tolua.setpeer(n, np)
 
---[[        local mt = getmetatable(n)
-        mt.__gc = function(self)
-            director.runTextureCleanup = true
-            self:delete()
-        end
-        ]]
-	else
-		np = n
-	end
+    local mt = getmetatable(n) 
+    mt.__serialize = QSprite.serialize
 end
 
 --------------------------------------------------------------------------------
@@ -119,11 +155,24 @@ function director:createSprite(x, y, source)
     self:addNodeToLists(n)
 
     local frame = nil
+    local w = nil
+    local h = nil
 
     if type(x) == "table" then
         -- Copy any "source" input to local
         source = x["source"]
         x["source"] = nil
+        
+        --avoid setting w & h (via overrides) until sprite is set-up
+        if x.w then
+            w = x.w
+            x.w = nil
+        end
+        if x.h then
+            h = x.h
+            x.h = nil
+        end
+        
         table.setValuesFromTable(n, x)
         if x.frame then
             frame = x.frame
@@ -144,14 +193,43 @@ function director:createSprite(x, y, source)
         n.animationlock = n.source
     end
 
-    dbg.assert(n.source, "Source data is nil")
-    n.animation = n.source
-    n.source = nil
+    -- Allow the texture (Atlas) to be unspecified at the time of creation
+    --dbg.assert(n.source, "Source data is nil")
+    if n.source then
+        n.animation = n.source
+        n.source = nil
+    end
     if frame then
         n.frame = frame
     end
+    
+    -- Set width and height after image has been loaded
+    n._relativeScaleX = 1
+    n._relativeScaleY = 1
+    n._fileW = n.w
+    n._fileH = n.h
+    n.xScale = n._xScale or 1.0
+    n.yScale = n._yScale or 1.0
+    
+    --We have overriden the assignment (_index) operator,
+    --so assigning it now will update internals
+    if w then
+        n.w = w
+    end
+    if h then
+        n.h = h
+    end
 
     return n
+end
+
+-- PRIVATE
+function director:_createSpriteNoCCNode()
+    local n = quick.QSprite(false)
+    QNode:initNode(n)
+    QSprite:initSprite(n)
+    self:addNodeToLists(n)
+	return n
 end
 
 --[[
@@ -179,3 +257,14 @@ function QSprite:play(n)
     self:_play( startFrame, loopCount)
 end
 
+--[[
+/*! Set the width and height to the file size of the texture.
+    xScale and yScale will not be reset.
+*/
+--]]
+function QSprite:resetSize()
+    self.w = self._fileW
+    self.h = self._fileH
+end
+
+    

@@ -38,6 +38,7 @@ function initClassWithParent(n, cn)
 	else
 		np = n
 	end
+
 end
 
 --------------------------------------------------------------------------------
@@ -64,6 +65,11 @@ end
 --------------------------------------------------------------------------------
 -- Private API
 --------------------------------------------------------------------------------
+QJoint.serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+	return obj
+end
+
 --[[
 /*
 Initialise the peer table for the C++ class QJoint.
@@ -71,17 +77,16 @@ This must be called immediately after the QJoint() constructor.
 */
 --]]
 function QJoint:initJoint(n)
+	local np = {}
+	setmetatable(np, QJoint)
+	tolua.setpeer(n, np)
+
+    local mt = getmetatable(n) 
+    -- TODO, SUPPORT __SERIALIZE FOR JOINTS
+--    mt.__serialize = QJoint.serialize
     if config.debug.traceGC == true then
-        getmetatable(n).__gc = QJoint.newGC
+        mt.__gc = QJoint.newGC
     end
-	local np
-	if not config.debug.mock_tolua == true then
-		np = {}
-		setmetatable(np, QJoint)
-		tolua.setpeer(n, np)
-	else
-		np = n
-	end
 end
 
 --------------------------------------------------------------------------------

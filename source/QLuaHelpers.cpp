@@ -26,6 +26,16 @@
 #include "QDefines.h"
 #include "QLuaHelpers.h"
 #include "QMain.h"
+#include "CCPlatformMacros.h"
+
+//For GNUC compiler warnings. Cocos2d-x macro which isnt defined in our current version of CC
+#ifndef CC_UNUSED
+#ifdef __GNUC__
+#define CC_UNUSED __attribute__ ((unused))
+#else
+#define CC_UNUSED
+#endif
+#endif
 
 QUICK_NAMESPACE_BEGIN;
 
@@ -41,8 +51,8 @@ int QLuaErrorHandler(lua_State *L)
 	const char* CC_UNUSED msg = lua_tostring(L, -1);
 	QTrace("--Lua Error: %s", msg ? msg : "<No message>");
 
-  char assertMsg[cocos2d::kMaxLogLen+1];
-  snprintf(assertMsg, cocos2d::kMaxLogLen, "Lua Error: %s", msg ? msg : "<No message>");
+    char assertMsg[cocos2d::kMaxLogLen+1];
+    snprintf(assertMsg, cocos2d::kMaxLogLen, "Lua Error: %s", msg ? msg : "<No message>");
 	// use an assert here, so it shows up on device
 	QAssert(false, assertMsg);
 
@@ -65,7 +75,7 @@ void LUA_REPORT_ERRORS(lua_State *L, int status)
         //int s1 = lua_gettop(g_L);
         const char* error = lua_tostring(L, -1);
         //int s2 = lua_gettop(g_L);
-        const char* CC_UNUSED processed = MainGetProcessedLuaError(error);
+        const char* processed = MainGetProcessedLuaError(error);
         //int s3 = lua_gettop(g_L);
         QAssert(false, processed);
         //int s4 = lua_gettop(g_L);

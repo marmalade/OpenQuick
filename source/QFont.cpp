@@ -55,7 +55,7 @@ bool QFont::initFromFntFile(std::string filename)
 	QAssert( m_FontConfiguration == NULL, "QFont has been previously initialised");
 	
     // Create the font from the filename
-    m_FontConfiguration = CCBMFontConfiguration::create(filename.c_str());
+    m_FontConfiguration = FNTConfigLoadFile(filename.c_str());
     if ( m_FontConfiguration == NULL)
     {
         return false;

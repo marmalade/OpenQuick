@@ -1,6 +1,7 @@
 #include "QDefines.h" // include this first, it turns off various VS warnings
 #include "QMain.h"
 #include "AppDelegate.h"
+#include "main.h"
 #include "SimpleAudioEngine.h"
 
 USING_NS_CC;

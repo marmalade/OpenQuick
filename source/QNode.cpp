@@ -94,19 +94,31 @@ QNode::QNode()
 
 	// Cocos2dx
 	m_CCNode = NULL; // assume always autoreleased
+	m_ManageCCNodeLifeCycle = true; // very rarely, derived QNodes will set to false
 
     // Physics
     physics = NULL;
+    m_Program = NULL;
 }
 //------------------------------------------------------------------------------
 QNode::~QNode()
 {
     // Destroy cocos2d stuff
     if (m_CCNode)
-    {
-        m_CCNode->cleanup();
-        CC_SAFE_RELEASE_NULL(m_CCNode);
-    }
+	{
+		if (m_ManageCCNodeLifeCycle)
+		{
+			m_CCNode->cleanup();
+			CC_SAFE_RELEASE_NULL(m_CCNode);
+		}
+		else
+		{
+			// Sometimes we use m_uID to point back to the 
+			// related 'Q' object. If we are not managing the CCNode
+			// lifecycle, we must at least break this link
+			m_CCNode->m_uID = 0;
+		}
+	}
 }
 //------------------------------------------------------------------------------
 void QNode::_createCCNode()
@@ -124,9 +136,7 @@ void QNode::sync()
 {
     // Only sync if sync is enabled
     if (!isSynced)
-    {
         return;
-    }
 
     if (physics)
         physics->_sync();
@@ -159,6 +169,34 @@ void QNode::sync()
 	}
 }
 //------------------------------------------------------------------------------
+void QNode::reverseSync()
+{
+    // Only sync if sync is enabled
+    if (!isSynced)
+        return;
+
+ 	// cocos stuff
+	if (m_CCNode)
+	{
+		x = m_CCNode->getPosition().x;
+		y = m_CCNode->getPosition().y;
+		xScale = m_CCNode->getScaleX();
+		yScale = m_CCNode->getScaleX();
+		xSkew = m_CCNode->getSkewX();
+		ySkew = m_CCNode->getSkewY();
+		rotation = m_CCNode->getRotation();
+
+		isVisible = m_CCNode->isVisible();
+		zOrder = m_CCNode->getZOrder();
+	}
+}
+//------------------------------------------------------------------------------
+void QNode::visit()
+{
+    sync();
+    m_CCNode->visit();
+}
+//------------------------------------------------------------------------------
 bool QNode::_isChild(QNode* pChild)
 {
     // Check if pChild is really a child
@@ -178,9 +216,12 @@ void QNode::_setParent(QNode* pParent)
         m_Parent->_removeChild(this); // also handles CCNodes
 
     m_Parent = pParent;
-    CCAssert(pParent->m_CCNode, "Null ptr");
-    CCAssert(m_CCNode, "Null ptr");
-    pParent->m_CCNode->addChild(m_CCNode, zOrder);
+	if (m_ManageCCNodeLifeCycle == true)
+	{
+        CCAssert(pParent->m_CCNode, "Null ptr");
+        CCAssert(m_CCNode, "Null ptr");
+        pParent->m_CCNode->addChild(m_CCNode, zOrder);
+    }
     m_ZOrderLast = zOrder;
 }
 //------------------------------------------------------------------------------
@@ -192,10 +233,12 @@ void QNode::_addChild(QNode* pChild)
     m_Children.push_back(pChild);
     pChild->m_Parent = this;
 
-    // Tidy up cocos2d nodes
-    CCAssert(m_CCNode, "Null ptr");
-    CCAssert(pChild->m_CCNode, "Null ptr");
-    m_CCNode->addChild(pChild->m_CCNode, pChild->zOrder);
+	if (pChild->m_ManageCCNodeLifeCycle == true)
+	{
+        CCAssert(m_CCNode, "Null ptr");
+        CCAssert(pChild->m_CCNode, "Null ptr");
+        m_CCNode->addChild(pChild->m_CCNode, pChild->zOrder);
+    }
     pChild->m_ZOrderLast = pChild->zOrder;
 }
 //------------------------------------------------------------------------------
@@ -220,8 +263,8 @@ void QNode::_removeChild(QNode* pChild)
     }
     pChild->m_Parent = NULL;
 
-    // Tidy up cocos2d nodes
-    pChild->m_CCNode->removeFromParentAndCleanup(false);
+	if (pChild->m_ManageCCNodeLifeCycle == true)
+        pChild->m_CCNode->removeFromParentAndCleanup(false);
 }
 //------------------------------------------------------------------------------
 bool QNode::isPointInside(float x, float y)
@@ -238,5 +281,46 @@ bool QNode::isPointInside(float x, float y)
     }
     return false;
 }
-
+//------------------------------------------------------------------------------
+void QNode::getPointInWorldSpace(float lx, float ly, float& wx, float& wy)
+{
+    if (m_CCNode)
+    {
+        CCPoint pi(lx, ly);
+        CCPoint pr = m_CCNode->convertToWorldSpace(pi);
+        wx = pr.x;
+        wy = pr.y;
+    }
+}
+//------------------------------------------------------------------------------
+void QNode::getPointInLocalSpace(float wx, float wy, float& lx, float& ly)
+{
+    if (m_CCNode)
+    {
+        CCPoint pi(wx, wy);
+        CCPoint pr = m_CCNode->convertToNodeSpace(pi);
+        lx = pr.x;
+        ly = pr.y;
+    }
+}
+//------------------------------------------------------------------------------
+void QNode::setGLProgram(QNodeGLProgram* Program)
+{
+    if (m_CCNode)
+    {
+        m_Program = Program;
+        m_CCNode->setShaderProgram(m_Program->m_CCProgram);
+    }
+}
+//------------------------------------------------------------------------------
+QNodeGLProgram* QNode::getGLProgram()
+{
+    if (m_Program == NULL && m_CCNode->getShaderProgram() != NULL)
+    {
+        m_Program = new QNodeGLProgram();
+        m_Program->m_CCProgram = m_CCNode->getShaderProgram();
+    }
+    return m_Program;
+}
+//------------------------------------------------------------------------------
 QUICK_NAMESPACE_END;

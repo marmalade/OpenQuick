@@ -20,13 +20,17 @@
  * THE SOFTWARE.
  */--]]
 
-config =
-{
-	debug =
-	{
-        general = true, -- Turn on general debugging
-		assertDialogs = false, -- Display dialog boxes when asserting
-		typeChecking = true, -- Turn on type checking by default
-        traceGC = true, -- Trace info on object garbage collection
-	}
-}
+--------------------------------------------------------------------------------
+-- Rect
+-- NOTE: This file must have no dependencies on the ones loaded after it by
+-- openquick_init.lua. For example, it must have no dependencies on QDirector.lua
+--------------------------------------------------------------------------------
+
+-- Serialize
+QRect_serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+	return obj
+end
+local rectTemp = quick.QRect:new()
+local mt = getmetatable(rectTemp)
+mt.__serialize = QRect_serialize

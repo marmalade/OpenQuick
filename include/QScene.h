@@ -81,6 +81,8 @@ public:
     // BOUND, PRIVATE
     // tolua_begin
     virtual const char* _getToLuaClassName() { return "quick::QScene"; }
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
     QScene();
     ~QScene();
 

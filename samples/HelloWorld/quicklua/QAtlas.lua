@@ -40,20 +40,27 @@ end
 --------------------------------------------------------------------------------
 -- Private API
 --------------------------------------------------------------------------------
+QAtlas.serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+	return obj
+end
+
 --[[
 /*
 Initialise the peer table for the C++ class QAtlas.
 This must be called immediately after the QAtlas() constructor.
 */
 --]]
-function QAtlas:initAtlas(l)
-    if config.debug.traceGC == true then
-        getmetatable(l).__gc = QAtlas.newGC
-    end
+function QAtlas:initAtlas(n)
     local lp = {}
     setmetatable(lp, QAtlas)
-    tolua.setpeer(l, lp)
-    -- Add Lua variables below...
+    tolua.setpeer(n, lp)
+
+    local mt = getmetatable(n) 
+    mt.__serialize = QAtlas.serialize
+    if config.debug.traceGC == true then
+        mt.__gc = QAtlas.newGC
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -142,6 +149,10 @@ function director:createAtlas(values)
         dbg.assertFuncVarTypes({"string"}, values)
         n:initFromFile(values)
     end
+
+    -- Store this Atlas in the current QScene object's atlas list
+--    dbg.print( "Adding atlas to scene "..tostring(self.currentScene))
+    self.currentScene._atlasList[n] = n
 
     return n
 end

@@ -31,10 +31,12 @@
 #define __Q_NODE_H
 
 #include "QDefines.h"
+#include "QBase.h"
 #include "QColor.h"
 #include "QPhysics.h"
 #include "QPhysicsNodeProps.h"
 #include "QVec2.h"
+#include "QNodeGLProgram.h"
 
 #include "cocos2d.h"
 
@@ -51,13 +53,16 @@ Any Node object can have another Node object as its parent, and any number of No
 Each Node holds full transform information including position, rotation, scale and skew.
 Nodes also have color and alpha (opacity).
 */
-class QNode { // tolua_export
+class QNode : public QBaseObject { // tolua_export
 public:
     // BOUND, PRIVATE
     // tolua_begin
     virtual const char* _getToLuaClassName() { return "quick::QNode"; }
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
+
     QNode();
-    virtual ~QNode();
+    ~QNode();
     void _createCCNode();
     bool _isChild(QNode* pChild);
     void _setParent(QNode* pParent);
@@ -73,15 +78,9 @@ public:
 
     // BOUND, PUBLIC
     virtual void sync();
+    virtual void reverseSync();
 
-	/**
-	Check if a display point is inside this Node.
-	The Node's global transform is taken into account, as well as its shape (rectangular, circular, etc.)
-	@param x Display x coordinate to check against.
-	@param y Display y coordinate to check against.
-	@param result True only if the display point is inside the Node.
-	*/
-    virtual bool isPointInside(float x, float y);
+    void visit();
 
 	/*
     DEPRECATE - USE node.color = {..} instead
@@ -102,6 +101,31 @@ public:
 	*/
     void setColor(int r, int g, int b, int a) { color.r = r, color.g = g, color.b = b, color.a = a; }
 
+    /**
+	Check if a display point is inside this Node.
+	The Node's global transform is taken into account, as well as its shape (rectangular, circular, etc.)
+	@param x Display x coordinate to check against.
+	@param y Display y coordinate to check against.
+	@param result True only if the display point is inside the Node.
+	*/
+    virtual bool isPointInside(float x, float y);
+
+    /**
+	Given a point in the node's local space, return a point in the world (scene) space.
+	@param x Local x coordinate of the point.
+	@param y Local y coordinate of the point.
+	@param result Returns an x,y pair for the point in world space.
+	*/
+    void getPointInWorldSpace(float lx, float ly, float& wx, float& wy);
+    
+    /**
+	Given a point in the world (scene) space, return a point in the node's local space.
+	@param x World x coordinate of the point.
+	@param y World y coordinate of the point.
+	@param result Returns an x,y pair for the point in local space.
+	*/
+    void getPointInLocalSpace(float wx, float wy, float& lx, float& ly);
+
     // Timers and tweens control
     void pauseTimers() { _timersPaused = true; }
     void resumeTimers() { _timersPaused = false; }
@@ -111,7 +135,10 @@ public:
     void resumeTweens() { _tweensPaused = false; }
     void setTweensTimeScale(float f) { _tweensTimeScale = f; }
     float getTweensTimeScale() { return _tweensTimeScale; }
-    
+
+    void setGLProgram(QNodeGLProgram* pProg);
+    QNodeGLProgram* getGLProgram();
+
 	/**
 	The 'name' of the Node. Each Node can hold an arbitrary string as its name. This value need only be set by
 	the app if it is considered useful. The default value is an empty string.
@@ -271,12 +298,15 @@ public:
     bool isSynced;
 
     // UNBOUND
-    int     m_ZOrderLast; // copy of the last zOrder with which this node was added to its parent
+    int  m_ZOrderLast; // copy of the last zOrder with which this node was added to its parent
+    bool m_ManageCCNodeLifeCycle; // if false, CCNodes are NOT managed by QNodes
     QNode* m_Parent;
     std::vector<QNode*> m_Children;
 
     // Cocos2dx
 	cocos2d::CCNode* m_CCNode;
+
+    QNodeGLProgram* m_Program;
 
     static int  g_GUID; // increases each time a QNode is created
 

@@ -59,6 +59,8 @@ public:
     // BOUND, PRIVATE
     // tolua_begin
     virtual const char* _getToLuaClassName() { return "quick::QLines"; }
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
 	QLines();
 	~QLines();
     void _appendPoint(float x, float y);
@@ -67,6 +69,8 @@ public:
 
     // BOUND, PUBLIC
     virtual void sync();
+    virtual bool isPointInside(float x, float y);
+    bool isClosed();
 
     // tolua_end
 
@@ -74,6 +78,8 @@ public:
 	std::vector<QVec2>	m_Points;
 	std::vector<QVec2> m_Norms;
     std::vector<float> m_NormLens;
+    QVec2 m_Centre;
+    bool m_Closed;
 
 }; // tolua_export
 

@@ -93,5 +93,13 @@ void QSystem::_sendTouchEvent(float x, float y, const char* phase)
     LUA_EVENT_SET_STRING("phase", phase);
 	LUA_EVENT_SEND();
 }
+//------------------------------------------------------------------------------
+void QSystem::setFrameRateLimit(int fps)
+{
+	CCDirector *pDirector = CCDirector::sharedDirector();
+	pDirector->setAnimationInterval(1.0 / (double)fps);
+
+}
+
 
 QUICK_NAMESPACE_END;

@@ -24,19 +24,104 @@ QTiledMap = {}
 table.setValuesFromTable(QTiledMap, QNode) -- previous class in hierarchy
 QTiledMap.__index = QTiledMap
 
+QTiledMapLayer = {}
+table.setValuesFromTable(QTiledMapLayer, QNode) -- previous class in hierarchy
+QTiledMapLayer.__index = QTiledMapLayer
+
+-- from ccTMXTileFlags
+tiledMap = {}
+tiledMap.horizontal = 0x80000000
+tiledMap.vertical = 0x40000000
+tiledMap.diagonal = 0x20000000
+tiledMap.flippedAll = 0xe0000000
+
+QTiledMap.serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+    table.setValuesFromTable(obj, serializeTLMT(getmetatable(quick.QTiledMap), o))
+	return obj
+end
+QTiledMapLayer.serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+    table.setValuesFromTable(obj, serializeTLMT(getmetatable(quick.QTiledMapLayer), o))
+	return obj
+end
+
 function QTiledMap:initTiledMap(n)
 	local np = {}
     local ep = tolua.getpeer(n)
     table.setValuesFromTable(np, ep)
 	setmetatable(np, QTiledMap)
 	tolua.setpeer(n, np)
+
+    local mt = getmetatable(n) 
+    mt.__serialize = QTiledMap.serialize
 end
 
-function director:createTiledMap()
+function QTiledMapLayer:initTiledMapLayer(n)
+	local np = {}
+    local ep = tolua.getpeer(n)
+    table.setValuesFromTable(np, ep)
+	setmetatable(np, QTiledMapLayer)
+	tolua.setpeer(n, np)
+
+    local mt = getmetatable(n) 
+    mt.__serialize = QTiledMapLayer.serialize
+end
+
+function director:createTiledMap(plist)
+    dbg.assertFuncVarType("string", plist)
 	local n = quick.QTiledMap()
 	QNode:initNode(n)
 	QTiledMap:initTiledMap(n)
+
+	-- Create CCNode from plist
+	n:init(plist)
+
+	-- Set up QTiledMap children to be QTiledMapLayers
+	-- This reflects the hierarchy already in place between the
+	-- CCTMXTiledMap and the CCTMXLayers
+	local layer
+	local numc = n:_getCCNodeNumChildren()
+	for i=0,numc-1 do
+		layer = n:_createQTiledMapLayer(i)
+		QNode:initNode(layer)
+		QTiledMapLayer:initTiledMapLayer(layer)
+    	n:addChild(layer)
+    end
+
     self:addNodeToLists(n)
 	return n
 end
 
+--[[
+Promoted from C++ to Lua, so that we can manage the lifecycle of the 
+associated QSprite object. For each grid ref, a CCSprite already exists.
+Only if we call getSpriteAtGridRef() do we create an associated QSprite.
+--]]
+function QTiledMapLayer:getSpriteAtGridRef(x, y)
+	-- Get QSprite or nil
+	local qs = self:_checkSpriteAtGridRef(x, y)
+	if qs == nil then
+		qs = director:_createSpriteNoCCNode()
+		self._activeQSprite = qs
+		self:_setActiveSpriteCCNode()
+		self:addChild(qs)
+	end
+	
+	return qs
+end				
+
+--[[
+Promoted from C++ to Lua, so that we can manage the lifecycle of the 
+associated QSprite object, which may or may not exist for any tile.
+If it exists, here we remove it from the Lua scene graph.
+--]]
+function QTiledMapLayer:removeTileAtGridRef(x, y)
+	-- Get QSprite or nil
+	local qs = self:_checkSpriteAtGridRef(x, y)
+	if qs then
+		dbg.print("removeTileAtGridRef, removing QSprite")
+		qs = qs:removeFromParent()
+	end
+	self:_removeTileAtGridRef(x, y)
+end

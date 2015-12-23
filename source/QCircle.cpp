@@ -56,8 +56,12 @@ void CCSpriteCircle::draw()
 
     // Write vertex buffer
 	int nump = m_Vector->m_NumPoints;
+	int numl = nump-1;
+	float w2 = m_Vector->strokeWidth / 2;
 
     float* pCoord = m_GLVerts + 2;
+    float tx = 0.0f;
+    float ty = 0.0f;
 //    float xOfs = pCircle->xAnchor * pCircle->radius * 2;
 //    float yOfs = pCircle->yAnchor * pCircle->radius * 2;
     float xOfs = pCircle->radius;

@@ -9,10 +9,12 @@ $cfile "include/QCircle.h"
 $cfile "include/QColor.h"
 $cfile "include/QDirector.h"
 $cfile "include/QEvent.h"
+$cfile "include/QFilter.h"
 $cfile "include/QFont.h"
 $cfile "include/QLabel.h"
 $cfile "include/QLines.h"
 $cfile "include/QNode.h"
+$cfile "include/QNodeGLProgram.h"
 $cfile "include/QMain.h"
 $cfile "include/QParticles.h"
 $cfile "include/QPhysics.h"
@@ -30,7 +32,9 @@ $cfile "include/QPhysicsJointTouch.h"
 $cfile "include/QPhysicsJointGear.h"
 $cfile "include/QPhysicsJointRope.h"
 $cfile "include/QPhysicsNodeProps.h"
+$cfile "include/QRect.h"
 $cfile "include/QRectangle.h"
+$cfile "include/QRenderTexture.h"
 $cfile "include/QScene.h"
 $cfile "include/QSprite.h"
 $cfile "include/QLsqlite3.h"
@@ -38,6 +42,7 @@ $cfile "include/QSystem.h"
 $cfile "include/QTiledMap.h"
 $cfile "include/QTimer.h"
 $cfile "include/QTween.h"
+$cfile "include/QVec2.h"
 $cfile "include/QVector.h"
 
 //------------------------------------------------------------------------------
@@ -86,8 +91,8 @@ namespace quick {
 namespace quick {
     class QAudio {
     public:
-         tolua_property float musicVolume;
-         tolua_property float sfxVolume;
+         tolua_property float streamVolume;
+         tolua_property float soundVolume;
     };
 }
 
@@ -108,118 +113,125 @@ namespace quick {
 // Joint
 //------------------------------------------------------------------------------
 namespace quick {
-	namespace physics {
-		class QJoint {
-		public:
-			tolua_property bool isActive;
-			tolua_property bool isCollideConnected;
-		};
-	};
+    namespace physics {
+        class QJoint {
+        public:
+            tolua_property bool isActive;
+            tolua_property bool isCollideConnected;
+        };
+    };
 }
 
 // QJointDistance
 namespace quick {
-	namespace physics {
-		class QJointDistance {
-		public:
-//			tolua_property float length;		//readonly
+    namespace physics {
+        class QJointDistance {
+        public:
+//          tolua_property float length;        //readonly
         };
     };
 }
 
 // QJointRevolute
 namespace quick {
-	namespace physics {
-		class QJointRevolute {
-		public:
-			tolua_property float motorTorque;		//readonly
-			tolua_property float jointSpeed;		//readonly
-			tolua_property float jointAngle;		//readonly
+    namespace physics {
+        class QJointRevolute {
+        public:
+            tolua_property float motorTorque;       //readonly
+            tolua_property float jointSpeed;        //readonly
+            tolua_property float jointAngle;        //readonly
         };
     };
 }
 
 // QJointPrismatic
 namespace quick {
-	namespace physics {
-		class QJointPrismatic {
-		public:
-			tolua_property float motorForce;		//readonly
-			tolua_property float jointTranslation;	//readonly
-			tolua_property float jointSpeed;		//readonly
+    namespace physics {
+        class QJointPrismatic {
+        public:
+            tolua_property float motorForce;        //readonly
+            tolua_property float jointTranslation;  //readonly
+            tolua_property float jointSpeed;        //readonly
         };
     };
 }
 
 // QJointFriction
 namespace quick {
-	namespace physics {
-		class QJointFriction {
-		public:
-//			tolua_property float motorForce;		//readonly
+    namespace physics {
+        class QJointFriction {
+        public:
+//          tolua_property float motorForce;        //readonly
         };
     };
 }
 
 // QJointWheel
 namespace quick {
-	namespace physics {
-		class QJointWheel {
-		public:
-			tolua_property float motorTorque;		//readonly
-			tolua_property float jointTranslation;	//readonly
-			tolua_property float jointSpeed;		//readonly
+    namespace physics {
+        class QJointWheel {
+        public:
+            tolua_property float motorTorque;       //readonly
+            tolua_property float jointTranslation;  //readonly
+            tolua_property float jointSpeed;        //readonly
         };
     };
 }
 
 // QJointWeld
 namespace quick {
-	namespace physics {
-		class QJointWeld {
-		public:
-//			tolua_property float motorTorque;		//readonly
+    namespace physics {
+        class QJointWeld {
+        public:
+//          tolua_property float motorTorque;       //readonly
         };
     };
 }
 
 // QJointPulley
 namespace quick {
-	namespace physics {
-		class QJointPulley {
-		public:
-//			tolua_property float motorTorque;		//readonly
+    namespace physics {
+        class QJointPulley {
+        public:
+//          tolua_property float motorTorque;       //readonly
         };
     };
 }
 
 // QJointTouch
 namespace quick {
-	namespace physics {
-		class QJointTouch {
-		public:
-//			tolua_property float motorTorque;		//readonly
+    namespace physics {
+        class QJointTouch {
+        public:
+//          tolua_property float motorTorque;       //readonly
         };
     };
 }
 
 // QJointGear
 namespace quick {
-	namespace physics {
-		class QJointGear {
-		public:
-//			tolua_property float motorTorque;		//readonly
+    namespace physics {
+        class QJointGear {
+        public:
+//          tolua_property float motorTorque;       //readonly
         };
     };
 }
 
 // QJointRope
 namespace quick {
-	namespace physics {
-		class QJointRope {
-		public:
-//			tolua_property float motorTorque;		//readonly
+    namespace physics {
+        class QJointRope {
+        public:
+//          tolua_property float motorTorque;       //readonly
         };
     };
 }
 
+// QRenderTexture
+namespace quick {
+    class QRenderTexture {
+    public:
+        tolua_property bool autodraw;
+    };
+}

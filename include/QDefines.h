@@ -37,6 +37,7 @@
 #endif
 
 #include "cocos2d.h"
+#include "CCPlatformMacros.h"
 
 // Macros for default namespace
 #define QUICK_NAMESPACE_BEGIN namespace quick {

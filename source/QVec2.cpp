@@ -44,5 +44,49 @@ QVec2 QVec2::GetNormal()
 	n.Normalize();
 	return n;
 }
+//------------------------------------------------------------------------------
+float QVec2::Length()
+{
+    return std::sqrt(x * x + y * y);
+}
+//------------------------------------------------------------------------------
+float QVec2::Normalize()
+{
+    float length = Length();
+    if (length < FLT_EPSILON)
+    {
+        return 0.0f;
+    }
+    float invLength = 1.0f / length;
+    x *= invLength;
+    y *= invLength;
+
+    return length;
+}
+//------------------------------------------------------------------------------
+bool QVec2::isPointInsideTri(QVec2& a, QVec2& b, QVec2& c) 
+{
+    // From http://www.blackpawn.com/texts/pointinpoly/default.html
+
+    // Compute vectors        
+    QVec2 v0 = c - a;
+    QVec2 v1 = b - a;
+    QVec2 v2 = *this - a;
+
+    // Compute dot products
+    float dot00 = v0 * v0;
+    float dot01 = v0 * v1;
+    float dot02 = v0 * v2;
+    float dot11 = v1 * v1;
+    float dot12 = v1 * v2;
+
+    // Compute barycentric coordinates
+    float invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
+    float u = (dot11 * dot02 - dot01 * dot12) * invDenom;
+    float v = (dot00 * dot12 - dot01 * dot02) * invDenom;
+
+    // Check if point is in triangle
+    return (u >= 0) && (v >= 0) && (u + v < 1);
+}
 
 QUICK_NAMESPACE_END;

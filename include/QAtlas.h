@@ -51,6 +51,8 @@ namespace quick {
 class QAtlas : private cocos2d::CCSpriteFrameCache { // tolua_export
 public:
     // tolua_begin
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
     QAtlas();
     ~QAtlas();
 

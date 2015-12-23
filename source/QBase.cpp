@@ -23,10 +23,10 @@
 #include "QBase.h"
 #include "QLuaHelpers.h"
 
-//QUICK_NAMESPACE_BEGIN;
+QUICK_NAMESPACE_BEGIN;
 
 //------------------------------------------------------------------------------
 // QBaseObject
 //------------------------------------------------------------------------------
 
-//QUICK_NAMESPACE_END;
+QUICK_NAMESPACE_END;

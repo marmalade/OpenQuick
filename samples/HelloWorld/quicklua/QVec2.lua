@@ -20,7 +20,17 @@
  * THE SOFTWARE.
  */--]]
 
-dofile("quicklua/json/json.lua")
-json = require("json")
+--------------------------------------------------------------------------------
+-- Vec2
+-- NOTE: This file must have no dependencies on the ones loaded after it by
+-- openquick_init.lua. For example, it must have no dependencies on QDirector.lua
+--------------------------------------------------------------------------------
 
-
+-- Serialize
+QVec2_serialize = function(o)
+	local obj = serializeTLMT(getmetatable(o), o)
+	return obj
+end
+local vecTemp = quick.QVec2:new()
+local mt = getmetatable(vecTemp)
+mt.__serialize = QVec2_serialize

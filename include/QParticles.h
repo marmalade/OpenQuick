@@ -24,7 +24,8 @@
 #define __Q_PARTICLES_H
 
 #include "QNode.h"
-#include "particle_nodes/CCParticleSystemQuad.h"
+#include "QVec2.h"
+#include "CCParticleSystemQuad.h"
 
 // tolua_begin
 namespace quick {
@@ -37,36 +38,35 @@ class QAtlas;
 class CCParticleSystemQuad2 : public cocos2d::CCParticleSystemQuad
 {
 public:
-	// modeA accessors
-	void modeASetGravity(float x, float y) { modeA.gravity = ccp(x, y); }
-	cocos2d::CCPoint& modeAGetGravity() { return modeA.gravity; }
-	void modeASetSpeed(float s) { modeA.speed = s; }
-	float modeAGetSpeed() { return modeA.speed; }
-	void modeASetSpeedVar(float s) { modeA.speedVar = s; }
-	float modeAGetSpeedVar() { return modeA.speedVar; }
-	void modeASetTangentialAccel(float a) { modeA.tangentialAccel = a; }
-	float modeAGetTangentialAccel() { return modeA.tangentialAccel; }
-	void modeASetTangentialAccelVar(float a) { modeA.tangentialAccelVar = a; }
-	float modeAGetTangentialAccelVar() { return modeA.tangentialAccelVar; }
-	void modeASetRadialAccel(float a) { modeA.radialAccel = a; }
-	float modeAGetRadialAccel() { return modeA.radialAccel; }
-	void modeASetRadialAccelVar(float a) { modeA.radialAccelVar = a; }
-	float modeAGetRadialAccelVar() { return modeA.radialAccelVar; }
+	// modeGravity accessors
+	void modeGravitySetGravity(float x, float y) { modeA.gravity = ccp(x, y); }
+	cocos2d::CCPoint& modeGravityGetGravity() { return modeA.gravity; }
+	void modeGravitySetSpeed(float s) { modeA.speed = s; }
+	float modeGravityGetSpeed() { return modeA.speed; }
+	void modeGravitySetSpeedVar(float s) { modeA.speedVar = s; }
+	float modeGravityGetSpeedVar() { return modeA.speedVar; }
+	void modeGravitySetTangentialAccel(float a) { modeA.tangentialAccel = a; }
+	float modeGravityGetTangentialAccel() { return modeA.tangentialAccel; }
+	void modeGravitySetTangentialAccelVar(float a) { modeA.tangentialAccelVar = a; }
+	float modeGravityGetTangentialAccelVar() { return modeA.tangentialAccelVar; }
+	void modeGravitySetRadialAccel(float a) { modeA.radialAccel = a; }
+	float modeGravityGetRadialAccel() { return modeA.radialAccel; }
+	void modeGravitySetRadialAccelVar(float a) { modeA.radialAccelVar = a; }
+	float modeGravityGetRadialAccelVar() { return modeA.radialAccelVar; }
 
-	// modeB accessors
-	void modeBSetStartRadius(float r) { modeB.startRadius = r; }
-	float modeBGetStartRadius() { return modeB.startRadius; }
-	void modeBSetStartRadiusVar(float r) { modeB.startRadiusVar = r; }
-	float modeBGetStartRadiusVar() { return modeB.startRadiusVar; }
-	void modeBSetEndRadius(float r) { modeB.endRadius = r; }
-	float modeBGetEndRadius() { return modeB.endRadius; }
-	void modeBSetEndRadiusVar(float r) { modeB.endRadiusVar = r; }
-	float modeBGetEndRadiusVar() { return modeB.endRadiusVar; }
-	void modeBSetRotatePerSecond(float r) { modeB.rotatePerSecond = r; }
-	float modeBGetRotatePerSecond() { return modeB.rotatePerSecond; }
-	void modeBSetRotatePerSecondVar(float r) { modeB.rotatePerSecondVar = r; }
-	float modeBGetRotatePerSecondVar() { return modeB.rotatePerSecondVar; }
-
+	// modeRadial accessors
+	void modeRadialSetStartRadius(float r) { modeB.startRadius = r; }
+	float modeRadialGetStartRadius() { return modeB.startRadius; }
+	void modeRadialSetStartRadiusVar(float r) { modeB.startRadiusVar = r; }
+	float modeRadialGetStartRadiusVar() { return modeB.startRadiusVar; }
+	void modeRadialSetEndRadius(float r) { modeB.endRadius = r; }
+	float modeRadialGetEndRadius() { return modeB.endRadius; }
+	void modeRadialSetEndRadiusVar(float r) { modeB.endRadiusVar = r; }
+	float modeRadialGetEndRadiusVar() { return modeB.endRadiusVar; }
+	void modeRadialSetRotatePerSecond(float r) { modeB.rotatePerSecond = r; }
+	float modeRadialGetRotatePerSecond() { return modeB.rotatePerSecond; }
+	void modeRadialSetRotatePerSecondVar(float r) { modeB.rotatePerSecondVar = r; }
+	float modeRadialGetRotatePerSecondVar() { return modeB.rotatePerSecondVar; }
 };
 
 // Our particles class
@@ -75,14 +75,14 @@ public:
 	// tolua_begin
 	// BOUND, PUBLIC
     virtual const char* _getToLuaClassName() { return "quick::QParticles"; }
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
 	QParticles();
 	~QParticles();
 
-	struct xyStruct {
-		float x, y;
-	};
-	struct modeAStruct {
-		xyStruct gravity;
+    // Stuff specific to mode 'Gravity'
+	struct modeGravityStruct {
+		QVec2 gravity;
         float speed;
         float speedVar;
         float tangentialAccel;
@@ -91,7 +91,8 @@ public:
         float radialAccelVar;
     };
 
-    struct modeBStruct {
+    // Stuff specific to mode 'Radial'
+    struct modeRadialStruct {
         float startRadius;
         float startRadiusVar;
         float endRadius;
@@ -100,12 +101,13 @@ public:
         float rotatePerSecondVar;
     };
 
-	void init(const char* plist, int numParticles);
 	void setAtlas(QAtlas* pAtlas);
     bool addParticle();
     void stop();
     void reset();
     bool isFull();
+	bool isActive();
+    int getNumParticles() const { return particleCount; }
 
 //    virtual void updateQuadWithParticle(tCCParticle* particle, const CCPoint& newPosition);
 //    virtual void postStep();
@@ -113,15 +115,18 @@ public:
     virtual void sync();
     void syncReverse();
 
-	modeAStruct modeA;
-	modeBStruct modeB;
+	modeGravityStruct modeGravity;  // mode "gravity"
+	modeRadialStruct modeRadial;  // mode "radial"
 
-    int particleCount;
+	int totalParticles; // total permitted
+    int particleCount;  // total active
+
+    int emitterMode;
+	float emitterRate;
+
     float duration;
-    float sourcePosX;
-    float sourcePosY;
-    float sourcePosVarX;
-    float sourcePosVarY;
+    QVec2 sourcePos;
+    QVec2 sourcePosVar;
 	float life;
     float lifeVar;
     float angle;
@@ -139,13 +144,14 @@ public:
 	float	startSpinVar;
 	float	endSpin;
 	float	endSpinVar;
-	float	emissionRate;
-	int		totalParticles;
 	// TODO texture;
 	// TODO blendFunc
 	bool	alphaModifiesColor;
 
 	// BOUND, PRIVATE
+	void _initWithPlist(const char* plist);
+	void _initWithNumber(int numParticles);
+
 	QAtlas*	_atlas;
 
 	// tolua_end

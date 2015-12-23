@@ -49,6 +49,8 @@ public:
     // tolua_begin
 
     // BOUND, PRIVATE
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
     QSystem();
     ~QSystem();
     void _sendTouchEvent(float x, float y, const char* phase);
@@ -63,6 +65,7 @@ public:
     void resumeTimers() { _timersPaused = false; }
     void setTimersTimeScale(float f) { _timersTimeScale = f; }
     float getTimersTimeScale() { return _timersTimeScale; }
+	void setFrameRateLimit(int fps);
  
     /**
     The elapsed game time, in seconds.

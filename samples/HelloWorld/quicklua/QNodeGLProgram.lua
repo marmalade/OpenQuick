@@ -21,37 +21,24 @@
  */--]]
 
 --------------------------------------------------------------------------------
--- audio singleton
+-- Nodes
+-- NOTE: This file must have no dependencies on the ones loaded after it by
+-- openquick_init.lua. For example, it must have no dependencies on QDirector.lua
 --------------------------------------------------------------------------------
-audio = quick.QAudio:new()
+QNodeGLProgram = {}
+QNodeGLProgram.__index = QNodeGLProgram
 
 --------------------------------------------------------------------------------
 -- Public API
 --------------------------------------------------------------------------------
 --[[
-/**
-Play a stream
-@param fileName The name of the file to play
-@param bLoop (optional) specify if the stream is to loop
-@return The created node.
+/*
+Create a Shader program (base class object), specifying arbitrary input values.
+@return The created Shader program.
 */
 --]]
-function audio:playStream( fileName, bLoop)
-    dbg.assertFuncVarType("string", fileName)
-    dbg.assertFuncVarTypes({"boolean", "nil"}, bLoop)
-    self:playStreamWithLoop( fileName, bLoop or false)
-end
-
---[[
-/**
-Play a sound
-@param fileName The name of the file to play
-@param bLoop (optional) specify if the stream is to loop
-@return The created node.
-*/
---]]
-function audio:playSound( fileName, bLoop)
-    dbg.assertFuncVarType("string", fileName)
-    dbg.assertFuncVarTypes({"boolean", "nil"}, bLoop)
-    return self:playSoundWithLoop( fileName, bLoop or false)
+function director:createGLProgram()
+    local n = quick.QNodeGLProgram()
+    n:_createCCGLProgram()
+    return n
 end

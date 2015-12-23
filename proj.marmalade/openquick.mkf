@@ -21,6 +21,7 @@ files
     QDefines.h
     QEvent.h
     QDirector.h
+    QFilter.h
     QFont.h
     QLabel.h
     QLines.h
@@ -28,6 +29,7 @@ files
     QLuaHelpers.h
     QMain.h
     QNode.h
+    QNodeGLProgram.h
     QParticles.h
     QPhysics.h
     QPhysicsContact.h
@@ -44,13 +46,16 @@ files
     QPhysicsJointGear.h
     QPhysicsJointRope.h
     QPhysicsNodeProps.h
+    QRect.h
     QRectangle.h
+    QRenderTexture.h
     QScene.h
     QSceneTextureBatch.h
     QSprite.h
     QSystem.h
     QTiledMap.h
     QTimer.h
+    QTransition.h
     QTween.h
     QVector.h
     QVec2.h
@@ -64,6 +69,7 @@ files
     QCircle.cpp
     QColor.cpp
     QDirector.cpp
+    QFilter.cpp
     QFont.cpp
     QLabel.cpp
     QLines.cpp
@@ -71,6 +77,7 @@ files
     QLuaHelpers.cpp
     QMain.cpp
     QNode.cpp
+    QNodeGLProgram.cpp
     QParticles.cpp
     QPhysics.cpp
     QPhysicsContact.cpp
@@ -88,14 +95,31 @@ files
     QPhysicsJointRope.cpp
     QPhysicsNodeProps.cpp
     QRectangle.cpp
+    QRenderTexture.cpp
     QScene.cpp
     QSceneTextureBatch.cpp
     QSprite.cpp
     QSystem.cpp
     QTiledMap.cpp
+    QTransition.cpp
     QTween.cpp
     QVector.cpp
     QVec2.cpp
+
+    (../include/shaders)
+    [shaders]
+    qShader_Blur_frag.h
+    qShader_Brightness_frag.h
+    qShader_Bulge_frag.h
+    qShader_ChromaKey_frag.h
+    qShader_Contrast_frag.h
+    qShader_Crosshatch_frag.h
+    qShader_Emboss_frag.h
+    qShader_Exposure_frag.h
+    qShader_Grayscale_frag.h
+    qShader_Hue_frag.h
+    qShader_Invert_frag.h
+    qShader_Saturation_frag.h
 
     (../data/lua)
     [Lua]

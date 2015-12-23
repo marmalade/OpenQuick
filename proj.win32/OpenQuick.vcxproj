@@ -20,9 +20,9 @@
     <ClInclude Include="..\include\QColor.h" />
     <ClInclude Include="..\include\QDefines.h" />
     <ClInclude Include="..\include\QDirector.h" />
-    <ClInclude Include="..\include\QDraw.h" />
     <ClInclude Include="..\include\QEvent.h" />
     <ClInclude Include="..\include\QFont.h" />
+    <ClInclude Include="..\include\QFilter.h" />
     <ClInclude Include="..\include\QLabel.h" />
     <ClInclude Include="..\include\QLines.h" />
     <ClInclude Include="..\include\QLsqlite3.h" />
@@ -46,7 +46,9 @@
     <ClInclude Include="..\include\QPhysicsJointWheel.h" />
     <ClInclude Include="..\include\QPhysicsNew.h" />
     <ClInclude Include="..\include\QPhysicsNodeProps.h" />
+    <ClInclude Include="..\include\QRect.h" />
     <ClInclude Include="..\include\QRectangle.h" />
+    <ClInclude Include="..\include\QRenderTexture.h" />
     <ClInclude Include="..\include\QScene.h" />
     <ClInclude Include="..\include\QSceneTextureBatch.h" />
     <ClInclude Include="..\include\QSprite.h" />
@@ -54,9 +56,22 @@
     <ClInclude Include="..\include\QTemplate.h" />
     <ClInclude Include="..\include\QTiledMap.h" />
     <ClInclude Include="..\include\QTimer.h" />
+    <ClInclude Include="..\include\QTransition.h" />
     <ClInclude Include="..\include\QTween.h" />
     <ClInclude Include="..\include\QVec2.h" />
     <ClInclude Include="..\include\QVector.h" />
+    <ClInclude Include="..\include\shaders\qShader_Blur_frag.h" />
+    <ClInclude Include="..\include\shaders\qShader_Brightness_frag.h" />
+    <ClInclude Include="..\include\shaders\qShader_Bulge_frag.h" />
+    <ClInclude Include="..\include\shaders\qShader_ChromaKey_frag.h" />
+    <ClInclude Include="..\include\shaders\qShader_Contrast_frag.h" />
+    <ClInclude Include="..\include\shaders\qShader_Crosshatch_frag.h" />
+    <ClInclude Include="..\include\shaders\qShader_Emboss_frag.h" />
+    <ClInclude Include="..\include\shaders\qShader_Exposure_frag.h" />
+    <ClInclude Include="..\include\shaders\qShader_Grayscale_frag.h" />
+    <ClInclude Include="..\include\shaders\qShader_Hue_frag.h" />
+    <ClInclude Include="..\include\shaders\qShader_Invert_frag.h" />
+    <ClInclude Include="..\include\shaders\qShader_Saturation_frag.h" />
     <ClInclude Include="..\sqlite3\sqlite3.h" />
     <ClInclude Include="..\sqlite3\sqlite3ext.h" />
   </ItemGroup>
@@ -70,7 +85,7 @@
     <ClCompile Include="..\source\QCircle.cpp" />
     <ClCompile Include="..\source\QColor.cpp" />
     <ClCompile Include="..\source\QDirector.cpp" />
-    <ClCompile Include="..\source\QDraw.cpp" />
+    <ClCompile Include="..\source\QFilter.cpp" />
     <ClCompile Include="..\source\QFont.cpp" />
     <ClCompile Include="..\source\QLabel.cpp" />
     <ClCompile Include="..\source\QLines.cpp" />
@@ -95,11 +110,13 @@
     <ClCompile Include="..\source\QPhysicsJointWheel.cpp" />
     <ClCompile Include="..\source\QPhysicsNodeProps.cpp" />
     <ClCompile Include="..\source\QRectangle.cpp" />
+    <ClInclude Include="..\source\QRenderTexture.cpp" />
     <ClCompile Include="..\source\QScene.cpp" />
     <ClCompile Include="..\source\QSceneTextureBatch.cpp" />
     <ClCompile Include="..\source\QSprite.cpp" />
     <ClCompile Include="..\source\QSystem.cpp" />
     <ClCompile Include="..\source\QTiledMap.cpp" />
+    <ClCompile Include="..\source\QTransition.cpp" />
     <ClCompile Include="..\source\QTween.cpp" />
     <ClCompile Include="..\source\QVec2.cpp" />
     <ClCompile Include="..\source\QVector.cpp" />
@@ -168,7 +185,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_WINDOWS;TOLUA_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_WINDOWS;TOLUA_RELEASE;COCOS2D_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\openquick\include;..\..\cocos2dx-2\CocosDenshion\include;..\..\cocos2dx-2\cocos2dx\layers_scenes_transitions_nodes;..\..\cocos2dx-2\cocos2dx\tilemap_parallax_nodes;..\..\cocos2dx-2\cocos2dx\textures;..\..\cocos2dx-2\cocos2dx\particle_nodes;..\..\cocos2dx-2\cocos2dx;..\..\cocos2dx-2\cocos2dx\include;..\..\cocos2dx-2\cocos2dx\cocoa;..\..\cocos2dx-2\cocos2dx\platform;..\..\cocos2dx-2\cocos2dx\platform\win32;..\..\cocos2dx-2\cocos2dx\platform\third_party\win32\OGLES;..\..\cocos2dx-2\cocos2dx\kazmath\include;..\..\cocos2dx-2\scripting\lua\tolua;..\..\cocos2dx-2\scripting\lua\lua;..\..\cocos2dx-2\external</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>

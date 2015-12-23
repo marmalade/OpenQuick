@@ -25,32 +25,50 @@ If you are using OpenQuick WITHOUT Marmalade Quick, then the runtime OS
 abstraction you are using will be Cocos2d-x's - i.e. you are using the
 Cocos2d-x platform back-ends, such as proj.win32.
 
-OpenQuick is provided under the MIT license::
+##Working with GitHub vs Marmalade SDK
 
-  /*
-   * (C) 2012-2013 Marmalade.
-   *
-   * Permission is hereby granted, free of charge, to any person obtaining a copy
-   * of this software and associated documentation files (the "Software"), to deal
-   * in the Software without restriction, including without limitation the rights
-   * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-   * copies of the Software, and to permit persons to whom the Software is
-   * furnished to do so, subject to the following conditions:
-   *
-   * The above copyright notice and this permission notice shall be included in
-   * all copies or substantial portions of the Software.
-   *
-   * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-   * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-   * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-   * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-   * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-   * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-   * THE SOFTWARE.
-   */
+OpenQuick is distributed as source both inside the Marmalade SDK (in
+modules/third_party/openquick) and on github (at
+https://github.com/marmalade/OpenQuick/)
+
+The SDK and GitHub versions are not synced by any build tools currently;
+it relies on Marmalade engineers manually syncing between GitHub and
+perforce versions of the repository. If you want to make changes to
+OpenQuick and use it with Marmalade, please fork the repo and submit pull
+requests for any changes you make.
+
+To pick up your github version instead
+of the SDK one, you can edit the subprojects list in quick/quick.mkf to
+include path/to/openquick/proj.marmalade/openquick.mkf instead of
+../modules/third_party/openquick/proj.marmalade/openquick.mkf
+
+OpenQuick is provided under the MIT license:
+
+```
+/*
+ * (C) 2012-2015 Marmalade.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+```
 
 The following components are redistributed under their respective licenses:
-
 - sqlite3 (luasqlite.luaforge.net)
 - json (json.luaforge.net)
 

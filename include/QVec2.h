@@ -30,31 +30,61 @@
 #ifndef __Q_VEC2_H
 #define __Q_VEC2_H
 
-#include "Box2D/Box2D.h"
+#include "QBase.h"
+
+#include <cmath>
+#ifndef SHP
+#include <cfloat>
+#else
+#include <float.h>
+#endif
+#include <cstddef>
+#include <limits>
 
 // tolua_begin
 namespace quick {
 // tolua_end
 
-// DO WE REALLY NEED TO BIND ANY OF THIS?
-
 //------------------------------------------------------------------------------
 // QVec2
 //------------------------------------------------------------------------------
-// Use Box2D's 2D vector, and extend it
-struct  QVec2 : public b2Vec2 { // tolua_export
+// Note: this class must have a sizeof 8, as the code assumes it can cast
+// these objects to those of type b2Vec2 and ccVertex2F. So it must NOT
+// have any members other than float x,y and must NOT have any virtual functions.
+class QVec2 { // tolua_export
 public:
+    // BOUND, PRIVATE
+    // tolua_begin
+    std::string __tostring() { return "<>"; }
+    void* __serialize() { return NULL; }
+
+    // BOUND, PUBLIC
     QVec2() {};
     QVec2(float _x, float _y);
+    
+    void Set(float _x, float _y) { x = _x; y = _y; }
+    float Length();
+    float Normalize();
 
+    // tolua_end
+    // tolua++ does not support mapping these
     inline QVec2 operator + (QVec2 const & v) const { return QVec2(x+v.x, y+v.y); }
     inline QVec2 operator - (QVec2 const & v) const { return QVec2(x-v.x, y-v.y); }
-    
-    // tolua_begin
-    QVec2 GetNormal();
-    // tolua_end
+    inline float operator * (QVec2 const & v) const { return x*v.x + y*v.y; }
+    inline bool operator == (const QVec2& v) const { return (x==v.x) && (y==v.y); }
 
+    inline void operator += (const QVec2& v) { x += v.x; y += v.y; }
+    inline void operator -= (const QVec2& v) { x -= v.x; y -= v.y; }
+    inline void operator *= (float a) { x *= a; y *= a; }
+    // tolua_begin
+
+    bool isPointInsideTri(QVec2& a, QVec2& b, QVec2& c);
+    
+    QVec2 GetNormal();
+
+    float x, y;
     static QVec2 g_Zero;
+    // tolua_end
 
 }; // tolua_export
 

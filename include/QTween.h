@@ -49,6 +49,20 @@ namespace ease {
 	The value field is not used.
 	*/
 	float linear(float time, float value = 1.0f);
+	
+    /**
+	Easing function providing a straight line, with fixed value of 1.
+    When combined with a mode of 'mirror', this can be used to provide a square wave.
+	The value field is not used.
+	*/
+	float one(float time, float value = 1.0f);
+	
+    /**
+	Easing function providing a straight line, with fixed value of 0.
+    When combined with a mode of 'mirror', this can be used to provide a square wave.
+	The value field is not used.
+	*/
+	float zero(float time, float value = 1.0f);
 
 	/**
 	Easing function providing a curve based on raising the time value to a specified power.
