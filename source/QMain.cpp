@@ -524,9 +524,9 @@ void setupPrecompiledPath()
         return;
     }
 
-    char ramPath[S3E_FILE_MAX_PATH];
+    char ramPath[256];
     strcpy(ramPath, "");
-    s3eFileGetFileString("rom://", S3E_FILE_REAL_PATH, ramPath, S3E_FILE_MAX_PATH);
+    s3eFileGetFileString("rom://", S3E_FILE_REAL_PATH, ramPath, sizeof(ramPath));
     std::string rawFSPath = ramPath;
     if (!rawFSPath.size())
     {
