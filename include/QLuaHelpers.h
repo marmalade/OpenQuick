@@ -265,6 +265,14 @@ inline void LUA_EVENT_SET_TOLUA_PTR(const char* name, void* ptr, const char* val
     lua_setfield(g_L, -2, name);
 }
 
+// Assume Event object on stack: set tolua light userdata (C++ pointer, Lua does not handle
+// memory etc, so we can use for comparing pointers etc - ideal for opaque pointers)
+inline void LUA_EVENT_SET_TOLUA_LIGHT_PTR(const char* name, void* ptr)
+{
+    lua_pushlightuserdata(g_L, ptr);
+    lua_setfield(g_L, -2, name);
+}
+
 // -- Adding tables to events
 
 // Assume Event object on stack: create a table on top of stack - will be named
@@ -343,6 +351,20 @@ inline void LUA_EVENT_SET_NUMBER_AT_INDEX(int index, lua_Number value)
 {
     lua_pushinteger(g_L, index);
     lua_pushnumber(g_L, value);
+    lua_settable(g_L, -3);
+}
+
+inline void LUA_EVENT_SET_TOLUA_PTR_AT_INDEX(int index, void* ptr, const char* value)
+{
+    lua_pushinteger(g_L, index);
+    tolua_pushusertype(g_L, ptr, value);
+    lua_settable(g_L, -3);
+}
+
+inline void LUA_EVENT_SET_TOLUA_LIGHT_PTR_AT_INDEX(int index, void* ptr)
+{
+    lua_pushinteger(g_L, index);
+    lua_pushlightuserdata(g_L, ptr);
     lua_settable(g_L, -3);
 }
 
