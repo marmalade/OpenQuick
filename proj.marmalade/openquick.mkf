@@ -7,6 +7,10 @@ define TOLUA_RELEASE
 
 files
 {
+    ["Docs"]
+    "../docs/openquick.defines.txt"
+
+    [""]
     "../openquick_tolua.cpp"
     "../openquick_tolua.pkg"
 

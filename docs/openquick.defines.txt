@@ -1,0 +1,1 @@
+TOLUA_RELEASE   Don't compile in all the tolua error-checking code.
