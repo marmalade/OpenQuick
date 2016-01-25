@@ -32,6 +32,8 @@
 
 #include "cocos2d.h"
 
+static char bufferedLuaMessage[LUABUFFSIZE];
+
 // Define this to run test code for Cocos2d-x
 //#define COCOS2DX_TEST
 

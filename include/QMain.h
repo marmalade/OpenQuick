@@ -102,8 +102,6 @@ void MainUpdate(float dt);
 typedef void (*MainCallback)(void);
 extern MainCallback g_MainCallback;
 
-static char bufferedLuaMessage[LUABUFFSIZE];
-
 // tolua_begin
 }
 // tolua_end
