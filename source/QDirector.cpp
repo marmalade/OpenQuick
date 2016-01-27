@@ -133,7 +133,7 @@ QDirector::QDirector()
     
     m_OverlayTransitionScene = NULL;
     _overlayTransitionScene = NULL;
-    _overlayTransitionTime = NULL;
+    _overlayTransitionTime = 0;
     _overlayTransitionType = "";
 
     _overlayScene = NULL;

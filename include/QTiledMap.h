@@ -151,7 +151,7 @@ public:
     void _removeTileAtGridRef(int x, int y); // PRIVATE
 
     /** returns the position in points of a given tile coordinate */
-    void getPosAtGridRef(int x, int y, float* px=NULL, float* py=NULL)
+    void getPosAtGridRef(int x, int y, float* px, float* py)
 	{
 		cocos2d::CCTMXLayer* pCCTL = (cocos2d::CCTMXLayer*)m_CCNode;
 		cocos2d::CCPoint p = pCCTL->positionAt(ccp(x, y));

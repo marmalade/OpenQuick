@@ -59,7 +59,7 @@ public:
     void* __serialize() { return NULL; }
 
     // BOUND, PUBLIC
-    QVec2() {};
+    QVec2();
     QVec2(float _x, float _y);
     
     void Set(float _x, float _y) { x = _x; y = _y; }

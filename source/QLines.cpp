@@ -137,7 +137,7 @@ void QLines::_appendFinalise()
 			// costheta = cos(theta)
 			// costheta2 = cos(theta/2)
 			// cos2 means cos^2, "cos squared", sqr(cos)
-            float costheta = (float)n0.x*n1.x + (float)n0.y*n1.y;
+            float costheta = float(n0.x*n1.x) + float(n0.y*n1.y);
 
 			// cos(2theta) = 2 cos2(theta) - 1
 			// cos(theta) = 2 cos2(theta2) - 1

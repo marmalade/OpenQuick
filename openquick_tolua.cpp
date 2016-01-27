@@ -1,6 +1,6 @@
 /*
 ** Lua binding: openquick_tolua
-** Generated automatically by tolua++-1.0.92 on 12/23/15 13:14:00.
+** Generated automatically by tolua++-1.0.92 on 01/26/16 17:11:36.
 */
 
 #ifndef __cplusplus
@@ -19437,8 +19437,8 @@ static int tolua_openquick_tolua_quick_QTiledMapLayer_getPosAtGridRef00(lua_Stat
      !tolua_isusertype(tolua_S,1,"quick::QTiledMapLayer",0,&tolua_err) ||
      !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
      !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
-     !tolua_isnumber(tolua_S,4,1,&tolua_err) ||
-     !tolua_isnumber(tolua_S,5,1,&tolua_err) ||
+     !tolua_isnumber(tolua_S,4,0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,5,0,&tolua_err) ||
      !tolua_isnoobj(tolua_S,6,&tolua_err)
  )
   goto tolua_lerror;
@@ -19448,8 +19448,8 @@ static int tolua_openquick_tolua_quick_QTiledMapLayer_getPosAtGridRef00(lua_Stat
   quick::QTiledMapLayer* self = (quick::QTiledMapLayer*)  tolua_tousertype(tolua_S,1,0);
   int x = ((int)  tolua_tonumber(tolua_S,2,0));
   int y = ((int)  tolua_tonumber(tolua_S,3,0));
-  float px = ((float)  tolua_tonumber(tolua_S,4,NULL));
-  float py = ((float)  tolua_tonumber(tolua_S,5,NULL));
+  float px = ((float)  tolua_tonumber(tolua_S,4,0));
+  float py = ((float)  tolua_tonumber(tolua_S,5,0));
 #ifndef TOLUA_RELEASE
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPosAtGridRef'", NULL);
 #endif

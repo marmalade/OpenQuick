@@ -45,8 +45,8 @@ QRenderTexture::QRenderTexture(int w, int h, int eFormat, unsigned int uDepthSte
     this->w = size.width;
     this->h = size.height;
 
-    this->x = x;
-    this->y = y;
+    this->x = (float) x;
+    this->y = (float) y;
 
     static bool normaliseProperties = true;
 

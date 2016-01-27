@@ -45,7 +45,7 @@ class QBaseObject { // tolua_export
 public:
     // tolua_begin
     QBaseObject() {};
-    ~QBaseObject() {};
+    virtual ~QBaseObject() {};
 
     // tolua_end
 }; // tolua_export
