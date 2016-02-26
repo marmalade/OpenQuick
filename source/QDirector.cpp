@@ -478,8 +478,10 @@ void QDirector::RunScene()
     }
 
     // Ensure the required scene is always the delegate for event
-    pDelegateScene->setTouchEnabled(true);
-    pDelegateScene->setKeypadEnabled(true);
+    // but need to ignore overlay of the previous scene.
+    bool enableEventDelegate = _overlayScene == NULL || running_scene == (CCScene*)_currentScene->m_CCNode;
+    pDelegateScene->setTouchEnabled(enableEventDelegate);
+    pDelegateScene->setKeypadEnabled(enableEventDelegate);
 
     // Cocos2d-x internal checking forces us to do this, in order to ensure delegate is correctly set!
 //    pDelegateScene->setAccelerometerEnabled(false);
