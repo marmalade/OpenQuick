@@ -167,7 +167,9 @@ void CheckLuacDirPath(const std::string& guaranted_path, const std::string& out_
         if(!f) break;
         tmp_path = out.substr(0,f);
         if (!CheckDirectoryExists(tmp_path.c_str()))
+        {
             s3eFileMakeDirectory(tmp_path.c_str());
+        }
     }
     while(true);
 }
@@ -301,7 +303,7 @@ bool MainLuaPrecompileFile(const char* filename)
     s3eFile* out = s3eFileOpen(out_filename.c_str(), "wb");
     if (out == NULL)
     {
-        QWarning("Failed to write precompiled lua file %s", out_filename.c_str());
+        QWarning("Failed to write precompiled lua file %s(%d)", out_filename.c_str(), s3eFileError());
         return false;
     }
 
@@ -580,11 +582,15 @@ void MainInitLuaMiddleware(const char* configFilename)
 
     // Allow non-existence of config.lua
     if (!s3eFileCheckExists(configFilename))
+    {
         QWarning("Failed to load config lua file");
+    }
     else
     {
         if (LuaLoadFile(configFilename))
+        {
             QWarning("Failed to load config lua file");
+        }
         s = lua_pcall(g_L, 0, 0, 0);
         LUA_REPORT_ERRORS(g_L, s);
     }
