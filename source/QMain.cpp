@@ -522,37 +522,57 @@ const char* MainGetVersionString()
 //------------------------------------------------------------------------------
 void setupPrecompiledPath()
 {
+    // work out where luac:// should be mapped to, when using precompiled etc.
+    // On simulator this is directory resources-concatenated or resources-precompiled
+    // at the same level as "resources" (rom://) directory that will contain the lua itself.
+    // Anything else we map to rom:// itself - the lua and luac files will be in the same area.
     int32 deviceID = s3eDeviceGetInt(S3E_DEVICE_OS);
+    bool on_simulator;
     if (!(deviceID == S3E_OS_ID_WINDOWS || deviceID == S3E_OS_ID_OSX))
     {
-        return;
+        on_simulator = false;
+    }
+    else
+    {
+        on_simulator = strcmp(s3eDeviceGetString(S3E_DEVICE_UNIQUE_ID), "SIMULATOR_ID") == 0;
     }
 
-    char ramPath[256];
-    strcpy(ramPath, "");
-    s3eFileGetFileString("rom://", S3E_FILE_REAL_PATH, ramPath, sizeof(ramPath));
-    std::string rawFSPath = ramPath;
-    if (!rawFSPath.size())
+    if (!on_simulator)
     {
-        return;
+        g_LuacRawFSPrefix = "rom://";
     }
-    std::replace(rawFSPath.begin(), rawFSPath.end(), '\\', '/');
-    int f = rawFSPath.find_last_of('/');
-    rawFSPath = rawFSPath.substr(0, f);
-    g_LuacRawFSPrefix = "raw://" + rawFSPath;
-    if (g_Config.useConcatenatedLua)
+    else
     {
-        g_LuacRawFSPrefix += "/resources-concatenated/";
-    }
-    else if (g_Config.makePrecompiledLua || g_Config.usePrecompiledLua)
-    {
-        g_LuacRawFSPrefix += "/resources-precompiled/";
+        char romPath[256];
+        strcpy(romPath, "");
+        s3eFileGetFileString("rom://", S3E_FILE_REAL_PATH, romPath, sizeof(romPath));
+        std::string rawFSPath = romPath;
+        if (!rawFSPath.size())
+        {
+            return;
+        }
+        
+        std::replace(rawFSPath.begin(), rawFSPath.end(), '\\', '/');
+        int f = rawFSPath.find_last_of('/');
+        rawFSPath = rawFSPath.substr(0, f);
+        g_LuacRawFSPrefix = "raw://" + rawFSPath;
+        
+        if (g_Config.useConcatenatedLua)
+        {
+            g_LuacRawFSPrefix += "/resources-concatenated/";
+        }
+        else if (g_Config.makePrecompiledLua || g_Config.usePrecompiledLua)
+        {
+            g_LuacRawFSPrefix += "/resources-precompiled/";
+        }
+        
+        if (!CheckDirectoryExists(g_LuacRawFSPrefix.c_str()))
+        {
+            s3eFileMakeDirectory(g_LuacRawFSPrefix.c_str());
+        }
     }
 
-    if (!CheckDirectoryExists(g_LuacRawFSPrefix.c_str()))
-    {
-        s3eFileMakeDirectory(g_LuacRawFSPrefix.c_str());
-    }
+    IwTrace(QUICK_VERBOSE, ("luac:// is mapped to %s", g_LuacRawFSPrefix.c_str()));
 }
 //------------------------------------------------------------------------------
 void MainInitLuaMiddleware(const char* configFilename)
