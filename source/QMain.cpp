@@ -537,15 +537,28 @@ void setupPrecompiledPath()
         on_simulator = strcmp(s3eDeviceGetString(S3E_DEVICE_UNIQUE_ID), "SIMULATOR_ID") == 0;
     }
 
+    // When [S3E]DataDirIsRAM is set, ram points to where rom should and rom is not defined.
+    // Need to adapt accordingly. 
+    bool assumeDataDirIsRam = false;
+    char romPath[256];
+    strcpy(romPath, "");
+    if (s3eFileGetFileString("rom://", S3E_FILE_REAL_PATH, romPath, sizeof(romPath)) == NULL)
+    {
+        assumeDataDirIsRam = true;
+    }
+
     if (!on_simulator)
     {
-        g_LuacRawFSPrefix = "rom://";
+        g_LuacRawFSPrefix = assumeDataDirIsRam ? "ram://" : "rom://";
     }
     else
     {
-        char romPath[256];
-        strcpy(romPath, "");
-        s3eFileGetFileString("rom://", S3E_FILE_REAL_PATH, romPath, sizeof(romPath));
+        if (assumeDataDirIsRam)
+        {
+            // rom lookup above failed, so use ram:// instead
+            s3eFileGetFileString("ram://", S3E_FILE_REAL_PATH, romPath, sizeof(romPath));
+        }
+
         std::string rawFSPath = romPath;
         if (!rawFSPath.size())
         {
