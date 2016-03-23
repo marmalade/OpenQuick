@@ -71,6 +71,11 @@ bool QVec2::isPointInsideTri(QVec2& a, QVec2& b, QVec2& c)
 {
     // From http://www.blackpawn.com/texts/pointinpoly/default.html
 
+    // If triangle has two points with the same coordinates this function 
+    // can return wrongly positive result.
+    if (a == b || a == c || b == c)
+        return false;
+
     // Compute vectors        
     QVec2 v0 = c - a;
     QVec2 v1 = b - a;
