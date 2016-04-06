@@ -167,7 +167,9 @@ void CheckLuacDirPath(const std::string& guaranted_path, const std::string& out_
         if(!f) break;
         tmp_path = out.substr(0,f);
         if (!CheckDirectoryExists(tmp_path.c_str()))
+        {
             s3eFileMakeDirectory(tmp_path.c_str());
+        }
     }
     while(true);
 }
@@ -301,7 +303,7 @@ bool MainLuaPrecompileFile(const char* filename)
     s3eFile* out = s3eFileOpen(out_filename.c_str(), "wb");
     if (out == NULL)
     {
-        QWarning("Failed to write precompiled lua file %s", out_filename.c_str());
+        QWarning("Failed to write precompiled lua file %s(%d)", out_filename.c_str(), s3eFileError());
         return false;
     }
 
@@ -520,37 +522,70 @@ const char* MainGetVersionString()
 //------------------------------------------------------------------------------
 void setupPrecompiledPath()
 {
+    // work out where luac:// should be mapped to, when using precompiled etc.
+    // On simulator this is directory resources-concatenated or resources-precompiled
+    // at the same level as "resources" (rom://) directory that will contain the lua itself.
+    // Anything else we map to rom:// itself - the lua and luac files will be in the same area.
     int32 deviceID = s3eDeviceGetInt(S3E_DEVICE_OS);
+    bool on_simulator;
     if (!(deviceID == S3E_OS_ID_WINDOWS || deviceID == S3E_OS_ID_OSX))
     {
-        return;
+        on_simulator = false;
+    }
+    else
+    {
+        on_simulator = strcmp(s3eDeviceGetString(S3E_DEVICE_UNIQUE_ID), "SIMULATOR_ID") == 0;
     }
 
-    char ramPath[256];
-    strcpy(ramPath, "");
-    s3eFileGetFileString("rom://", S3E_FILE_REAL_PATH, ramPath, sizeof(ramPath));
-    std::string rawFSPath = ramPath;
-    if (!rawFSPath.size())
+    // When [S3E]DataDirIsRAM is set, ram points to where rom should and rom is not defined.
+    // Need to adapt accordingly. 
+    bool assumeDataDirIsRam = false;
+    char romPath[256];
+    strcpy(romPath, "");
+    if (s3eFileGetFileString("rom://", S3E_FILE_REAL_PATH, romPath, sizeof(romPath)) == NULL)
     {
-        return;
-    }
-    std::replace(rawFSPath.begin(), rawFSPath.end(), '\\', '/');
-    int f = rawFSPath.find_last_of('/');
-    rawFSPath = rawFSPath.substr(0, f);
-    g_LuacRawFSPrefix = "raw://" + rawFSPath;
-    if (g_Config.useConcatenatedLua)
-    {
-        g_LuacRawFSPrefix += "/resources-concatenated/";
-    }
-    else if (g_Config.makePrecompiledLua || g_Config.usePrecompiledLua)
-    {
-        g_LuacRawFSPrefix += "/resources-precompiled/";
+        assumeDataDirIsRam = true;
     }
 
-    if (!CheckDirectoryExists(g_LuacRawFSPrefix.c_str()))
+    if (!on_simulator)
     {
-        s3eFileMakeDirectory(g_LuacRawFSPrefix.c_str());
+        g_LuacRawFSPrefix = assumeDataDirIsRam ? "ram://" : "rom://";
     }
+    else
+    {
+        if (assumeDataDirIsRam)
+        {
+            // rom lookup above failed, so use ram:// instead
+            s3eFileGetFileString("ram://", S3E_FILE_REAL_PATH, romPath, sizeof(romPath));
+        }
+
+        std::string rawFSPath = romPath;
+        if (!rawFSPath.size())
+        {
+            return;
+        }
+        
+        std::replace(rawFSPath.begin(), rawFSPath.end(), '\\', '/');
+        int f = rawFSPath.find_last_of('/');
+        rawFSPath = rawFSPath.substr(0, f);
+        g_LuacRawFSPrefix = "raw://" + rawFSPath;
+        
+        if (g_Config.useConcatenatedLua)
+        {
+            g_LuacRawFSPrefix += "/resources-concatenated/";
+        }
+        else if (g_Config.makePrecompiledLua || g_Config.usePrecompiledLua)
+        {
+            g_LuacRawFSPrefix += "/resources-precompiled/";
+        }
+        
+        if (!CheckDirectoryExists(g_LuacRawFSPrefix.c_str()))
+        {
+            s3eFileMakeDirectory(g_LuacRawFSPrefix.c_str());
+        }
+    }
+
+    IwTrace(QUICK_VERBOSE, ("luac:// is mapped to %s", g_LuacRawFSPrefix.c_str()));
 }
 //------------------------------------------------------------------------------
 void MainInitLuaMiddleware(const char* configFilename)
@@ -580,11 +615,15 @@ void MainInitLuaMiddleware(const char* configFilename)
 
     // Allow non-existence of config.lua
     if (!s3eFileCheckExists(configFilename))
+    {
         QWarning("Failed to load config lua file");
+    }
     else
     {
         if (LuaLoadFile(configFilename))
+        {
             QWarning("Failed to load config lua file");
+        }
         s = lua_pcall(g_L, 0, 0, 0);
         LUA_REPORT_ERRORS(g_L, s);
     }
