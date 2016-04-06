@@ -102,13 +102,13 @@ void QNodeProps::_init(bool _isSensor)
     bodyDef.userData = m_Node; // bodyDef has pointer back to node
 
     if (!strcmp(type.c_str(), "static"))
-	    bodyDef.type = b2_staticBody;
+        bodyDef.type = b2_staticBody;
     else
     if (!strcmp(type.c_str(), "dynamic"))
-	    bodyDef.type = b2_dynamicBody;
+        bodyDef.type = b2_dynamicBody;
     else
     if (!strcmp(type.c_str(), "kinematic"))
-	    bodyDef.type = b2_kinematicBody;
+        bodyDef.type = b2_kinematicBody;
 
     /*
     CURRENTLY THIS ASSUMES THE NODE POSTIIONS/ROTATIONS ARE IN WORLDSPACE.
@@ -122,27 +122,29 @@ void QNodeProps::_init(bool _isSensor)
     float bx = g_Sim->scaleD2P(m_Node->x);
     float by = g_Sim->scaleD2P(m_Node->y);
     bodyDef.position.Set(bx, by);
-    
+
     bodyDef.angle = g_Sim->angleD2P(m_Node->rotation);
-	m_Body = g_Sim->m_World->CreateBody(&bodyDef);
+    m_Body = g_Sim->m_World->CreateBody(&bodyDef);
 
     // Set up Fixture
-	b2FixtureDef fd;
-	fd.friction = friction;
-	fd.density = density;
-	fd.restitution = restitution;
+    b2FixtureDef fd;
+    fd.friction = friction;
+    fd.density = density;
+    fd.restitution = restitution;
 
-	// Store sensor state, on the fixture and also locally
+    // Store sensor state, on the fixture and also locally
     fd.isSensor = _isSensor;
-	m_IsSensor = _isSensor;
+    m_IsSensor = _isSensor;
 
+    b2CircleShape circleShape;
+    b2PolygonShape poligonShape;
     // Set up Fixture Shape
     if (radius > 0.0f)
     {
         // Circle::sync
         float xCentre = radius - m_Node->xAnchor*radius*2; // centre of box, in Box2D object local space
         float yCentre = radius - m_Node->yAnchor*radius*2; // centre of box, in Box2D object local space
-        fd.shape = new b2CircleShape;
+        fd.shape = &circleShape;
         ((b2CircleShape*)fd.shape)->m_p.x = g_Sim->scaleD2P(xCentre);
         ((b2CircleShape*)fd.shape)->m_p.y = g_Sim->scaleD2P(yCentre);
         ((b2CircleShape*)fd.shape)->m_radius = g_Sim->scaleD2P(radius);
@@ -153,7 +155,7 @@ void QNodeProps::_init(bool _isSensor)
     if (m_NumShapePoints > 0)
     {
         // Polygon
-	    fd.shape = new b2PolygonShape;
+        fd.shape = &poligonShape;
         ((b2PolygonShape*)fd.shape)->Set((b2Vec2*)m_ShapePoints, m_NumShapePoints); // assumes b2Vec2 same as our Vec2
 
         debugDrawColor.set(0xc0, 0xc0, 0x40); // yellow
@@ -166,15 +168,15 @@ void QNodeProps::_init(bool _isSensor)
         float bh = g_Sim->scaleD2P(m_Node->h * m_Node->yScale); // TODO, PROPER USE OF SCALE
         float xCentre = bw/2 - m_Node->xAnchor*bw; // centre of box, in Box2D object local space
         float yCentre = bh/2 - m_Node->yAnchor*bh; // centre of box, in Box2D object local space
-	    fd.shape = new b2PolygonShape;
+        fd.shape = &poligonShape;
         ((b2PolygonShape*)fd.shape)->SetAsBox(bw/2, bh/2, b2Vec2(xCentre, yCentre), 0.0f);
 
         debugDrawColor.set(0xc0, 0x40, 0x40); // red
     }
 
     // Set Shape on Fixture, and create Fixture
-//	fd.shape = m_Shape;
     m_Body->CreateFixture(&fd);
+
     // TODO MASS?
 //    b2MassData massData;
 //    massData.center = b2Vec2(bw/2, bh/2);
