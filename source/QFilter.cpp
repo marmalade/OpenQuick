@@ -63,6 +63,7 @@ QFilter::QFilter() :
 //------------------------------------------------------------------------------
 QFilter::~QFilter()
 {
+    CC_SAFE_RELEASE(m_ShaderProgram);
     if (m_Sprite)
     {
         m_Sprite->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
@@ -77,6 +78,7 @@ void QFilter::sync()
 //------------------------------------------------------------------------------
 bool QFilter::init(QFilterData* filterData, cocos2d::CCSprite* sprite)
 {
+    CC_SAFE_RELEASE_NULL(m_ShaderProgram);
     m_filterData = filterData;
     m_Sprite = sprite;
     return true;
@@ -115,7 +117,11 @@ CCGLProgram* QFilter::createProgram(const char * name, const GLchar* vShaderByte
     CCGLProgram * pShaderProgram = CCShaderCache::sharedShaderCache()->programForKey(name);
 
     if (pShaderProgram != NULL)
+    {
+        // we do an extra retain here so calling code can safely release and not delete cached object
+        CC_SAFE_RETAIN(pShaderProgram);
         return pShaderProgram;
+    }
     
     pShaderProgram = new CCGLProgram();
     pShaderProgram->initWithVertexShaderByteArray(vShaderByteArray, fShaderByteArray);
@@ -129,7 +135,8 @@ CCGLProgram* QFilter::createProgram(const char * name, const GLchar* vShaderByte
 
     CHECK_GL_ERROR_DEBUG();
 
-    CCShaderCache::sharedShaderCache()->addProgram(pShaderProgram, name);
+    // we no longer add anything we add to the cache - so get fresh objects each time
+    // CCShaderCache::sharedShaderCache()->addProgram(pShaderProgram, name);
 
     return pShaderProgram;
 }
