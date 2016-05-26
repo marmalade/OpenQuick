@@ -57,12 +57,17 @@ public:
     std::string _getMemoryStats( void);
 
     bool _timersPaused;     // true if ALL the system's timers should be paused. Default is false
+    bool _stalledTimer;     // used to delay restarting time, as the first update delta can be very long
     float _timersTimeScale; // time scaling factor to apply to the update timestep for timers. Default is 1
 
     // BOUND, PUBLIC
     // Timers and tweens control
-    void pauseTimers() { _timersPaused = true; }
-    void resumeTimers() { _timersPaused = false; }
+    void pauseTimers() { _timersPaused = true; clearStalledTimers(); }
+    void resumeTimers() { _timersPaused = false; setStalledTimers(); }
+    bool isPausedTimers() const { return _timersPaused; }
+    bool isStalledTimers() const { return _stalledTimer; }
+    void clearStalledTimers() { _stalledTimer = false; }
+    void setStalledTimers() { _stalledTimer = true; }
     void setTimersTimeScale(float f) { _timersTimeScale = f; }
     float getTimersTimeScale() { return _timersTimeScale; }
 	void setFrameRateLimit(int fps);

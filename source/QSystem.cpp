@@ -34,12 +34,12 @@ QSystem* g_QSystem = NULL;
 //------------------------------------------------------------------------------
 // QSystem
 //------------------------------------------------------------------------------
-QSystem::QSystem()
+QSystem::QSystem() :
+    _timersPaused(false),
+    _stalledTimer(false),
+    _timersTimeScale(1.0f)
 {
     g_QSystem = this;
-
-    _timersPaused = false;
-    _timersTimeScale = 1.0f;
 
     gameTime = 0.0f;
     deltaTime = 0.0f;

@@ -64,6 +64,28 @@ bool CCScene2::init( bool bAddScene)
 //------------------------------------------------------------------------------
 void CCScene2::update(float dt)
 {
+    // this is how the main game loop calls into the "quick" code.
+    // If system:pauseTimers() is called we want to ignore any. There
+    // is an issue with suspend and resume on at least some of the
+    // platforms. The update() calls are themselves suspended when
+    // the app is "paused" but the first update() has a dt of the
+    // real time since the previous one. To get around that,
+    // system:resumeTimers() sets isStalledTimers(), and we use
+    // that to ignore the first update(). Assumption is that they
+    // come thick and fast, so ignoring this first one is OK.
+    if (g_QSystem->isPausedTimers())
+    {
+        // skip
+        return;
+    }
+
+    if (g_QSystem->isStalledTimers())
+    {
+        g_QSystem->clearStalledTimers();
+        // skip
+        return;
+    }
+
     // Here's how we keep track of elapsed time, in a x-platform way
     g_QSystem->deltaTime = dt;
     g_QSystem->gameTime += dt;
