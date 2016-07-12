@@ -8,7 +8,7 @@ define TOLUA_RELEASE
 commands
 {
     ("..")
-    "$S3E_DIR/../quick/tools/tolua++ -o openquick_tolua.cpp openquick_tolua.pkg"
+    "$S3E_DIR/../quick/tools/tolua++ -o openquick_tolua.cpp -n openquick_tolua openquick_tolua.pkg"
 }
 
 files
