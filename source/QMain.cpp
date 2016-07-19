@@ -334,8 +334,10 @@ static const char *MainLuaGetF(lua_State *L, void *ud, size_t *size)
     (void)L;
     int fileSize = 0;
     s3eFile* pFile = NULL;
-    if(!GetFileWithSize(lf->filename.c_str(), pFile, fileSize))
+    if (!GetFileWithSize(lf->filename.c_str(), pFile, fileSize))
+    {
         return NULL;
+    }
     lf->buff = (char*)malloc(fileSize);
     if (!lf->buff)
     {
@@ -353,8 +355,14 @@ static const char *MainLuaGetF(lua_State *L, void *ud, size_t *size)
 //------------------------------------------------------------------------------
 static int LuaLoadFile(const char *filename)
 {
-    if (filename == NULL || !strlen(filename))
-        return false;
+    if (filename == NULL || strlen(filename) == 0)
+    {
+        return -1;
+    }
+    if (!s3eFileCheckExists(filename))
+    {
+        return -1;
+    }
     MainLuaLoadData lf;
     int status;
     lf.buff = NULL;
@@ -372,7 +380,8 @@ static int LuaLoadFile(const char *filename)
 //------------------------------------------------------------------------------
 void MainLuaLoadFile(const char* filename)
 {
-    if (LuaLoadFile(filename))
+    int status = LuaLoadFile(filename);
+    if (status != 0)
         lua_pushnil(g_L);
     lua_setglobal(g_L, LUA_LOADED_FILE_ACCESS);
 }
@@ -604,11 +613,29 @@ void MainInitLuaMiddleware(const char* configFilename)
     // Log "QUICKLOG CPP: Marmalade Quick <version>"
     QTrace("Marmalade Quick %s", MainGetVersionString());
 
+    char quicklua[1024];
+    if (s3eConfigGetString("quick", "QuickLuaDir", quicklua) != S3E_RESULT_SUCCESS)
+    {
+        // default QUICKLUA value
+        strcpy(quicklua, "quicklua");
+        if (getenv("QUICKLUA"))
+        {
+            unsetenv("QUICKLUA"); // just in case it's defined externally - effectively disable feature
+        }
+    }
+    else
+    {
+        // set as env so can be picked up by lua runtime
+        setenv("QUICKLUA", quicklua, true);
+    }
+
+    std::string luaConfig = std::string(quicklua) + "/QConfig.lua";
+
     // Log "QUICKLOG CPP: Loading app configuration..."
-    QTrace("Loading app configuration...");
+    QTrace("Loading app configuration(%s)...", luaConfig.c_str());
 
     // Our app config
-    if (LuaLoadFile("quicklua/QConfig.lua"))
+    if (LuaLoadFile(luaConfig.c_str()))
         QWarning("Failed to load QConfig.lua file");
     s = lua_pcall(g_L, 0, 0, 0);
     LUA_REPORT_ERRORS(g_L, s);
@@ -635,11 +662,13 @@ void MainInitLuaMiddleware(const char* configFilename)
     s = lua_pcall(g_L, 0, 0, 0);
     LUA_REPORT_ERRORS(g_L, s);
 
+    std::string luaDbg = std::string(quicklua) + "/dbg.lua";
+
     // Log "QUICKLOG CPP: Loading Quick engine..."
-    QTrace("Loading Quick engine...");
+    QTrace("Loading Quick engine(%s)...", luaDbg.c_str());
 
     // dbg.lua
-    if (LuaLoadFile("quicklua/dbg.lua"))
+    if (LuaLoadFile(luaDbg.c_str()))
         QWarning("Failed to load dbg.lua file");
     else
         g_Config.isDbgLoaded = true;
@@ -684,8 +713,12 @@ void MainInitLuaMiddleware(const char* configFilename)
     QuickUserInitPreOpenQuick();
 #endif
 
+    std::string luaOpenquick = std::string(quicklua) + "/openquick.lua";
+
+    QTrace("Loading openquick(%s)...", luaOpenquick.c_str());
+
     // Our OpenQuick init
-    if (LuaLoadFile("quicklua/openquick.lua"))
+    if (LuaLoadFile(luaOpenquick.c_str()))
         QWarning("Failed to load openquick lua file");
     s = lua_pcall(g_L, 0, 0, 0);
     LUA_REPORT_ERRORS(g_L, s);
