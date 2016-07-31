@@ -256,7 +256,7 @@ bool concatenateLuaFile(const char* filename)
     return true;
 }
 
-bool MainLuaPrecompileFile(const char* filename)
+bool MainLuaPrecompileFile(const char* filename, const char* basename)
 {
 #if defined(_MSC_VER) || (defined(__APPLE__) && defined(__MACH__))
 
@@ -298,7 +298,9 @@ bool MainLuaPrecompileFile(const char* filename)
         return false;
     }
 
-    std::string out_filename = std::string(LUAC_PREFIX) + filename + "c";
+    std::string out_filename = std::string(LUAC_PREFIX) + basename + "c";
+
+    QTrace("MainLuaPrecompileFile out_filename=%s", out_filename.c_str());
 
     s3eFile* out = s3eFileOpen(out_filename.c_str(), "wb");
     if (out == NULL)
@@ -529,22 +531,33 @@ const char* MainGetVersionString()
     return "1.1";
 }
 //------------------------------------------------------------------------------
+static bool isOnSimulator()
+{
+    static bool on_simulator;
+    static bool on_simulator_known = false;
+    if (!on_simulator_known)
+    {
+        int32 deviceID = s3eDeviceGetInt(S3E_DEVICE_OS);
+        if (!(deviceID == S3E_OS_ID_WINDOWS || deviceID == S3E_OS_ID_OSX))
+        {
+            on_simulator = false;
+        }
+        else
+        {
+            on_simulator = strcmp(s3eDeviceGetString(S3E_DEVICE_UNIQUE_ID), "SIMULATOR_ID") == 0;
+        }
+        on_simulator_known = true;
+    }
+    return on_simulator;
+}
+//------------------------------------------------------------------------------
 void setupPrecompiledPath()
 {
     // work out where luac:// should be mapped to, when using precompiled etc.
     // On simulator this is directory resources-concatenated or resources-precompiled
     // at the same level as "resources" (rom://) directory that will contain the lua itself.
     // Anything else we map to rom:// itself - the lua and luac files will be in the same area.
-    int32 deviceID = s3eDeviceGetInt(S3E_DEVICE_OS);
-    bool on_simulator;
-    if (!(deviceID == S3E_OS_ID_WINDOWS || deviceID == S3E_OS_ID_OSX))
-    {
-        on_simulator = false;
-    }
-    else
-    {
-        on_simulator = strcmp(s3eDeviceGetString(S3E_DEVICE_UNIQUE_ID), "SIMULATOR_ID") == 0;
-    }
+    bool on_simulator = isOnSimulator();
 
     // When [S3E]DataDirIsRAM is set, ram points to where rom should and rom is not defined.
     // Need to adapt accordingly. 
@@ -614,7 +627,7 @@ void MainInitLuaMiddleware(const char* configFilename)
     QTrace("Marmalade Quick %s", MainGetVersionString());
 
     char quicklua[1024];
-    if (s3eConfigGetString("quick", "QuickLuaDir", quicklua) != S3E_RESULT_SUCCESS)
+    if (!isOnSimulator() || s3eConfigGetString("quick", "QuickLuaDir", quicklua) != S3E_RESULT_SUCCESS)
     {
         // default QUICKLUA value
         strcpy(quicklua, "quicklua");

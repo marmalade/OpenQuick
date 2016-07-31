@@ -46,7 +46,7 @@ void CheckLuacDirPath(const std::string& guaranted_path, const std::string& out_
 
 // tolua_begin
 // Our own version of dofile(), which can perform pre-processing
-bool MainLuaPrecompileFile(const char* filename);
+bool MainLuaPrecompileFile(const char* filename, const char* basename);
 void MainLuaLoadFile(const char* filename);
 void MainLuaDoFile(const char* filename);
 
