@@ -25,7 +25,7 @@ If you are using OpenQuick WITHOUT Marmalade Quick, then the runtime OS
 abstraction you are using will be Cocos2d-x's - i.e. you are using the
 Cocos2d-x platform back-ends, such as proj.win32.
 
-##Working with GitHub vs Marmalade SDK
+## Working with GitHub vs Marmalade SDK
 
 OpenQuick is distributed as source both inside the Marmalade SDK (in
 modules/third_party/openquick) and on github (at
